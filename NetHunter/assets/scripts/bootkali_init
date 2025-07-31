@@ -16,8 +16,182 @@ if [ ! -d "$MNT" ]; then
     exit 2
 fi
 
-# Goals:
-# 01. Check mountpoints
-# 02. Mount them to the chroot
-# 03 . Looking for any issues
-# 04. returns 0
+# Define functions
+
+f_chk_chroot() {
+    [ ! -d $MNT ] && bklog "[-] $MNT directory is not found." && return 1
+    [ ! -f $MNT$CHROOT_EXEC ] && bklog "[-] $CHROOT_EXEC not found." && return 1
+    if ! $BUSYBOX chroot $MNT /bin/uname; then
+        bklog "[-] No chroot file exists."
+        return 1
+    fi
+    return 0
+}
+
+# Check if a path is a mountpoint
+is_mounted() {
+    [ "$($BUSYBOX mountpoint "$1" 2>/dev/null | grep 'is a')" ] && {
+        echo "$1 is already mounted"
+        return 0
+    }
+    return 1
+}
+
+# Enhanced mount function
+advanced_mount() {
+    local src="$1" tgt="$2" type="$3" opts="$4"
+
+    if is_mounted "$tgt"; then
+        bklog "[-] Skipping mount: $tgt is already mounted."
+        return 0
+    fi
+
+    mkdir -p "$(dirname "$tgt")" 2>/dev/null
+    [ -e "$src" ] || [ "$type" = "tmpfs" ] || [ "$type" = "devpts" ] && mkdir -p "$tgt"
+
+    if [ "$type" = "bind" ]; then
+        $BUSYBOX mount --bind "$src" "$tgt"
+    else
+        $BUSYBOX mount -t "$type" $opts "$type" "$tgt"
+    fi
+
+    [ $? -eq 0 ] && bklog "[+] Mounted $src -> $tgt ($type)" || bklog "[-] Failed to mount $src"
+}
+
+
+mount_cgroup_v1() {
+    local sub="$1" path="/sys/fs/cgroup/$sub"
+    grep -q "^$sub" /proc/cgroups || return
+    mkdir -p "$path"
+    advanced_mount "cgroup" "$path" "cgroup" "-o rw,nosuid,nodev,noexec,relatime,$sub"
+}    
+
+init_mounts(){
+
+    # essential
+    $BUSYBOX mount -o remount,suid /data
+    $BUSYBOX chmod +s $MNT$CHROOT_EXEC    
+
+    if [ ! -e "/dev/fd" -o ! -e "/dev/stdin" -o ! -e "/dev/stdout" -o ! -e "/dev/stderr" ]; then
+        [ -e "/dev/fd" ] || ln -s /proc/self/fd /dev/ && bklog "[+] linked /proc/self/fd to /dev/"
+        [ -e "/dev/stdin" ] || ln -s /proc/self/fd/0 /dev/stdin && bklog "[+] linked /proc/self/fd/0 to /dev/stdin"
+        [ -e "/dev/stdout" ] || ln -s /proc/self/fd/1 /dev/stdout && bklog "[+] linked /proc/self/fd/1 to /dev/stdout"
+        [ -e "/dev/stderr" ] || ln -s /proc/self/fd/2 /dev/stderr && bklog "[+] linked /proc/self/fd/2 to /dev/stderr"
+    fi
+
+    if [ ! -e "/dev/net/tun" ]; then
+        [ ! -d "/dev/net" ] && mkdir -p /dev/net
+        mknod /dev/net/tun c 10 200 && bklog "[+] created /dev/net/tun"
+    fi      
+
+    advanced_mount "/proc" "$MNT/proc" "proc" "-o rw,nosuid,nodev,noexec,relatime"
+    advanced_mount "sys" "$MNT/sys" "sysfs" "-o rw,nosuid,nodev,noexec,relatime"
+    # advanced_mount "/sys" "$MNT/sys" "bind"
+    advanced_mount "/dev" "$MNT/dev" "bind"
+    advanced_mount "devpts" "$MNT/dev/pts" "devpts" "-o rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000"
+
+    advanced_mount "/proc/net" "$MNT/proc/net" "bind"
+
+    advanced_mount "tmpfs" "$MNT/tmp" "tmpfs" "-o rw,nosuid,nodev,relatime,size=100M"
+    advanced_mount "tmpfs" "$MNT/run" "tmpfs" "-o rw,nosuid,nodev,relatime,size=50M"
+    advanced_mount "tmpfs" "$MNT/dev/shm" "tmpfs" "-o rw,nosuid,nodev,mode=1777"
+
+    advanced_mount "/system" "$MNT/system" "bind"
+    advanced_mount "/dev/binderfs" "$MNT/dev/binderfs" "bind"
+
+    [ -d "$MNT/dev/shm" ] && chmod 1777 "$MNT/dev/shm"
+    [ -d "/sys/kernel/debug" ] && advanced_mount "/sys/kernel/debug" "$MNT/sys/kernel/debug" "bind"
+    [ -d "/config" ] && advanced_mount "/config" "$MNT/config" "bind"
+    [ -d "/sys/kernel/config" ] && advanced_mount "/sys/kernel/config" "$MNT/sys/kernel/config" "bind"
+    [ -d "/proc/bus/usb" ] && advanced_mount "/proc/bus/usb" "$MNT/proc/bus/usb" "bind"
+    [ -d "/dev/bus/usb" ] && advanced_mount "/dev/bus/usb" "$MNT/dev/bus/usb" "bind"
+    [ -d "/sys/class/net" ] && chmod -R 755 /sys/class/net/ 2>/dev/null    
+
+    for dev in /dev/null /dev/zero /dev/random /dev/urandom /dev/tty; do [ -e "$dev" ] && chmod 666 "$dev"; done
+
+    if $BUSYBOX mount -t tmpfs -o rw,nosuid,nodev,noexec,relatime,mode=755 tmpfs /sys/fs/cgroup 2>/dev/null; then
+        for c in devices cpuset cpu cpuacct memory blkio freezer net_cls net_prio perf_event pids schedtune; do 
+            mount_cgroup_v1 "$c"
+        done
+    fi
+
+    # mount Android's internal storage
+    local storage_path="${EXTERNAL_STORAGE:-/storage/emulated/0}"
+    if [ -d "$storage_path" ]; then
+        bklog "[+] Setting up storage access: $storage_path"
+        mkdir -p "$MNT/sdcard"
+        advanced_mount "$storage_path" "$MNT/sdcard" "bind"
+    else
+        bklog "[-] Android storage not found - continuing without it"
+    fi
+
+}
+
+networking() {
+    bklog "[+] Resolving Internet..."
+
+    > "$MNT/etc/resolv.conf"
+
+    for i in 1 2 3 4; do
+        dns=$(getprop net.dns${i} 2>/dev/null)
+        [ -z "$dns" ] && break
+        echo "nameserver $dns" >> "$MNT/etc/resolv.conf"
+    done
+
+    echo "nameserver 8.8.8.8" >> "$MNT/etc/resolv.conf"
+    echo "nameserver 8.8.4.4" >> "$MNT/etc/resolv.conf"
+
+    chmod 644 "$MNT/etc/resolv.conf"
+
+    $BUSYBOX sysctl -w net.ipv4.ip_forward=1 >/dev/null 2>&1
+
+    echo "127.0.0.1    localhost kali" > "$MNT/etc/hosts"
+    echo "::1          localhost ip6-localhost ip6-loopback" >> "$MNT/etc/hosts"
+    echo "kali" > "$MNT/proc/sys/kernel/hostname" 2>/dev/null
+}
+
+
+# mountpoint checking part
+is_mountpoints_ready() {
+    for i in proc sys dev dev/pts system sdcard; do
+        if is_mounted "$MNT/$i"; then
+            bklog "[+] $i was mounted already."
+        else
+            bklog "[-] fs is NOT all mounted yet."
+            return 1
+        fi
+    done
+    return 0
+}
+
+# --- MAIN EXECUTION --- #
+
+bklog "[!] Checking chroot environment."
+
+## First to check if chroot directory exists
+if ! f_chk_chroot; then
+    bklog "[-] Something went wrong. Aborted."
+    exit 1
+fi
+
+## Lastly check if all Filesystems are mounted.
+
+if ! is_mountpoints_ready; then
+    bklog "[!] Mounting fs to kali chroot."
+    init_mounts
+fi
+
+
+start_chroot() {
+
+    bklog "[+] Starting up Kali Nethunter chroot..."
+
+    networking
+
+    # SET 250MB TO ALLOW POSTGRESQL 
+    $BUSYBOX sysctl -w kernel.shmmax=268435456
+
+    bklog "[+] The Kali chroot has been started."
+}
+
+start_chroot
