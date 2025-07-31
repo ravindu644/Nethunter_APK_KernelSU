@@ -1,0 +1,67 @@
+#!/system/bin/sh
+
+# This runs after the KaliChroot has been started.
+
+# Enable debugging
+#set -x
+
+# Enable logging
+#LOG_FILE="/data/data/com.offsec.nethunter/code_cache/80postservices.log"
+#exec >"$LOG_FILE" 2>&1  # Redirect output and errors to a log file
+
+KALI_SERVICES_FILE="/data/data/com.offsec.nethunter/scripts/kaliservices"
+BUSYBOX_PATH="/data/data/com.offsec.nethunter/scripts/bin/busybox_nh"
+
+## Define the NetHunter app package name.
+APP_PGK_NAME=com.offsec.nethunter
+
+USERINIT_SCRIPT_PATH=$(readlink -f "$0")
+
+# shellcheck source=/data/data/$APP_PGK_NAME/scripts/bootkali_log
+. /data/data/$APP_PGK_NAME/scripts/bootkali_log
+
+# shellcheck source=/data/data/$APP_PGK_NAME/scripts/bootkali_env
+. /data/data/$APP_PGK_NAME/scripts/bootkali_env
+
+## Validate busybox path.
+if [ -z "$BUSYBOX" ]; then
+    bklog "[-] No busybox_nh is installed or busybox is not granted execute permission. If you did have it installed, please symlink it to /system/bin and grant it execute permission."
+    exit 1
+fi
+
+## Validate kali Chroot path.
+if [ -z "$MNT" ] || [ ! -d "$MNT" ]; then
+    bklog "[-] The Kali Chroot directory \"$MNT\" does not exist or \$MNT is undefined."
+    bklog "[!] Click the button [INSTALL KALI CHROOT] in the NetHunter app!"
+    exit 2
+fi
+
+## Define chroot shell executable path.
+if [ ! -x "$MNT$CHROOT_EXEC" ]; then
+    bklog "[-] Your chroot is missing \"$CHROOT_EXEC\" or it's not executable."
+    bklog "[-] Make sure sudo is installed and the chroot is not corrupted."
+    exit 2
+fi
+
+## Check for kaliservices file
+if [ ! -f "$KALI_SERVICES_FILE" ] || [ ! -s "$KALI_SERVICES_FILE" ]; then
+    echo "[-] Missing or empty kaliservices script list at \"$KALI_SERVICES_FILE\""
+    echo "[-] Creating a default kaliservices file."
+    echo -e "#!/system/bin/sh\n# Default services\n" > "$KALI_SERVICES_FILE"
+    chmod +x "$KALI_SERVICES_FILE"
+fi
+if [ ! -x "$KALI_SERVICES_FILE" ]; then
+    bklog "[-] The kaliservices file is not executable. Please check permissions."
+    exit 2
+fi
+bklog "[!] Starting user-defined Kali services"
+while IFS= read -r line; do
+    if [ -n "$line" ]; then
+        "$BUSYBOX" chroot "$MNT" "$CHROOT_EXEC" -E "PATH=$PATH" su -c "$line"
+    fi
+done < "$KALI_SERVICES_FILE"
+bklog "[+] Kali services should be started!"
+
+su -c "$BUSYBOX_PATH rfkill unblock all"
+su -c "$BUSYBOX_PATH rfkill unblock 0"
+bklog "[!] Unblocking all rfkill devices"

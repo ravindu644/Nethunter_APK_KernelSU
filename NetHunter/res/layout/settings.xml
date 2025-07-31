@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:orientation="vertical" android:paddingLeft="@dimen/base_listItem_LR" android:paddingRight="@dimen/base_listItem_LR" android:paddingBottom="@dimen/base_listItem_TB" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:gravity="center" android:layout_gravity="center" android:paddingTop="10.0dip" android:paddingBottom="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/settings_description" />
+            <View android:id="@id/divider4" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textAppearance="?android:textAppearanceSmall" android:id="@id/textView1" android:paddingTop="10.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="SCREEN SIZE:" android:layout_weight="1.0" android:layout_marginStart="20.0dip" android:layout_marginEnd="20.0dip" />
+                <TextView android:textAppearance="?android:textAppearanceSmall" android:id="@id/screen_size" android:paddingTop="10.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0" android:layout_marginStart="20.0dip" android:layout_marginEnd="20.0dip" />
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textAppearance="?android:textAppearanceSmall" android:id="@id/textView4" android:paddingTop="15.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="SELECT ANIMATION:" android:layout_weight="1.0" android:layout_marginStart="20.0dip" android:layout_marginEnd="20.0dip" />
+                <Spinner android:id="@id/animation_spinner" android:saveEnabled="false" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0" android:dropDownWidth="fill_parent" android:layout_marginStart="5.0dip" android:layout_marginEnd="5.0dip" />
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <CheckBox android:textAppearance="?android:textAppearanceSmall" android:id="@id/convert" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="Convert" android:layout_weight="1.0" android:layout_marginStart="20.0dip" android:layout_marginEnd="20.0dip" />
+                <CheckBox android:textAppearance="?android:textAppearanceSmall" android:id="@id/preview_checkbox" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="Preview" android:layout_weight="1.0" android:layout_marginStart="20.0dip" android:layout_marginEnd="20.0dip" />
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="center" android:id="@id/pre_view" android:paddingTop="10.0dip" android:visibility="gone" android:layout_width="756.0px" android:layout_height="1344.0px">
+                <VideoView android:id="@id/videoView" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textAppearance="?android:textAppearanceSmall" android:id="@id/textView5" android:paddingTop="10.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="IMAGE RESOLUTION:" android:layout_weight="2.0" android:layout_marginStart="20.0dip" android:layout_marginEnd="20.0dip" />
+                <EditText android:textColor="#40ffffff" android:id="@id/image_width" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1080" android:ems="10" android:layout_weight="1.0" android:inputType="number" />
+                <EditText android:textColor="#40ffffff" android:id="@id/image_height" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1920" android:ems="10" android:layout_weight="1.0" android:inputType="number" />
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <View android:textAppearance="?android:textAppearanceSmall" android:paddingTop="10.0dip" android:layout_width="60.0dip" android:layout_height="fill_parent" android:layout_weight="1.0" android:layout_marginStart="20.0dip" android:layout_marginEnd="10.0dip" />
+                <Button android:textColor="#40ffffff" android:id="@id/imageresminus" android:layout_width="40.0dip" android:layout_height="40.0dip" android:text="-" android:layout_weight="1.0" android:layout_marginStart="20.0dip" android:layout_marginEnd="5.0dip" />
+                <Button android:textColor="#40ffffff" android:id="@id/imageresplus" android:layout_width="40.0dip" android:layout_height="40.0dip" android:text="+" android:layout_weight="1.0" android:layout_marginEnd="5.0dip" />
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textAppearance="?android:textAppearanceSmall" android:id="@id/textView8" android:paddingTop="10.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="FINAL RESOLUTION:" android:layout_weight="2.0" android:layout_marginStart="20.0dip" android:layout_marginEnd="20.0dip" />
+                <EditText android:id="@id/final_width" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1080" android:ems="10" android:layout_weight="1.0" android:inputType="number" />
+                <EditText android:id="@id/final_height" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1920" android:ems="10" android:layout_weight="1.0" android:inputType="number" />
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <View android:textAppearance="?android:textAppearanceSmall" android:paddingTop="10.0dip" android:layout_width="60.0dip" android:layout_height="fill_parent" android:layout_weight="1.0" android:layout_marginStart="20.0dip" android:layout_marginEnd="10.0dip" />
+                <Button android:id="@id/finalresminus" android:layout_width="40.0dip" android:layout_height="40.0dip" android:text="-" android:layout_weight="1.0" android:layout_marginStart="20.0dip" android:layout_marginEnd="5.0dip" />
+                <Button android:id="@id/finalresplus" android:layout_width="40.0dip" android:layout_height="40.0dip" android:text="+" android:layout_weight="1.0" android:layout_marginEnd="5.0dip" />
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textAppearance="?android:textAppearanceSmall" android:id="@id/textView2" android:paddingTop="10.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="FRAME RATE:" android:layout_weight="3.0" android:layout_marginStart="20.0dip" android:layout_marginEnd="20.0dip" />
+                <EditText android:id="@id/fps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="30" android:ems="10" android:layout_weight="2.0" android:inputType="number" />
+                <TextView android:textAppearance="?android:textAppearanceSmall" android:id="@id/textView3" android:paddingTop="10.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="FPS" android:layout_weight="4.0" />
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textAppearance="?android:textAppearanceSmall" android:id="@id/textView9" android:paddingTop="10.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="PATH:" android:layout_weight="3.0" android:layout_marginStart="20.0dip" android:layout_marginEnd="20.0dip" />
+                <EditText android:id="@id/bootanimation_path" android:layout_width="wrap_content" android:layout_height="wrap_content" android:hint="Detecting..." android:ems="80" android:layout_weight="1.0" />
+            </LinearLayout>
+            <Button android:textColor="#ffffffff" android:id="@id/make_bootanimation" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Make bootanimation" android:layout_weight="1.0" />
+            <Button android:textColor="#ffffffff" android:id="@id/set_bootanimation" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Install bootanimation" android:layout_weight="1.0" />
+            <View android:id="@id/divider5" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+            <TextView android:padding="4.0dip" android:paddingTop="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="BACKUP OR RESTORE NETHUNTER FILES" />
+            <Button android:textColor="#ffffffff" android:id="@id/backup" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Backup" />
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <EditText android:id="@id/restorefilename" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="/sdcard/nh_files_20201010.tar" android:layout_weight="1.0" android:inputType="text" />
+                <Button android:textColor="#ffffffff" android:id="@id/restorefilebrowse" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="..." android:layout_weight="5.0" />
+            </LinearLayout>
+            <Button android:textColor="#ffffffff" android:id="@id/restore" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Restore" />
+            <View android:id="@id/divider11" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+            <CheckBox android:id="@id/selinuxonboot" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Set SELinux to permissive on boot" />
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:padding="4.0dip" android:paddingTop="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="SELINUX STATUS" android:layout_weight="1.0" />
+                <TextView android:id="@id/selinux" android:padding="4.0dip" android:paddingTop="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Loading.." android:layout_weight="3.0" />
+            </LinearLayout>
+            <Button android:textColor="#ffffffff" android:id="@id/selinux_toggle" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Loading.." />
+            <View android:id="@id/divider9" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:padding="4.0dip" android:paddingTop="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="CURRENT BUSYBOX VERSION" android:layout_weight="1.0" />
+                <TextView android:id="@id/busybox_version" android:padding="4.0dip" android:paddingTop="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Loading.." android:layout_weight="3.0" />
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="NEW VERSION" />
+                <Spinner android:id="@id/bb_spinner" android:saveEnabled="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:dropDownWidth="fill_parent" android:layout_marginStart="5.0dip" android:layout_marginEnd="5.0dip" />
+                <Button android:textColor="#ffffffff" android:id="@id/select_bb" android:paddingBottom="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Apply" />
+            </LinearLayout>
+            <Button android:textColor="#ffffffff" android:id="@id/system_bb" android:paddingBottom="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Use as default system busybox" />
+            <View android:id="@id/divider10" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="CURRENT TERMINAL STYLE" android:layout_weight="1.0" />
+                <TextView android:id="@id/prompt_type" android:padding="4.0dip" android:paddingTop="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Loading.." android:layout_weight="3.0" />
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:id="@id/textView11" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SELECT NEW STYLE:" android:layout_weight="1.0" />
+                <Spinner android:textAppearance="?android:textAppearanceSmall" android:id="@id/prompt_spinner" android:saveEnabled="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1.0" android:dropDownWidth="fill_parent" />
+            </LinearLayout>
+            <Button android:textColor="#ffffffff" android:id="@id/apply_prompt" android:paddingBottom="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Set zsh style" />
+            <View android:id="@id/divider7" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+            <TextView android:padding="4.0dip" android:paddingTop="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="REMOVE NETHUNTER SYSTEM APP" />
+            <Button android:textColor="#ffffffff" android:id="@id/uninstall_nh" android:paddingBottom="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Uninstall NetHunter App" android:layout_weight="5.0" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:paddingLeft="16.0dip" android:paddingRight="16.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content"
+      xmlns:android="http://schemas.android.com/apk/res/android">
+        <TextView android:gravity="center" android:layout_gravity="center" android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/mana_hostapd_wpe" />
+        <Button android:layout_gravity="center_horizontal" android:id="@id/wpe_generate_certs" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/mana_hostapd_wpe_certs" />
+        <TextView android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/iface" />
+        <EditText android:id="@id/wpe_ifc" android:layout_width="fill_parent" android:layout_height="wrap_content" android:ems="10" />
+        <TextView android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/bssid" />
+        <EditText android:id="@id/wpe_bssid" android:layout_width="fill_parent" android:layout_height="wrap_content" android:ems="10" />
+        <TextView android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/ssid" />
+        <EditText android:id="@id/wpe_ssid" android:layout_width="fill_parent" android:layout_height="wrap_content" android:ems="10" />
+        <TextView android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/chanel" />
+        <EditText android:id="@id/wpe_channel" android:layout_width="fill_parent" android:layout_height="wrap_content" android:ems="10" />
+        <TextView android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/hostapd_private_key" />
+        <EditText android:id="@id/wpe_private_key" android:layout_width="fill_parent" android:layout_height="wrap_content" android:ems="10" />
+        <Button android:id="@id/wpe_updateButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/update" />
+    </LinearLayout>
+</ScrollView>

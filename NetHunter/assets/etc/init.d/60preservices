@@ -1,0 +1,80 @@
+#!/system/bin/sh
+
+# this runs before the Kali services
+
+# shellcheck disable=SC2181
+if [ ! $? -eq 0 ]; then
+    exit 1
+fi
+
+## Define the NetHunter app package name.
+APP_PGK_NAME=com.offsec.nethunter
+
+USERINIT_SCRIPT_PATH=$(readlink -f "$0")
+
+if [ ! -f "/data/data/$APP_PGK_NAME/scripts/bootkali_log" ]; then
+    echo "[-] Missing bootkali_log script."
+    exit 1
+fi
+if [ ! -f "/data/data/$APP_PGK_NAME/scripts/bootkali_env" ]; then
+    echo "[-] Missing bootkali_env script."
+    exit 1
+fi
+
+# shellcheck source=/data/data/$APP_PGK_NAME/scripts/bootkali_log
+. /data/data/$APP_PGK_NAME/scripts/bootkali_log
+# shellcheck source=/data/data/$APP_PGK_NAME/scripts/bootkali_env
+. /data/data/$APP_PGK_NAME/scripts/bootkali_env
+
+## Validate busybox path.
+if [ -z "$BUSYBOX" ]; then
+    bklog "[-] No busybox_nh is installed or busybox is not granted execute permission. Please symlink it to /system/bin and grant execute permission."
+    exit 1
+fi
+
+## Validate kali Chroot path.
+if [ ! -d "$MNT" ]; then
+    bklog "[-] \"$MNT\" directory does not exist!"
+    bklog "[!] Click the button [INSTALL KALI CHROOT] down below now!"
+    exit 2
+fi
+if [ -z "$MNT" ]; then
+    bklog "[-] The \$MNT variable is not defined. Please run the NetHunter app first."
+    exit 2
+fi
+
+## Define chroot shell executable path.
+if [ ! -x "$MNT""$CHROOT_EXEC" ]; then
+    bklog "[-] Your chroot has no \"sudo\" installed. Please install it manually first."
+    bklog "[-] Also make sure your Kali Chroot is not corrupted."
+    exit 2
+fi
+
+if sh /data/data/$APP_PGK_NAME/scripts/chrootmgr -p "$MNT" -c 'status'; then
+    IS_CHROOT_MOUNTED=0
+    bklog "[+] IS_CHROOT_MOUNTED: Yes"
+else
+    IS_CHROOT_MOUNTED=1
+    bklog "[-] IS_CHROOT_MOUNTED: No"
+fi
+
+bklog "[!] Starting user-defined custom commands"
+if [ ! -f "/data/data/$APP_PGK_NAME/scripts/runonboot_services" ]; then
+    bklog "[-] Missing runonboot_services file. Skipping custom commands."
+else
+    while IFS= read -r line || [ -n "$line" ]; do
+        read -r SENDTO CMD <<< "$line"
+        if [ "$SENDTO" = "android" ]; then
+            bklog "[!] Executing: sh -c \"$CMD\""
+            sh -c "$CMD"
+        elif [ "$SENDTO" = "kali" ]; then
+            if [ $IS_CHROOT_MOUNTED -eq 0 ]; then
+                bklog "[!] Executing: $BUSYBOX chroot $MNT $CHROOT_EXEC -E PATH=$PATH su -c \"$CMD\""
+                $BUSYBOX chroot "$MNT" "$CHROOT_EXEC" -E PATH="$PATH" su -c "$CMD"
+            else
+                bklog "[!] Kali Chroot is not mounted, skipping $CMD"
+            fi
+        fi
+    done < /data/data/$APP_PGK_NAME/scripts/runonboot_services
+fi
+bklog "[+] User-defined custom commands have all been executed!"

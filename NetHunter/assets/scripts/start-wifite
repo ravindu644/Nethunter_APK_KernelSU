@@ -1,0 +1,28 @@
+if which busybox_nh > /dev/null 2>&1; then
+    BUSYBOX="busybox_nh"
+elif which busybox > /dev/null 2>&1; then
+    BUSYBOX="busybox"
+else
+    echo "Error: Busybox is not available."
+    exit 1
+fi
+
+unset LD_PRELOAD
+$BUSYBOX chroot /data/local/nhsystem/kalifs /bin/bash -c "chmod 777 /dev/null"
+
+if ip link show wlan1 > /dev/null 2>&1; then
+    ip link set wlan1 up
+else
+    echo "Error: wlan1 interface not found."
+    exit 1
+fi
+
+sleep 3
+
+DICT_FILE="/opt/dic/89.txt"
+if [ -f "$DICT_FILE" ]; then
+    LANG=C PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin $BUSYBOX chroot /data/local/nhsystem/kalifs /usr/bin/python3 /usr/bin/wifite -dict "$DICT_FILE"
+else
+    echo "Error: Dictionary file not found at $DICT_FILE."
+    exit 1
+fi

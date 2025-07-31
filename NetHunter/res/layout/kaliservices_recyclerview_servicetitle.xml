@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/cardview_shadow_start_color" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:background="@color/cardview_shadow_start_color" android:layout_width="fill_parent" android:layout_height="3.0dip" />
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginStart="8.0dip" android:layout_marginEnd="8.0dip">
+        <TextView android:textSize="20.0sp" android:textColor="@android:color/background_light" android:id="@id/f_kaliservices_recyclerview_servicetitle_tv" android:background="?selectableItemBackground" android:focusable="true" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Loading.." android:layout_marginEnd="4.0dip" />
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="48.0dip">
+        <TextView android:id="@id/f_kaliservices_recyclerview_serviceresult_tv" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Service is NOT running." android:layout_weight="0.35" android:layout_marginStart="12.0dip" />
+        <CheckBox android:id="@id/f_kaliservices_recyclerview_runonchrootstart_checkbox" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="RunOnChrootStart" android:layout_weight="0.35" />
+        <androidx.appcompat.widget.SwitchCompat android:textColor="@android:color/background_light" android:id="@id/f_kaliservices_recyclerview_switch_toggle" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="4.0dip" android:layout_weight="0.5" android:layout_marginEnd="8.0dip" />
+    </LinearLayout>
+</LinearLayout>

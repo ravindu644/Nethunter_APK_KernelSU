@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:gravity="center" android:layout_gravity="center" android:id="@id/wps_desc" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/modules_description" />
+    <View android:id="@id/divider2" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+    <LinearLayout android:layout_gravity="center" android:orientation="horizontal" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TextView android:textAppearance="?android:textAppearanceSmall" android:id="@id/textView2" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="@string/modules_path" android:layout_weight="3.0" android:layout_marginStart="20.0dip" />
+        <EditText android:textAppearance="?android:textAppearanceSmall" android:id="@id/modulesPath" android:layout_width="0.0dip" android:layout_height="48.0dip" android:text="@string/modules_system_lib_path" android:hint="@string/modules_system_lib_path" android:layout_weight="3.0" android:layout_marginStart="20.0dip" android:autofillHints="none" />
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="10.0dip">
+        <Button android:id="@id/lsmod" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="@string/modules_lsmod" android:layout_weight="1.0" />
+        <Button android:id="@id/refresh" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="@string/modules_refresh" android:layout_weight="1.0" />
+    </LinearLayout>
+    <TextView android:textAppearance="?android:textAppearanceSmall" android:id="@id/textView3" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/modules_available_modules" android:layout_marginStart="20.0dip" />
+    <com.google.android.material.divider.MaterialDivider android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="8.0dip" android:layout_marginBottom="8.0dip" app:dividerColor="@color/cardview_light_background" />
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:baselineAligned="false">
+        <ListView android:id="@id/modulesList" android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_marginLeft="15.0dip" android:layout_marginRight="15.0dip" android:layout_weight="3.0" />
+    </LinearLayout>
+</LinearLayout>

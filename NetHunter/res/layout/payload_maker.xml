@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:paddingLeft="16.0dip" android:paddingRight="16.0dip" android:focusableInTouchMode="true" android:layout_width="fill_parent" android:layout_height="wrap_content"
+      xmlns:android="http://schemas.android.com/apk/res/android">
+        <TextView android:gravity="center" android:layout_gravity="center" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/mpc_description" />
+        <TextView android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/mpc_type" />
+        <Spinner android:entries="@array/mpc_type_array" android:id="@id/mpc_type_spinner" android:focusable="false" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+        <TextView android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/mpc_port" />
+        <EditText android:id="@id/mpc_port" android:layout_width="68.0dip" android:layout_height="wrap_content" android:maxWidth="15.0dip" android:maxLines="1" android:ems="10" android:maxLength="5" />
+        <TextView android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/mpc_ip_address" />
+        <EditText android:id="@id/mpc_ip_address" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxWidth="15.0dip" android:maxLines="1" android:ems="10" android:maxLength="15" android:digits="0123456789." android:inputType="number" />
+        <TextView android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/mpc_payload" />
+        <Spinner android:entries="@array/mpc_payload_array" android:id="@id/mpc_payload_spinner" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+        <Spinner android:entries="@array/mpc_callback_array" android:id="@id/mpc_callback_spinner" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+        <Spinner android:entries="@array/mpc_stage_array" android:id="@id/mpc_stage_spinner" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+        <Spinner android:entries="@array/mpc_callbacktype_array" android:id="@id/mpc_callbacktype_spinner" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+        <Button android:id="@id/mpc_GenerateSDCARD" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/mpc_generateSDCARD" />
+        <Button android:id="@id/mpc_GenerateHTTP" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/mpc_generateHTTP" />
+    </LinearLayout>
+</ScrollView>

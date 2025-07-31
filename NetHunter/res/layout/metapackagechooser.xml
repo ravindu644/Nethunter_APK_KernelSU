@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:padding="16.0sp" android:layout_width="fill_parent" android:layout_height="wrap_content"
+      xmlns:android="http://schemas.android.com/apk/res/android">
+        <TextView android:textAppearance="?android:textAppearanceMedium" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/metapackagesExplanation" />
+        <LinearLayout android:orientation="vertical" android:id="@id/metapackageLinearLayout" android:padding="16.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:checked="true" android:text="kali-linux-nethunter" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-top10" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-linux-default" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-linux-large" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-linux-everything" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-802-11" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-bluetooth" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-crypto-stego" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-database" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-forensics" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-fuzzing" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-gpu" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-hardware" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-headless" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-information-gathering" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-passwords" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-post-exploitation" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-reporting" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-reverse-engineering" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-rfid" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-sdr" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-sniffing-spoofing" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-social-engineering" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-voip" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-vulnerability" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-web" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-windows-resources" />
+            <CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="kali-tools-wireless" />
+        </LinearLayout>
+        <TextView android:paddingTop="16.0sp" android:paddingBottom="16.0sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/metapackagesAdditionalInfo" android:textIsSelectable="false" />
+        <Button android:layout_gravity="center_horizontal" android:id="@id/metapackagesWeb" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Open kali-metapackages WebSite" />
+    </LinearLayout>
+</ScrollView>

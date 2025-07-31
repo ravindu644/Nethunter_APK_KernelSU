@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <com.google.android.material.button.MaterialButton android:id="@id/addCommand" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/add_command" android:layout_alignParentTop="true" android:layout_alignParentStart="false" style="?android:buttonStyleSmall" />
+        <androidx.appcompat.widget.SearchView android:id="@id/searchCommand" android:layout_width="fill_parent" android:layout_height="wrap_content" android:baselineAligned="false" android:hint="@string/search_command" android:layout_alignParentTop="true" android:measureWithLargestChild="true" android:iconifiedByDefault="false" android:queryHint="search command" android:layout_toEndOf="@id/addCommand" />
+    </RelativeLayout>
+    <TextView android:gravity="center" android:layout_gravity="center" android:id="@id/customComandsInfo" android:padding="16.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/long_press_to_manage_a_command_dont_forget_to_backup_use_double_quotes_if_needed" />
+    <ListView android:id="@id/commandList" android:layout_width="fill_parent" android:layout_height="fill_parent" android:divider="#ff333333" android:dividerHeight="1.0dip" />
+</LinearLayout>

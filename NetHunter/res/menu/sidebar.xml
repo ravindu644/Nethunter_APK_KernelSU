@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item android:icon="@drawable/ic_action_home" android:id="@id/nethunter_item" android:title="@string/drawertitlenethunter" />
+        <item android:icon="@drawable/ic_action_android" android:id="@id/createchroot_item" android:title="@string/drawertitlecreatechroot" />
+        <item android:icon="@drawable/ic_action_settings_applications" android:id="@id/settings_item" android:title="@string/drawertitlesettings" />
+        <item android:icon="@drawable/ic_action_kernel" android:id="@id/kernel_item" android:title="@string/drawertitlekernel" />
+        <item android:icon="@drawable/ic_action_extension" android:id="@id/modules_item" android:title="@string/drawertitlemodules" />
+    </group>
+    <group android:id="@id/chrootDependentGroup">
+        <item android:icon="@drawable/ic_action_settings_applications" android:id="@id/kaliservices_item" android:title="@string/drawertitlekaliservices" />
+        <item android:icon="@drawable/ic_action_play" android:id="@id/custom_commands_item" android:title="@string/drawertitlecustomcommands" />
+        <item android:icon="@drawable/ic_action_perm_device_information" android:id="@id/macchanger_item" android:title="@string/drawertitlemacchanger" />
+        <item android:icon="@drawable/ic_action_home" android:id="@id/vnc_item" android:title="@string/drawertitlevncmanager" />
+        <item android:icon="@drawable/ic_speaker" android:id="@id/audio_item" android:title="@string/drawertitleaudio" />
+        <item android:icon="@drawable/ic_usb" android:id="@id/usbarsenal_item" android:title="@string/drawertitleusbarsenal" />
+        <item android:icon="@drawable/ic_action_keyboard" android:id="@id/hid_item" android:title="@string/drawertitlehid" />
+        <item android:icon="@drawable/ic_action_keyboard" android:id="@id/duckhunter_item" android:title="@string/drawertitleduckhunter" />
+        <item android:icon="@drawable/ic_baseline_call_split_24" android:id="@id/badusb_item" android:title="@string/drawertitlebadusb" />
+        <item android:icon="@drawable/ic_action_network_wifi" android:id="@id/wifipumpkin_item" android:title="@string/drawertitlewifipumpkin" />
+        <item android:icon="@drawable/ic_baseline_wifi_protected_setup_24" android:id="@id/wps_item" android:title="@string/drawertitlewps" />
+        <item android:icon="@drawable/ic_action_bluetooth" android:id="@id/bt_item" android:title="@string/drawertitlebt" />
+        <item android:icon="@drawable/ic_baseline_portrait_24" android:id="@id/set_item" android:title="@string/drawertitleset" />
+        <item android:icon="@drawable/ic_cast_connected_black_24dp" android:id="@id/nmap_item" android:title="@string/drawertitlenmap" />
+        <item android:icon="@drawable/ic_memory_24dp" android:id="@id/mpc_item" android:title="@string/drawertitlempc" />
+        <item android:icon="@drawable/ic_bug_report_black_24dp" android:id="@id/searchsploit_item" android:title="@string/drawertitlesearchsploit" />
+        <item android:icon="@drawable/ic_usb" android:id="@id/pineapple_item" android:title="@string/drawertitlepineapple" />
+        <item android:icon="@drawable/ic_gps_fixed_black_18dp" android:id="@id/gps_item" android:title="@string/drawertitlegps" />
+        <item android:icon="@drawable/ic_action_network_wifi" android:id="@id/deauth_item" android:title="@string/drawertitledeauth" />
+        <item android:icon="@drawable/ic_action_can" android:id="@id/can_item" android:title="@string/drawertitlecan" />
+    </group>
+</menu>

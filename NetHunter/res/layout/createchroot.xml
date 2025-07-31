@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:weightSum="1.0"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textAppearance="?android:textAppearanceLarge" android:layout_gravity="center_horizontal" android:padding="16.0sp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/thechroottitle" />
+    <TextView android:textAppearance="?android:textAppearanceSmall" android:paddingLeft="16.0sp" android:paddingRight="16.0sp" android:paddingBottom="16.0sp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/aboutchroot" />
+    <LinearLayout android:gravity="center_horizontal" android:orientation="horizontal" android:paddingLeft="16.0sp" android:paddingRight="16.0sp" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <com.google.android.material.button.MaterialButton android:id="@id/upgradechrootbutton" android:paddingLeft="16.0sp" android:paddingRight="16.0sp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/MaintainChrootInTerminal" />
+        <com.google.android.material.button.MaterialButton android:id="@id/installButton" android:paddingLeft="16.0sp" android:paddingRight="16.0sp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/installkalichrootbutton" />
+    </LinearLayout>
+    <TextView android:textAppearance="?android:textAppearanceMedium" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/statusText" android:paddingStart="16.0sp" android:paddingEnd="16.0sp" />
+    <ScrollView android:layout_width="fill_parent" android:layout_height="0.0dip" android:fillViewport="true" android:layout_weight="1.0">
+        <TextView android:textColor="@android:color/holo_green_light" android:id="@id/statusText" android:background="@android:color/black" android:padding="16.0sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:fontFamily="monospace" />
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/deauth_item" android:layout_width="fill_parent" android:layout_height="fill_parent" android:weightSum="1.0"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <Spinner android:id="@id/wlan_interface" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+    <com.google.android.material.button.MaterialButton android:id="@id/scan_networks" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/scan_networks" />
+    <EditText android:enabled="false" android:textSize="14.0sp" android:textColor="@android:color/holo_green_light" android:id="@id/TerminalOutputDeAuth" android:background="@android:color/black" android:padding="16.0sp" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0" android:inputType="none" android:fontFamily="monospace" android:autofillHints="None" />
+    <EditText android:id="@id/channel" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/channel" android:ems="10" android:inputType="number" android:autofillHints="None" />
+    <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <CheckBox android:id="@id/deauth_whitelist" android:clickable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/whitelist" />
+        <CheckBox android:id="@id/deauth_me" android:duplicateParentState="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/deauthenticate_anyone_besides_me" />
+    </TableRow>
+    <com.google.android.material.button.MaterialButton android:id="@id/StartDeAuth" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/start_deauthentication" />
+</LinearLayout>

@@ -1,0 +1,4 @@
+#!/system/bin/sh
+
+USERINIT_SCRIPT_PATH=$(readlink -f "$0")
+sh "${USERINIT_SCRIPT_PATH%/*/*/*}"/scripts/bootkali_init

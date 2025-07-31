@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout android:id="@id/drawer_layout" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.jetradarmobile.snowfall.SnowfallView android:id="@id/snowfall" android:layout_width="fill_parent" android:layout_height="fill_parent" app:snowflakeAlphaMax="255" app:snowflakeAlphaMin="150" app:snowflakeAngleMax="10" app:snowflakeImage="@drawable/snowflake" app:snowflakeSizeMax="8.0dip" app:snowflakeSizeMin="2.0dip" app:snowflakeSpeedMax="3" app:snowflakeSpeedMin="1" app:snowflakesAlreadyFalling="false" app:snowflakesFadingEnabled="true" app:snowflakesNum="250" />
+    <FrameLayout android:id="@id/container" android:layout_width="fill_parent" android:layout_height="fill_parent" android:scaleType="centerCrop" android:contentDescription="@string/app_name" />
+    <androidx.appcompat.widget.AppCompatImageView android:layout_width="fill_parent" android:layout_height="fill_parent" android:src="@drawable/kali_newnh" android:scaleType="center" android:layout_alignParentTop="true" android:contentDescription="@string/app_name" android:alpha="0.05" />
+    <com.google.android.material.navigation.NavigationView android:layout_gravity="start" android:id="@id/navigation_view" android:layout_width="wrap_content" android:layout_height="fill_parent" app:itemIconTint="@drawable/activated_color" app:itemTextColor="@drawable/activated_color" app:menu="@menu/sidebar" xmlns:app="http://schemas.android.com/apk/res-auto" />
+</androidx.drawerlayout.widget.DrawerLayout>
