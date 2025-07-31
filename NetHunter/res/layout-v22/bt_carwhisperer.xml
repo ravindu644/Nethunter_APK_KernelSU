@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:paddingLeft="16.0dip" android:paddingRight="16.0dip" android:focusableInTouchMode="true" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TextView android:gravity="center" android:layout_gravity="center" android:id="@id/carwhisp_desc" android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/bt_carwhisperer" />
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textAppearance="?android:textAppearanceMedium" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bluetooth interface" />
+            <EditText android:id="@id/hci_interface" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="hci0" android:inputType="text" android:autofillHints="none" />
+        </LinearLayout>
+        <com.google.android.material.button.MaterialButton android:textColor="#ffffffff" android:id="@id/set_target" android:layout_width="fill_parent" android:layout_height="0.0dip" android:text="Use selected target" android:layout_weight="1.0" />
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textAppearance="?android:textAppearanceMedium" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Address" />
+            <EditText android:id="@id/hci_address" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="00:11:22:33:44:55" />
+        </LinearLayout>
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textAppearance="?android:textAppearanceMedium" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Channel" />
+            <EditText android:gravity="left" android:id="@id/hci_channel" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="2" android:inputType="number" android:layout_marginStart="10.0dip" />
+        </LinearLayout>
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textAppearance="?android:textAppearanceMedium" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mode" />
+            <Spinner android:id="@id/cwmode" android:layout_width="fill_parent" android:layout_height="wrap_content" android:prompt="@string/payload_select" />
+        </LinearLayout>
+        <TextView android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Save recorded sound to /sdcard/" />
+        <EditText android:id="@id/listenfilename" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="record.wav" android:ems="10" android:inputType="text" android:autofillHints="none" />
+        <TextView android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Sound file to inject" />
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <EditText android:id="@id/injectfilename" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="/root/carwhisperer/message.wav" android:layout_weight="1.0" android:inputType="text" android:autofillHints="none" />
+            <com.google.android.material.button.MaterialButton android:textColor="#ffffffff" android:id="@id/injectfilebrowse" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="..." android:layout_weight="5.0" />
+        </LinearLayout>
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <com.google.android.material.button.MaterialButton android:textColor="#ffffffff" android:id="@id/start_cw" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Launch" android:layout_weight="3.0" />
+            <com.google.android.material.button.MaterialButton android:textColor="#ffffffff" android:id="@id/stop_cw" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Kill" android:layout_weight="3.0" />
+            <ImageButton android:id="@id/play_audio" android:layout_width="fill_parent" android:layout_height="fill_parent" android:src="@drawable/ic_action_play" android:layout_weight="4.0" android:contentDescription="none" />
+            <ImageButton android:id="@id/stop_audio" android:layout_width="fill_parent" android:layout_height="fill_parent" android:src="@drawable/ic_action_stop" android:layout_weight="4.0" android:contentDescription="none" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:orientation="vertical" android:paddingLeft="@dimen/base_listItem_LR" android:paddingRight="@dimen/base_listItem_LR" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:gravity="center" android:id="@id/kexdesc" android:paddingTop="10.0dip" android:paddingBottom="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/kex_description" />
+            <Button android:textColor="#ffffffff" android:id="@id/set_up_vnc" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Setup Local Server" android:layout_weight="1.0" />
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="10.0dip">
+                <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <CheckBox android:id="@id/vnc_checkBox" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="false" android:text="Localhost Only" android:layout_weight="1.0" />
+                    <CheckBox android:id="@id/vnc_serviceCheckBox" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Enable at boot" android:layout_weight="1.0" android:layout_marginStart="10.0dip" android:layout_marginEnd="10.0dip" />
+                </LinearLayout>
+                <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <CheckBox android:id="@id/delay_checkBox" android:layout_width="fill_parent" android:layout_height="wrap_content" android:checked="false" android:text="Start Delay" android:layout_weight="1.0" />
+                    <EditText android:enabled="false" android:textColor="#40ffffff" android:id="@id/delay_time" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="20" android:layout_weight="1.0" android:inputType="number" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textAppearance="?android:textAppearanceSmall" android:id="@id/textView4" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="USER:" android:layout_weight="1.0" android:layout_marginStart="20.0dip" android:layout_marginEnd="20.0dip" />
+                <Spinner android:id="@id/user" android:saveEnabled="false" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0" android:dropDownWidth="wrap_content" android:layout_marginStart="5.0dip" android:layout_marginEnd="5.0dip" />
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textAppearance="?android:textAppearanceSmall" android:id="@id/textView5" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="DISPLAY:" android:layout_weight="1.0" android:layout_marginStart="20.0dip" android:layout_marginEnd="20.0dip" />
+                <Spinner android:id="@id/display" android:saveEnabled="false" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0" android:dropDownWidth="fill_parent" android:layout_marginStart="5.0dip" android:layout_marginEnd="5.0dip" />
+            </LinearLayout>
+            <Button android:textColor="#ffffffff" android:id="@id/vnc_audio" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Enable audio" android:layout_weight="1.0" />
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <Button android:textColor="#ffffffff" android:id="@id/start_vnc" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Start Server" android:layout_weight="1.0" />
+                <Button android:textColor="#ffffffff" android:id="@id/stop_vnc" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Stop Server" android:layout_weight="1.0" />
+            </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout android:gravity="center_horizontal" android:id="@id/linearLayout2" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textAppearance="?android:textAppearanceMedium" android:id="@id/status" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="11.0dip" android:text="KeX Server Status:" android:layout_marginEnd="10.0dip" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toStartOf="@id/guideline_1" />
+                <TextView android:textAppearance="?android:textAppearanceMedium" android:id="@id/KeXstatus" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="11.0dip" android:hint="-" android:maxLength="17" android:layout_marginStart="10.0dip" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toEndOf="@id/guideline_1" />
+                <ImageButton android:id="@id/refreshKeX" android:layout_width="wrap_content" android:layout_height="wrap_content" android:contentDescription="none" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:srcCompat="@drawable/ic_action_refresh" />
+                <androidx.constraintlayout.widget.Guideline android:orientation="vertical" android:id="@id/guideline_1" android:layout_width="wrap_content" android:layout_height="wrap_content" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintGuide_begin="185.0dip" app:layout_constraintGuide_percent="0.5" app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout android:gravity="center_horizontal" android:id="@id/linearLayout" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textAppearance="?android:textAppearanceMedium" android:id="@id/sessions" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="0.0dip" android:text="Active Sessions:" android:layout_marginEnd="10.0dip" app:layout_constraintEnd_toStartOf="@id/guideline_2" app:layout_constraintTop_toTopOf="parent" />
+                <TextView android:textAppearance="?android:textAppearanceMedium" android:id="@id/KeXuser" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="11.0dip" android:hint="-" android:maxLength="50" android:layout_marginStart="10.0dip" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toEndOf="@id/guideline_2" />
+                <androidx.constraintlayout.widget.Guideline android:orientation="vertical" android:id="@id/guideline_2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="16.0dip" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintGuide_percent="0.5" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <Button android:id="@id/vncClientStart" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="OPEN KEX CLIENT" android:layout_weight="1.0" />
+            <Button android:id="@id/AdvancedButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="SHOW ADVANCED SETTINGS" android:layout_weight="1.0" />
+            <LinearLayout android:orientation="vertical" android:id="@id/AdvancedView" android:visibility="gone" android:saveEnabled="true" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                <TextView android:textAppearance="?android:textAppearanceSmall" android:id="@id/textView3" android:paddingTop="10.0dip" android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="KEX SERVER RESOLUTION (OPTIONAL)" />
+                <Spinner android:id="@id/vncresolution" android:saveEnabled="false" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0" android:dropDownWidth="wrap_content" />
+                <Button android:textColor="#ffffffff" android:id="@id/DelVncResolutionButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Remove selected resolution" android:layout_weight="1.0" />
+                <Button android:textColor="#ffffffff" android:id="@id/AddVncResolutionButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="New resolution" android:layout_weight="1.0" />
+                <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <Button android:textSize="13.0sp" android:textColor="#ffffffff" android:id="@id/BackupVncResolutions" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Backup" android:layout_weight="1.0" />
+                    <Button android:textSize="13.0sp" android:textColor="#ffffffff" android:id="@id/RestoreVncResolutions" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Restore" android:layout_weight="1.0" />
+                </LinearLayout>
+                <View android:id="@id/divider3" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+                <TextView android:textAppearance="?android:textAppearanceSmall" android:id="@id/textView6" android:paddingTop="10.0dip" android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="MANAGE KALI USERS" android:layout_weight="1.0" />
+                <Button android:textColor="#ffffffff" android:id="@id/AddUserButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Add new Kali user" android:layout_weight="1.0" />
+                <Button android:textColor="#ffffffff" android:id="@id/DelUserButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Remove selected Kali user" android:layout_weight="1.0" />
+                <androidx.appcompat.widget.SwitchCompat android:textAppearance="?android:textAppearanceSmall" android:id="@id/immersionSwitch" android:paddingTop="10.0dip" android:paddingBottom="10.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="IMMERSIVE MODE" />
+                <View android:id="@id/divider2" android:background="?android:listDivider" android:paddingBottom="15.0dip" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+                <TextView android:textAppearance="?android:textAppearanceSmall" android:id="@id/textView2" android:paddingTop="10.0dip" android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="DEVICE RESOLUTION FOR HDMI" />
+                <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <Spinner android:id="@id/resolution" android:saveEnabled="false" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0" android:dropDownWidth="wrap_content" />
+                    <Button android:textColor="#ffffffff" android:id="@id/ApplyResolutionButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Apply" />
+                </LinearLayout>
+                <Button android:textColor="#ffffffff" android:id="@id/DelResolutionButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Remove selected resolution" android:layout_weight="1.0" />
+                <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <Button android:textSize="13.0sp" android:textColor="#ffffffff" android:id="@id/AddResolutionButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="New resolution" android:layout_weight="1.0" />
+                    <Button android:textSize="13.0sp" android:textColor="#ffffffff" android:id="@id/reset_hdmi" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Reset" android:layout_weight="1.0" />
+                </LinearLayout>
+                <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:paddingBottom="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <Button android:textSize="13.0sp" android:textColor="#ffffffff" android:id="@id/BackupResolutions" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Backup" android:layout_weight="1.0" />
+                    <Button android:textSize="13.0sp" android:textColor="#ffffffff" android:id="@id/RestoreResolutions" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Restore" android:layout_weight="1.0" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

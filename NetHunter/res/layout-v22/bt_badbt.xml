@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:orientation="vertical" android:paddingLeft="16.0dip" android:paddingRight="16.0dip" android:focusableInTouchMode="true" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TextView android:gravity="center" android:layout_gravity="center" android:id="@id/badbt_desc" android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/bt_badbt" />
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textAppearance="?android:textAppearanceMedium" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bluetooth interface" />
+            <EditText android:id="@id/badbt_interface" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="hci0" android:inputType="text" />
+        </LinearLayout>
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textAppearance="?android:textAppearanceMedium" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bluetooth address" />
+            <EditText android:id="@id/badbt_address" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="22:22:EA:CF:3C:1E" android:inputType="text" />
+        </LinearLayout>
+        <TextView android:textAppearance="?android:textAppearanceMedium" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bluetooth class" />
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <Spinner android:id="@id/badbt_class_spinner" android:layout_width="wrap_content" android:layout_height="wrap_content" android:prompt="@string/payload_select" />
+            <EditText android:id="@id/badbt_class" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="0x000540" android:hint="0x000540" android:inputType="text" android:autofillHints="none" />
+        </LinearLayout>
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textAppearance="?android:textAppearanceMedium" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Name" />
+            <EditText android:id="@id/badbt_name" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Evil Keyboard" android:layout_weight="15.0" />
+            <ImageButton android:id="@id/refreshBadBTStatus" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1.0" app:srcCompat="@drawable/ic_action_refresh" />
+        </LinearLayout>
+        <View android:id="@id/divider2" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+        <androidx.constraintlayout.widget.ConstraintLayout android:gravity="center_horizontal" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip">
+            <TextView android:textAppearance="?android:textAppearanceMedium" android:id="@id/badbt_server" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="10.0dip" android:text="Server:" android:layout_weight="1.0" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toStartOf="@id/guideline_1" />
+            <TextView android:textAppearance="?android:textAppearanceMedium" android:id="@id/BadBTServerStatus" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="10.0dip" android:hint="Loading.." android:maxLength="50" android:layout_weight="1.0" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toEndOf="@id/guideline_1" />
+            <androidx.constraintlayout.widget.Guideline android:orientation="vertical" android:id="@id/guideline_1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="16.0dip" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintGuide_percent="0.5" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.button.MaterialButton android:textColor="#ffffffff" android:id="@id/badbtserver_button" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Start" app:layout_constraintEnd_toEndOf="parent" />
+        <View android:id="@id/divider3" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <TextView android:textAppearance="?android:textAppearanceMedium" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mode" />
+            <Spinner android:id="@id/badbtmode" android:layout_width="fill_parent" android:layout_height="wrap_content" android:prompt="@string/payload_select" />
+        </LinearLayout>
+        <LinearLayout android:orientation="vertical" android:id="@id/badbtsettings_layout" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="vertical" android:id="@id/badbtprefix_layout" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                <TextView android:textAppearance="?android:textAppearanceMedium" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Prefix" />
+                <Spinner android:id="@id/badbtprefix" android:layout_width="fill_parent" android:layout_height="wrap_content" android:prompt="@string/payload_select" />
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="vertical" android:id="@id/badbtpreset_layout" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                <TextView android:textAppearance="?android:textAppearanceMedium" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Preset" />
+                <Spinner android:id="@id/badbtpresets" android:layout_width="fill_parent" android:layout_height="wrap_content" android:prompt="@string/payload_select" />
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="vertical" android:id="@id/badbtuac_layout" android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                <CheckBox android:id="@id/uac_bypass" android:layout_width="fill_parent" android:layout_height="wrap_content" android:checked="false" android:text="UAC Bypass" />
+                <Spinner android:id="@id/badbtpresets_uac" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+            </LinearLayout>
+            <com.google.android.material.button.MaterialButton android:textColor="#ffffffff" android:id="@id/injectstringbrowse" android:layout_width="fill_parent" android:layout_height="0.0dip" android:text="Load from file" android:layout_weight="1.0" />
+            <View android:id="@id/divider4" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+            <TextView android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="String to inject" />
+            <EditText android:id="@id/editBadBT" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="Hello friend" android:includeFontPadding="false" android:inputType="textMultiLine" android:autofillHints="none" />
+        </LinearLayout>
+        <com.google.android.material.button.MaterialButton android:textColor="#ffffffff" android:id="@id/start_badbt" android:layout_width="fill_parent" android:layout_height="0.0dip" android:text="Send" android:layout_weight="1.0" />
+    </LinearLayout>
+</ScrollView>

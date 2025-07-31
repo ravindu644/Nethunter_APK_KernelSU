@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView android:textSize="18.0sp" android:gravity="center" android:id="@id/f_nethunter_banner" android:padding="8.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="SYSTEM INFORMATION" app:layout_constraintTop_toTopOf="parent" />
+    <TextView android:textSize="12.0sp" android:gravity="center" android:id="@id/f_nethunter_banner2" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="4.0dip" android:text="@string/nethunter_description" app:layout_constraintTop_toBottomOf="@id/f_nethunter_banner" />
+    <androidx.core.widget.NestedScrollView android:id="@id/f_nethunter_scrollView" android:scrollbars="vertical" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_marginBottom="15.0dip" app:layout_constraintBottom_toTopOf="@id/f_nethunter_btn_scrollView" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/f_nethunter_banner2">
+        <androidx.recyclerview.widget.RecyclerView android:id="@id/f_nethunter_recyclerview" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+    </androidx.core.widget.NestedScrollView>
+    <HorizontalScrollView android:id="@id/f_nethunter_btn_scrollView" android:layout_width="fill_parent" android:layout_height="wrap_content" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/f_nethunter_scrollView">
+        <LinearLayout android:layout_gravity="center" android:orientation="horizontal" android:id="@id/f_nethunter_linearlayoutBtn" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <Button android:id="@id/f_nethunter_refreshButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Refresh" />
+            <Button android:id="@id/f_nethunter_addItemButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Add" />
+            <Button android:id="@id/f_nethunter_deleteItemButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Delete" />
+            <Button android:id="@id/f_nethunter_moveItemButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Move" />
+        </LinearLayout>
+    </HorizontalScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

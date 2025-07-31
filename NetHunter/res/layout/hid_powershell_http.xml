@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:paddingLeft="16.0dip" android:paddingRight="16.0dip" android:focusableInTouchMode="true" android:layout_width="fill_parent" android:layout_height="wrap_content"
+      xmlns:android="http://schemas.android.com/apk/res/android">
+        <TextView android:gravity="center" android:layout_gravity="center" android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="The Powershell HTTP payload allows you to download and run a generic powershell payload from a URL. The URL to payload should be in a location accessible to the victim." />
+        <TextView android:padding="4.0dip" android:layout_width="230.0dip" android:layout_height="fill_parent" android:text="@string/ps_payload_url" />
+        <EditText android:id="@id/payloadUrl" android:layout_width="fill_parent" android:layout_height="wrap_content" android:ems="10" android:inputType="text" />
+        <Button android:id="@id/powershellOptionsUpdate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/update" />
+    </LinearLayout>
+</ScrollView>

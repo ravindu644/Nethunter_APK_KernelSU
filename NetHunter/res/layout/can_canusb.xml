@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:gravity="center" android:layout_gravity="center" android:id="@id/can_desc" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/can_canusb_desc" />
+            <View android:id="@id/divider2" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="1.0dip" android:layout_marginBottom="10.0dip" />
+            <LinearLayout android:layout_gravity="center" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip">
+                <TextView android:textAppearance="?android:textAppearanceMedium" android:textStyle="bold" android:id="@id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Settings" android:layout_weight="3.0" android:layout_marginStart="20.0dip" />
+                <ImageButton android:id="@id/refreshUSB" android:layout_width="wrap_content" android:layout_height="wrap_content" android:ems="10" android:layout_marginEnd="20.0dip" app:srcCompat="@drawable/ic_action_refresh" />
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="center" android:orientation="horizontal" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textAppearance="?android:textAppearanceSmall" android:id="@id/usb_if" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Device :" android:layout_weight="3.0" android:layout_marginStart="20.0dip" />
+                <Spinner android:id="@id/device_interface" android:saveEnabled="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:dropDownWidth="wrap_content" android:spinnerMode="dropdown" />
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="center" android:orientation="horizontal" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textAppearance="?android:textAppearanceSmall" android:id="@id/textView14" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Baudrate :" android:layout_marginStart="20.0dip" />
+                <EditText android:textAppearance="?android:textAppearanceSmall" android:gravity="right|bottom" android:id="@id/baudrate_usb" android:saveEnabled="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:hint="200000" android:inputType="number" />
+                <TextView android:textAppearance="?android:textAppearanceSmall" android:id="@id/textView15" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CAN Speed :" android:layout_marginStart="95.0dip" />
+                <EditText android:textAppearance="?android:textAppearanceSmall" android:gravity="right|bottom" android:id="@id/canspeed_usb" android:saveEnabled="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="500000" android:inputType="number" android:layout_marginEnd="20.0dip" />
+            </LinearLayout>
+            <LinearLayout android:orientation="vertical" android:id="@id/usb_advanced_options" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginStart="20.0dip" android:layout_marginEnd="20.0dip">
+                <LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@id/button_row" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="8.0dip">
+                    <Button android:textAppearance="?android:textAppearanceSmall" android:textColor="@android:color/holo_red_light" android:id="@id/btn_toggle_usb_id" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="ID" android:layout_weight="1.0" />
+                    <Button android:textAppearance="?android:textAppearanceSmall" android:textColor="@android:color/holo_red_light" android:id="@id/btn_toggle_usb_counter" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="Counter" android:layout_weight="1.0" />
+                    <Button android:textAppearance="?android:textAppearanceSmall" android:textColor="@android:color/holo_red_light" android:id="@id/btn_toggle_usb_sleep" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="Sleep" android:layout_weight="1.0" />
+                </LinearLayout>
+                <LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@id/button_row2" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <Button android:textAppearance="?android:textAppearanceSmall" android:textColor="@android:color/holo_red_light" android:id="@id/btn_toggle_usb_data" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="Data" android:layout_weight="1.0" />
+                    <Button android:textAppearance="?android:textAppearanceSmall" android:textColor="@android:color/holo_red_light" android:id="@id/btn_toggle_usb_ttyOutput" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="TTY Output" android:layout_weight="1.0" />
+                    <Button android:textAppearance="?android:textAppearanceSmall" android:textColor="@android:color/holo_red_light" android:id="@id/btn_toggle_usb_mode" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="Mode" android:layout_weight="1.0" />
+                </LinearLayout>
+                <EditText android:textAppearance="?android:textAppearanceSmall" android:id="@id/usb_id_value" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="ID Value (e.g., 2)" android:inputType="text" />
+                <EditText android:textAppearance="?android:textAppearanceSmall" android:id="@id/usb_counter_value" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="Counter Value (e.g., infinite)" android:inputType="text" />
+                <EditText android:textAppearance="?android:textAppearanceSmall" android:id="@id/usb_sleep_value" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="Sleep Value (ms) (e.g., 200)" android:inputType="text" />
+                <EditText android:textAppearance="?android:textAppearanceSmall" android:id="@id/usb_data_value" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="Data (e.g., 0C1A2F3E0C1A2F3)" android:inputType="text" />
+                <Spinner android:textAppearance="?android:textAppearanceSmall" android:id="@id/usb_mode_spinner" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:dropDownWidth="wrap_content" />
+            </LinearLayout>
+            <LinearLayout android:gravity="center" android:layout_gravity="center" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginStart="20.0dip" android:layout_marginEnd="20.0dip">
+                <com.google.android.material.button.MaterialButton android:id="@id/start_canusb_send" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Run" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

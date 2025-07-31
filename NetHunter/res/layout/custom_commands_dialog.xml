@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:weightSum="1.0"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textAppearance="?android:textAppearanceLarge" android:textColor="@android:color/white" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/add_lauchner_btn_label" />
+            <EditText android:textColor="@android:color/white" android:id="@id/editText_launcher_btn_label" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <requestFocus />
+            </EditText>
+            <TextView android:textAppearance="?android:textAppearanceLarge" android:textColor="@android:color/white" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/add_lauchner_btn_command" />
+            <EditText android:textColor="@android:color/white" android:id="@id/editText_launcher_command" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="10.0dip" />
+            <RelativeLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textAppearance="?android:textAppearanceLarge" android:textColor="@android:color/white" android:id="@id/run_in_shell_text" android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="Send to:" android:layout_above="@id/add_lauchner_btn_execmode_text" android:layout_alignEnd="@id/add_lauchner_btn_execmode_text" android:layout_alignParentStart="true" />
+                <TextView android:textAppearance="?android:textAppearanceLarge" android:textColor="@android:color/white" android:layout_gravity="center_vertical" android:id="@id/add_lauchner_btn_execmode_text" android:paddingTop="5.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Exec mode: " android:layout_alignTop="@id/spinnerExecMode" android:layout_alignParentStart="true" />
+                <Spinner android:entries="@array/run_in_shell" android:id="@id/spinnerRun_in_shell" android:paddingTop="5.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:drawSelectorOnTop="true" android:layout_alignParentTop="true" android:layout_toEndOf="@id/run_in_shell_text" android:layout_alignStart="@id/spinnerExecMode" android:layout_alignParentEnd="true" />
+                <Spinner android:entries="@array/exec_mode" android:id="@id/spinnerExecMode" android:paddingTop="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:drawSelectorOnTop="true" android:layout_below="@id/spinnerRun_in_shell" android:layout_toEndOf="@id/add_lauchner_btn_execmode_text" />
+            </RelativeLayout>
+            <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+                <TextView android:textAppearance="?android:textAppearanceLarge" android:textColor="@android:color/white" android:id="@id/textView10" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Run at boot:" android:layout_alignParentBottom="true" android:layout_alignParentStart="true" />
+                <CheckBox android:textAppearance="?android:textAppearanceLarge" android:id="@id/custom_comands_runAtBoot" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="3.0dip" android:layout_marginBottom="-8.0dip" android:checked="false" android:text="" android:layout_alignParentTop="true" android:layout_toEndOf="@id/textView10" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

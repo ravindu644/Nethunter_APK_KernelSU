@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="horizontal" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textAppearance="?android:textAppearanceMedium" android:id="@id/moduleName" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="Module Name" android:layout_weight="1.0" />
+    <CheckBox android:id="@id/moduleAutoLoad" android:focusable="false" android:focusableInTouchMode="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Auto Load" />
+    <ImageView android:id="@id/moduleStatusIcon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_module_not_loaded" android:layout_marginStart="16.0dip" />
+</LinearLayout>

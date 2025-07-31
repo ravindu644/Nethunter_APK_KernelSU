@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:padding="20.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:gravity="center" android:layout_gravity="center_horizontal" android:padding="4.0dip" android:paddingTop="10.0dip" android:paddingBottom="10.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/pineapple_description" />
+    <TextView android:textAppearance="?android:textAppearanceMedium" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/pineapple_gateway" />
+    <EditText android:id="@id/pineapple_gatewayip" android:layout_width="152.0dip" android:layout_height="wrap_content" android:text="@string/pineapple_gatewayip" android:ems="10" android:digits="0123456789." android:inputType="numberDecimal" />
+    <TextView android:textAppearance="?android:textAppearanceMedium" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/pineapple_port" />
+    <EditText android:id="@id/pineapple_webport" android:layout_width="112.0dip" android:layout_height="wrap_content" android:text="@string/pineapple_webport" android:ems="10" android:inputType="number" />
+    <TextView android:textAppearance="?android:textAppearanceMedium" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/pineapple_ip" />
+    <EditText android:id="@id/pineapple_clientip" android:layout_width="177.0dip" android:layout_height="wrap_content" android:text="@string/pineapple_clientip" android:ems="10" android:digits="0123456789." android:inputType="numberDecimal" />
+    <TextView android:textAppearance="?android:textAppearanceMedium" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/pineapple_cidr" />
+    <EditText android:id="@id/pineapple_cidr" android:layout_width="205.0dip" android:layout_height="wrap_content" android:text="@string/pineapple_subnet" android:ems="10" android:digits="0123456789." android:inputType="numberDecimal" />
+    <CheckBox android:id="@id/pineapple_noup" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/pineapple_noupstream" />
+    <CheckBox android:id="@id/pineapple_transproxy" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/pineapple_transproxy" />
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <Button android:id="@id/pineapple_start_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/pineapple_start_OTG" />
+        <Button android:id="@id/pineapple_close_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/pineapple_stop_OTG" />
+    </LinearLayout>
+</LinearLayout>

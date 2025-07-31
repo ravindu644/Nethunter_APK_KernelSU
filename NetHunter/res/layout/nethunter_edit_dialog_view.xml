@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.core.widget.NestedScrollView android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="20.0dip" android:layout_marginRight="10.0dip" android:layout_marginStart="10.0dip" android:layout_marginEnd="10.0dip">
+            <TextView android:textSize="18.0sp" android:textColor="@color/accent_material_dark" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Title:" android:layout_marginStart="4.0dip" />
+            <EditText android:id="@id/f_nethunter_edit_adb_et_title" android:layout_width="fill_parent" android:layout_height="wrap_content" android:inputType="text" android:layout_marginStart="4.0dip" />
+            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textSize="18.0sp" android:textColor="@color/accent_material_dark" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Command for getting the output:" android:layout_weight="0.9" android:layout_marginStart="4.0dip" />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton android:textSize="12.0sp" android:id="@id/f_nethunter_edit_btn_info_fab1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_action_information" android:layout_weight="0.1" android:layout_marginEnd="8.0dip" android:backgroundTint="@color/colorPrimary" app:elevation="6.0dip" app:fabCustomSize="32.0dip" app:pressedTranslationZ="12.0dip" xmlns:app="http://schemas.android.com/apk/res-auto" />
+            </LinearLayout>
+            <EditText android:id="@id/f_nethunter_edit_adb_et_command" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginStart="4.0dip" />
+            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textSize="18.0sp" android:textColor="@color/accent_material_dark" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Line delimiter:" android:layout_weight="0.9" android:layout_marginStart="4.0dip" />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton android:textSize="12.0sp" android:id="@id/f_nethunter_edit_btn_info_fab2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_action_information" android:layout_weight="0.1" android:layout_marginEnd="8.0dip" android:backgroundTint="@color/colorPrimary" app:elevation="6.0dip" app:fabCustomSize="32.0dip" app:pressedTranslationZ="12.0dip" xmlns:app="http://schemas.android.com/apk/res-auto" />
+            </LinearLayout>
+            <EditText android:id="@id/f_nethunter_edit_adb_et_delimiter" android:layout_width="fill_parent" android:layout_height="wrap_content" android:inputType="text" android:layout_marginStart="4.0dip" />
+            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <CheckBox android:textSize="18.0sp" android:textColor="@color/accent_material_dark" android:id="@id/f_nethunters_edit_adb_checkbox_runoncreate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="RunOnCreate" android:layout_marginStart="4.0dip" />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton android:textSize="12.0sp" android:id="@id/f_nethunter_edit_btn_info_fab3" android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@drawable/ic_action_information" android:layout_marginStart="8.0dip" android:backgroundTint="@color/colorPrimary" app:elevation="6.0dip" app:fabCustomSize="32.0dip" app:pressedTranslationZ="12.0dip" xmlns:app="http://schemas.android.com/apk/res-auto" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

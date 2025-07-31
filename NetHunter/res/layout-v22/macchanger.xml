@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/scrollView" android:padding="16.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.core.widget.NestedScrollView android:scrollbars="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:gravity="start" android:layout_gravity="center" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/macchanger_description" />
+            <com.google.android.material.divider.MaterialDivider android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="8.0dip" android:layout_marginBottom="8.0dip" app:dividerColor="@color/cardview_light_background" />
+            <LinearLayout android:orientation="horizontal" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                <EditText android:id="@id/f_macchanger_phone_name_et" android:nextFocusLeft="@id/f_macchanger_phone_name_et" android:nextFocusUp="@id/f_macchanger_phone_name_et" android:layout_width="0.0dip" android:layout_height="wrap_content" android:singleLine="true" android:layout_weight="0.5" android:autofillHints="none" />
+                <Button android:id="@id/f_macchanger_setHostname_btn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/macchanger_set_hostname" style="?android:buttonStyleSmall" />
+            </LinearLayout>
+            <TextView android:textSize="18.0sp" android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="8.0dip" android:text="@string/interface_select" />
+            <Spinner android:textSize="18.0sp" android:id="@id/f_macchanger_interface_opts_spr" android:layout_width="fill_parent" android:layout_height="wrap_content" android:prompt="@string/interface_select" />
+            <View android:background="#ffffffff" android:layout_width="fill_parent" android:layout_height="1.0dip" android:layout_marginTop="8.0dip" android:layout_marginBottom="8.0dip" />
+            <LinearLayout android:orientation="horizontal" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textAppearance="?android:textAppearanceMedium" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8.0dip" android:text="@string/currentmac" />
+                <TextView android:textColor="@color/cardview_light_background" android:id="@id/f_macchanger_currMac_tv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="16.0dip" android:layout_marginTop="8.0dip" android:layout_marginRight="16.0dip" android:hint="@string/currentmac" android:maxLength="17" />
+                <androidx.appcompat.widget.AppCompatImageButton android:id="@id/f_macchanger_reloadMAC_imgbtn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:contentDescription="@string/reloadMAC" android:layout_marginStart="5.0dip" app:srcCompat="@drawable/ic_action_refresh" />
+            </LinearLayout>
+            <TextView android:textSize="18.0sp" android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="8.0dip" android:text="@string/macchanger_select" />
+            <Spinner android:textSize="18.0sp" android:entries="@array/macchanger_opts" android:id="@id/f_macchanger_mode_opts_spr" android:layout_width="fill_parent" android:layout_height="wrap_content" android:prompt="@string/macchanger_select" />
+            <View android:background="#ffffffff" android:layout_width="fill_parent" android:layout_height="1.0dip" android:layout_marginTop="8.0dip" android:layout_marginBottom="8.0dip" />
+            <LinearLayout android:gravity="center_horizontal" android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:baselineAligned="false">
+                <EditText android:id="@id/f_macchanger_mac1_et" android:layout_width="wrap_content" android:layout_height="wrap_content" android:hint="@string/TwoMACDigits" android:maxLength="2" android:digits="0123456789abcdef" android:inputType="textNoSuggestions" android:autofillHints="none" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/macSeparator" />
+                <EditText android:id="@id/f_macchanger_mac2_et" android:layout_width="wrap_content" android:layout_height="wrap_content" android:hint="@string/TwoMACDigits" android:maxLength="2" android:digits="0123456789abcdef" android:inputType="textNoSuggestions" android:autofillHints="none" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/macSeparator" />
+                <EditText android:id="@id/f_macchanger_mac3_et" android:layout_width="wrap_content" android:layout_height="wrap_content" android:hint="@string/TwoMACDigits" android:maxLength="2" android:digits="0123456789abcdef" android:inputType="textNoSuggestions" android:autofillHints="none" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/macSeparator" />
+                <EditText android:id="@id/f_macchanger_mac4_et" android:layout_width="wrap_content" android:layout_height="wrap_content" android:hint="@string/TwoMACDigits" android:maxLength="2" android:digits="0123456789abcdef" android:inputType="textNoSuggestions" android:autofillHints="none" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/macSeparator" />
+                <EditText android:id="@id/f_macchanger_mac5_et" android:layout_width="wrap_content" android:layout_height="wrap_content" android:hint="@string/TwoMACDigits" android:maxLength="2" android:digits="0123456789abcdef" android:inputType="textNoSuggestions" android:autofillHints="none" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/macSeparator" />
+                <EditText android:id="@id/f_macchanger_mac6_et" android:layout_width="wrap_content" android:layout_height="wrap_content" android:hint="@string/TwoMACDigits" android:maxLength="2" android:digits="0123456789abcdef" android:inputType="textNoSuggestions" android:autofillHints="none" />
+            </LinearLayout>
+            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <Button android:id="@id/f_macchanger_regenerate_mac_btn" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/macchanger_generate" android:layout_weight="1.0" />
+                <Button android:id="@id/f_macchanger_clear_mac_btn" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/macchanger_clear" android:layout_weight="1.0" />
+            </LinearLayout>
+            <Button android:layout_gravity="center_horizontal" android:id="@id/f_macchanger_set_mac_btn" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+            <Button android:layout_gravity="center_horizontal" android:id="@id/f_macchanger_reset_mac_btn" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

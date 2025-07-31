@@ -1,0 +1,52 @@
+.class public final synthetic Lcom/offsec/nethunter/VNCFragment$$ExternalSyntheticLambda9;
+.super Ljava/lang/Object;
+.source "D8$$SyntheticClass"
+
+# interfaces
+.implements Landroid/view/View$OnClickListener;
+
+
+# instance fields
+.field public final synthetic f$0:Lcom/offsec/nethunter/VNCFragment;
+
+.field public final synthetic f$1:Ljava/lang/String;
+
+.field public final synthetic f$2:Lcom/offsec/nethunter/utils/ShellExecuter;
+
+.field public final synthetic f$3:Ljava/io/File;
+
+
+# direct methods
+.method public synthetic constructor <init>(Lcom/offsec/nethunter/VNCFragment;Ljava/lang/String;Lcom/offsec/nethunter/utils/ShellExecuter;Ljava/io/File;)V
+    .locals 0
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, Lcom/offsec/nethunter/VNCFragment$$ExternalSyntheticLambda9;->f$0:Lcom/offsec/nethunter/VNCFragment;
+
+    iput-object p2, p0, Lcom/offsec/nethunter/VNCFragment$$ExternalSyntheticLambda9;->f$1:Ljava/lang/String;
+
+    iput-object p3, p0, Lcom/offsec/nethunter/VNCFragment$$ExternalSyntheticLambda9;->f$2:Lcom/offsec/nethunter/utils/ShellExecuter;
+
+    iput-object p4, p0, Lcom/offsec/nethunter/VNCFragment$$ExternalSyntheticLambda9;->f$3:Ljava/io/File;
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final onClick(Landroid/view/View;)V
+    .locals 4
+
+    iget-object v0, p0, Lcom/offsec/nethunter/VNCFragment$$ExternalSyntheticLambda9;->f$0:Lcom/offsec/nethunter/VNCFragment;
+
+    iget-object v1, p0, Lcom/offsec/nethunter/VNCFragment$$ExternalSyntheticLambda9;->f$1:Ljava/lang/String;
+
+    iget-object v2, p0, Lcom/offsec/nethunter/VNCFragment$$ExternalSyntheticLambda9;->f$2:Lcom/offsec/nethunter/utils/ShellExecuter;
+
+    iget-object v3, p0, Lcom/offsec/nethunter/VNCFragment$$ExternalSyntheticLambda9;->f$3:Ljava/io/File;
+
+    invoke-virtual {v0, v1, v2, v3, p1}, Lcom/offsec/nethunter/VNCFragment;->lambda$onCreateView$21$com-offsec-nethunter-VNCFragment(Ljava/lang/String;Lcom/offsec/nethunter/utils/ShellExecuter;Ljava/io/File;Landroid/view/View;)V
+
+    return-void
+.end method

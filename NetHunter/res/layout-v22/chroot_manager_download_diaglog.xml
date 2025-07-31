@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="18.0sp" android:textColor="@color/clearTitle" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Arch:" android:layout_marginStart="8.0dip" android:layout_marginEnd="8.0dip" />
+    <Spinner android:textSize="18.0sp" android:textColor="@color/clearTitle" android:entries="@array/f_chrootmanager_build_chroot_arm_opts" android:id="@id/f_chrootmanager_arch_adb_spr" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+    <TextView android:textSize="18.0sp" android:textColor="@color/clearTitle" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="12.0dip" android:text="Min or Full install:" android:layout_marginStart="8.0dip" android:layout_marginEnd="8.0dip" />
+    <Spinner android:textSize="18.0sp" android:textColor="@color/clearTitle" android:entries="@array/f_chrootmanager_build_chroot_full_or_min" android:id="@id/f_chrootmanager_minorfull_adb_spr" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+    <TextView android:textSize="18.0sp" android:textColor="@color/clearTitle" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="18.0dip" android:text="Path of the folder you want to download to:" android:layout_marginStart="8.0dip" android:layout_marginEnd="8.0dip" />
+    <EditText android:textSize="18.0sp" android:textColor="@color/clearTitle" android:id="@id/f_chrootmanager_storepath_et" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="/sdcard" android:layout_marginStart="8.0dip" android:layout_marginEnd="8.0dip" android:autofillHints="none" />
+</LinearLayout>

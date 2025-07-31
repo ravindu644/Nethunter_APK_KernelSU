@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:paddingLeft="16.0dip" android:paddingRight="16.0dip" android:focusableInTouchMode="true" android:layout_width="fill_parent" android:layout_height="wrap_content"
+      xmlns:android="http://schemas.android.com/apk/res/android">
+        <TextView android:gravity="center" android:layout_gravity="center" android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/hid_powersploit_description" />
+        <TextView android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/ps_ip_address" />
+        <EditText android:id="@id/ipaddress" android:layout_width="fill_parent" android:layout_height="wrap_content" android:ems="10" />
+        <TextView android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/ps_port" />
+        <EditText android:id="@id/port" android:layout_width="fill_parent" android:layout_height="wrap_content" android:ems="10" />
+        <TextView android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/payload" />
+        <Spinner android:entries="@array/payloads" android:id="@id/payload" android:layout_width="fill_parent" android:layout_height="wrap_content" android:prompt="@string/payload_select" />
+        <TextView android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/ps_payload_url" />
+        <EditText android:id="@id/payloadUrl" android:layout_width="fill_parent" android:layout_height="wrap_content" android:ems="10" android:inputType="text" />
+        <Button android:id="@id/powersploitOptionsUpdate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/update" />
+    </LinearLayout>
+</ScrollView>

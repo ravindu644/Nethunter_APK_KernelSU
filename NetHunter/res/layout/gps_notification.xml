@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:baselineAligned="false">
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/gps_notification_lat" style="@style/TextAppearance.Compat.Notification" />
+            <TextView android:id="@id/gps_notification_latitude" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/TextAppearance.Compat.Notification" />
+        </LinearLayout>
+        <LinearLayout android:layout_gravity="right" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/gps_notification_long" style="@style/TextAppearance.Compat.Notification" />
+            <TextView android:id="@id/gps_notification_longitude" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/TextAppearance.Compat.Notification" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.2">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/gps_notification_accuracy" style="@style/TextAppearance.Compat.Notification" />
+            <TextView android:id="@id/gps_notification_accuracy" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/TextAppearance.Compat.Notification" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:baselineAligned="false">
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/gps_notification_source" style="@style/TextAppearance.Compat.Notification" />
+            <TextView android:id="@id/gps_notification_source" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_weight="1.0" style="@style/TextAppearance.Compat.Notification" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/gps_notification_age" style="@style/TextAppearance.Compat.Notification" />
+            <TextView android:id="@id/gps_notification_age" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_weight="1.0" style="@style/TextAppearance.Compat.Notification" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.2">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/gps_notification_sats" style="@style/TextAppearance.Compat.Notification" />
+            <TextView android:id="@id/gps_notification_sats" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_weight="1.0" style="@style/TextAppearance.Compat.Notification" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

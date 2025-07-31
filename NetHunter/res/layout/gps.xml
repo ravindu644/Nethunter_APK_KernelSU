@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="right" android:orientation="vertical" android:clickable="false" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView android:gravity="center" android:layout_gravity="center" android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/gps_description" />
+    <androidx.appcompat.widget.SwitchCompat android:id="@id/switch_gps_provider" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:checked="false" android:textOn="On" android:textOff="Off" android:text="@string/switch_gps_provider" />
+    <androidx.appcompat.widget.SwitchCompat android:id="@id/switch_gpsd" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/switch_gpsd" />
+    <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TextView android:padding="10.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wireless interface" />
+        <EditText android:id="@id/wlan_interface" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="wlan0" android:inputType="text" />
+    </LinearLayout>
+    <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TextView android:padding="10.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bluetooth interface" />
+        <EditText android:id="@id/bt_interface" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="hci0" android:inputType="text" />
+    </LinearLayout>
+    <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <CheckBox android:id="@id/rtlsdr" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="RTL SDR" android:layout_weight="1.0" android:layout_marginStart="10.0dip" android:layout_marginEnd="10.0dip" />
+        <CheckBox android:id="@id/rtlamr" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="RTL AMR" android:layout_weight="1.0" android:layout_marginStart="10.0dip" android:layout_marginEnd="10.0dip" />
+    </LinearLayout>
+    <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <CheckBox android:id="@id/rtladsb" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="RTL ADSB" android:layout_weight="1.0" android:layout_marginStart="10.0dip" android:layout_marginEnd="10.0dip" />
+        <CheckBox android:id="@id/mousejack" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Mousejack" android:layout_weight="1.0" android:layout_marginStart="10.0dip" android:layout_marginEnd="10.0dip" />
+    </LinearLayout>
+    <Space android:layout_width="fill_parent" android:layout_height="15.0sp" />
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <Button android:id="@id/gps_button_launch_app" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="@string/gps_button_launch_app" android:layout_weight="1.0" />
+        <ImageButton android:id="@id/gps_button_settings" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="fill_parent" app:srcCompat="@drawable/ic_action_settings_applications" />
+    </LinearLayout>
+    <TextView android:gravity="center" android:layout_gravity="center_horizontal" android:id="@id/gps_help" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/gps_help" />
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:fillViewport="true">
+        <TextView android:textColor="@android:color/holo_green_light" android:id="@id/gps_textview" android:background="@android:color/black" android:padding="16.0sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:fontFamily="monospace" />
+    </ScrollView>
+</LinearLayout>

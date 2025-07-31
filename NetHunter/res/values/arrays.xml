@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="array_insert_position">
+        <item>Insert to Top</item>
+        <item>Insert to Bottom</item>
+        <item>Insert Before:</item>
+        <item>Insert After:</item>
+    </string-array>
+    <string-array name="array_move_position">
+        <item>Before:</item>
+        <item>After:</item>
+    </string-array>
+    <string-array name="custom_commands_execmode_array">
+        <item>interactive</item>
+        <item>background</item>
+    </string-array>
+    <string-array name="custom_commands_sendto_array">
+        <item>android</item>
+        <item>kali</item>
+    </string-array>
+    <string-array name="duckhunter_preset_array">
+        <item>Select preset</item>
+        <item>Hello World</item>
+        <item>OSX Perl Reverse Shell</item>
+        <item>OSX Ruby Reverse Shell</item>
+        <item>Enable Windows RDP</item>
+        <item>Fake Windows 10 Update</item>
+    </string-array>
+    <string-array name="exec_mode">
+        <item>BACKGROUND</item>
+        <item>INTERACTIVE</item>
+    </string-array>
+    <string-array name="f_chrootmanager_build_chroot_arm_opts">
+        <item>arm64</item>
+        <item>armhf</item>
+    </string-array>
+    <string-array name="f_chrootmanager_build_chroot_full_or_min">
+        <item>full</item>
+        <item>min</item>
+    </string-array>
+    <string-array name="interface_opts">
+        <item>wlan0 (Internal wireless card)</item>
+        <item>wlan1 (External wireless card)</item>
+        <item>eth0 (Ethernet)</item>
+        <item>rndis0 (USB > Ethernet)</item>
+        <item>usb0 (USB > Ethernet Nexus7 2013 when tethering | badusb)</item>
+    </string-array>
+    <string-array name="macchanger_opts">
+        <item>Random MAC</item>
+        <item>Custom MAC</item>
+    </string-array>
+    <string-array name="mpc_callback_array">
+        <item>Reverse</item>
+        <item>Bind</item>
+    </string-array>
+    <string-array name="mpc_callbacktype_array">
+        <item>TCP</item>
+        <item>HTTP</item>
+        <item>HTTPS</item>
+        <item>Find Port</item>
+    </string-array>
+    <string-array name="mpc_payload_array">
+        <item>MSF</item>
+        <item>CMD</item>
+    </string-array>
+    <string-array name="mpc_stage_array">
+        <item>Staged</item>
+        <item>Stageless</item>
+    </string-array>
+    <string-array name="mpc_type_array">
+        <item>ASP</item>
+        <item>ASPX</item>
+        <item>Bash [.sh]</item>
+        <item>Java [.jsp]</item>
+        <item>Linux [.elf]</item>
+        <item>OSX [.macho]</item>
+        <item>Perl [.pl]</item>
+        <item>PHP</item>
+        <item>Powershell [.ps1]</item>
+        <item>Python [.py]</item>
+        <item>Tomcat [.war]</item>
+        <item>Windows [.exe/.dll]</item>
+        <item>Android [.apk]</item>
+    </string-array>
+    <string-array name="nmap_interface_array">
+        <item>Select interface</item>
+        <item>wlan0</item>
+        <item>wlan1</item>
+        <item>eth0</item>
+        <item>rndis0</item>
+    </string-array>
+    <string-array name="nmap_scantechnique_array">
+        <item>Select scan technique</item>
+        <item>TCP SYN</item>
+        <item>Connect()</item>
+        <item>ACK</item>
+        <item>Windows</item>
+        <item>Maimon</item>
+        <item>TCP Null</item>
+        <item>FIN</item>
+        <item>XMAS</item>
+    </string-array>
+    <string-array name="nmap_timing_array">
+        <item>Select timing template</item>
+        <item>Paranoid</item>
+        <item>Sneaky</item>
+        <item>Polite</item>
+        <item>Normal</item>
+        <item>Aggressive</item>
+        <item>Insane</item>
+    </string-array>
+    <string-array name="payloads">
+        <item>windows/meterpreter/reverse_http</item>
+        <item>windows/meterpreter/reverse_https</item>
+    </string-array>
+    <string-array name="run_in_shell">
+        <item>KALI</item>
+        <item>ANDROID</item>
+    </string-array>
+    <string-array name="sort_options">
+        <item>Alphabetical</item>
+        <item>Reverse Alphabetical</item>
+    </string-array>
+    <string-array name="usb_adb">
+        <item>No adb</item>
+        <item>adb</item>
+    </string-array>
+    <string-array name="usb_states">
+        <item>Reset</item>
+        <item>mtp,hid</item>
+        <item>hid</item>
+        <item>mass_storage</item>
+        <item>rndis</item>
+        <item>hid,mass_storage</item>
+        <item>rndis,hid</item>
+        <item>rndis,mass_storage</item>
+        <item>rndis,hid,mass_storage</item>
+    </string-array>
+    <string-array name="usb_targets">
+        <item>Windows</item>
+        <item>Mac OS</item>
+    </string-array>
+    <string-array name="usbarsenal_target_platform">
+        <item>Windows</item>
+        <item>Linux</item>
+        <item>Mac OS</item>
+    </string-array>
+    <string-array name="usbarsenal_usb_adb">
+        <item>Enable</item>
+        <item>Disable</item>
+    </string-array>
+    <string-array name="usbarsenal_usb_network_attack_mode">
+        <item>Network Tethering Only</item>
+    </string-array>
+    <string-array name="usbarsenal_usb_states_mac">
+        <item>reset</item>
+        <item>hid</item>
+        <item>mass_storage</item>
+        <item>acm,ecm</item>
+        <item>hid,mass_storage</item>
+        <item>acm,ecm,hid</item>
+        <item>acm,ecm,mass_storage</item>
+        <item>acm,ecm,hid,mass_storage</item>
+    </string-array>
+    <string-array name="usbarsenal_usb_states_win_lin">
+        <item>reset</item>
+        <item>hid</item>
+        <item>mass_storage</item>
+        <item>rndis</item>
+        <item>hid,mass_storage</item>
+        <item>rndis,hid</item>
+        <item>rndis,mass_storage</item>
+        <item>rndis,hid,mass_storage</item>
+    </string-array>
+</resources>

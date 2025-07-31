@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:paddingLeft="16.0dip" android:paddingRight="16.0dip" android:focusableInTouchMode="true" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TextView android:gravity="center" android:layout_gravity="center" android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/bt_tools" />
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textAppearance="?android:textAppearanceMedium" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bluetooth interface" />
+            <EditText android:id="@id/hci_interface" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="hci0" android:inputType="text" android:autofillHints="none" />
+        </LinearLayout>
+        <com.google.android.material.button.MaterialButton android:textColor="#ffffffff" android:id="@id/set_target" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Use selected target" android:layout_weight="1.0" />
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Target address" />
+            <EditText android:id="@id/sdp_address" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="00:11:22:33:44:55" android:ems="10" android:autofillHints="none" />
+        </LinearLayout>
+        <View android:id="@id/divider" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+        <TextView android:textAppearance="?android:textAppearanceMedium" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="L2ping" android:layout_weight="1.0" />
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textAppearance="?android:textAppearanceMedium" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Size" android:layout_weight="1.0" />
+            <EditText android:gravity="center" android:id="@id/l2ping_size" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="44" android:layout_weight="1.0" android:inputType="number" android:autofillHints="none" />
+            <TextView android:textAppearance="?android:textAppearanceMedium" android:gravity="center" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Count" android:layout_weight="1.0" />
+            <EditText android:gravity="center" android:id="@id/l2ping_count" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="5" android:layout_weight="1.0" android:inputType="number" android:autofillHints="none" />
+        </LinearLayout>
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <CheckBox android:id="@id/l2ping_flood" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="false" android:text="Flood ping" android:layout_weight="1.0" />
+            <CheckBox android:id="@id/l2ping_reverse" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Reverse ping" android:layout_weight="1.0" />
+        </LinearLayout>
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <com.google.android.material.button.MaterialButton android:textColor="#ffffffff" android:id="@id/start_l2ping" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="l2ping" android:layout_weight="1.0" />
+            <com.google.android.material.button.MaterialButton android:textColor="#ffffffff" android:id="@id/start_rfcommscan" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="rfcomm scan" android:layout_weight="1.0" />
+        </LinearLayout>
+        <View android:id="@id/divider2" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+        <TextView android:textAppearance="?android:textAppearanceMedium" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Redfang" />
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Range" />
+            <EditText android:id="@id/redfang_range" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="00803789EE76-00803789EEff" android:autofillHints="none" />
+        </LinearLayout>
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Logfile path" />
+            <EditText android:id="@id/redfang_log" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="/root/redfang.log" android:inputType="text" android:autofillHints="none" />
+        </LinearLayout>
+        <com.google.android.material.button.MaterialButton android:textColor="#ffffffff" android:id="@id/start_redfang" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Hunt for devices" android:layout_weight="1.0" />
+        <View android:id="@id/divider3" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+        <TextView android:textAppearance="?android:textAppearanceMedium" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Blueranger" />
+        <com.google.android.material.button.MaterialButton android:textColor="#ffffffff" android:id="@id/start_blueranger" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Check proximity" android:layout_weight="1.0" />
+        <View android:id="@id/divider4" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+        <TextView android:textAppearance="?android:textAppearanceMedium" android:padding="4.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SDP Tool" />
+        <com.google.android.material.button.MaterialButton android:textColor="#ffffffff" android:id="@id/start_sdp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Discover services" android:layout_weight="1.0" />
+        <TextView android:id="@id/SDPoutput" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    </LinearLayout>
+</ScrollView>
