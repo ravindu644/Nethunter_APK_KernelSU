@@ -1461,7 +1461,7 @@
 
     new-instance p1, Ljava/lang/StringBuilder;
 
-    const-string v0, "usbtethering -o "
+    const-string v0, "/data/data/com.offsec.nethunter/scripts/bin/usbtethering -o "
 
     invoke-direct {p1, v0}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
 
