@@ -1710,7 +1710,7 @@
 
     move-result-object v0
 
-    const-string v6, "su -c id"
+    const-string v6, "su -M -c id"
 
     invoke-virtual {v0, v6}, Ljava/lang/Runtime;->exec(Ljava/lang/String;)Ljava/lang/Process;
 
@@ -1747,7 +1747,7 @@
 
     invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v6, "\'su -c id\' failed with code "
+    const-string v6, "\'su -M -c id\' failed with code "
 
     invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -3245,7 +3245,7 @@
 
     move-result-object v0
 
-    const-string v3, "su -c ifconfig wlan0 up; nexutil -s263 -l8 -b -v `printf \'mpc\\x00\\x00\\x00\\x00\\x00\' | base64 | tr -d \'\\n\'"
+    const-string v3, "su -M -c ifconfig wlan0 up; nexutil -s263 -l8 -b -v `printf \'mpc\\x00\\x00\\x00\\x00\\x00\' | base64 | tr -d \'\\n\'"
 
     invoke-virtual {v0, v3}, Lcom/hijacker/Shell;->run(Ljava/lang/String;)V
 

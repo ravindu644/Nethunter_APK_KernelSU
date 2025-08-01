@@ -277,7 +277,7 @@
 
     const-string v4, "\nRunning: "
 
-    const-string v5, "su -c "
+    const-string v5, "su -M -c "
 
     if-eqz v3, :cond_6
 

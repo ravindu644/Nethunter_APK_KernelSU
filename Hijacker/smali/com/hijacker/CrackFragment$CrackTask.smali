@@ -636,7 +636,7 @@
 
     const-string v2, "HIJACKER/CrackTask"
 
-    const-string v3, "su -c "
+    const-string v3, "su -M -c "
 
     const/4 v4, 0x2
 
