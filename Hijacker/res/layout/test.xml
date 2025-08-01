@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:paddingTop="5.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ProgressBar android:id="@id/test_progress" android:layout_width="fill_parent" android:layout_height="wrap_content" android:maxHeight="5.0dip" android:max="5" android:progressDrawable="@drawable/progress_horizontal_holo_blue_dark" android:minWidth="0.0dip" android:minHeight="5.0dip" style="?android:progressBarStyleHorizontal" />
+    <LinearLayout android:orientation="vertical" android:paddingTop="10.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent" android:paddingStart="20.0dip" android:paddingEnd="35.0dip">
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <TextView android:textColor="@android:color/white" android:padding="2.0dip" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="Airodump-ng" android:layout_weight="1.0" />
+            <ImageView android:id="@id/imageView1" android:layout_width="wrap_content" android:layout_height="fill_parent" app:srcCompat="@drawable/failed_drawable" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <TextView android:textColor="@android:color/white" android:padding="2.0dip" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="Aireplay-ng" android:layout_weight="1.0" />
+            <ImageView android:id="@id/imageView2" android:layout_width="wrap_content" android:layout_height="fill_parent" app:srcCompat="@drawable/done_drawable" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <TextView android:textColor="@android:color/white" android:padding="2.0dip" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="MDK3" android:layout_weight="1.0" />
+            <ImageView android:id="@id/imageView3" android:layout_width="wrap_content" android:layout_height="fill_parent" app:srcCompat="@drawable/testing_drawable" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <TextView android:textColor="@android:color/white" android:padding="2.0dip" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="Reaver" android:layout_weight="1.0" />
+            <ImageView android:id="@id/imageView4" android:layout_width="wrap_content" android:layout_height="fill_parent" app:srcCompat="@drawable/testing_drawable" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <TextView android:textColor="@android:color/white" android:padding="2.0dip" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="Kali chroot" android:layout_weight="1.0" />
+            <ImageView android:id="@id/imageView5" android:layout_width="wrap_content" android:layout_height="fill_parent" app:srcCompat="@drawable/testing_drawable" />
+        </LinearLayout>
+        <TextView android:textSize="12.0sp" android:typeface="monospace" android:textColor="@android:color/white" android:id="@id/current_cmd" android:paddingLeft="2.0dip" android:paddingTop="5.0dip" android:paddingRight="2.0dip" android:focusable="true" android:clickable="true" android:layout_width="wrap_content" android:layout_height="0.0dip" android:lines="4" android:layout_weight="1.0" />
+    </LinearLayout>
+</LinearLayout>

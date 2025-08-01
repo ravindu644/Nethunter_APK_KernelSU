@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:padding="5.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:paddingBottom="5.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <TextView android:textSize="19.0sp" android:textColor="?android:textColorPrimary" android:gravity="center" android:layout_gravity="center_vertical" android:id="@id/essid" android:focusable="true" android:clickable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chris" android:maxLines="2" android:onClick="onCopy" />
+            <TextView android:textSize="19.0sp" android:textColor="?android:textColorPrimary" android:gravity="center" android:id="@id/mac" android:focusable="true" android:clickable="true" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="00:11:22:33:44:55" android:maxLines="2" android:layout_weight="1.0" android:onClick="onCopy" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:id="@id/ap_details" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <TextView android:textSize="14.0sp" android:id="@id/manuf" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ZTE Corporation" android:maxLines="2" />
+            <TextView android:gravity="end" android:id="@id/sec1" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="Enc: WPA2 | Auth: PSK" android:maxLines="1" android:layout_weight="1.0" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:id="@id/ap_details2" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <TextView android:textSize="14.0sp" android:id="@id/numbers" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="B: 20000 | D: 20000 | #s: 20000" android:maxLines="2" />
+            <TextView android:gravity="end" android:id="@id/sec2" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="Cipher: TKIP" android:maxLines="1" android:layout_weight="1.0" />
+        </LinearLayout>
+        <TextView android:textSize="18.0sp" android:textColor="?android:textColorPrimary" android:id="@id/clients_title" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/clients" />
+    </LinearLayout>
+    <ListView android:id="@id/listview" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0" />
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" style="?android:buttonBarStyle">
+        <Button android:id="@id/deauth_all" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/disconnect_all" android:layout_weight="1.0" android:onClick="onDisconnect" style="?android:buttonBarButtonStyle" />
+        <Button android:id="@id/crack" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/capture" android:layout_weight="1.0" android:onClick="onCrack" style="?android:buttonBarButtonStyle" />
+        <Button android:id="@id/dos" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/dos" android:layout_weight="1.0" android:onClick="onDos" style="?android:buttonBarButtonStyle" />
+    </LinearLayout>
+</LinearLayout>

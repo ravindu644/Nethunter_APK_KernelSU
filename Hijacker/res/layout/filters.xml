@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:padding="10.0dip" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBox android:id="@id/ap_cb" android:layout_width="fill_parent" android:layout_height="wrap_content" android:checked="true" android:text="@string/show_ap" android:layout_weight="1.0" />
+    <CheckBox android:id="@id/st_cb" android:layout_width="fill_parent" android:layout_height="wrap_content" android:checked="true" android:text="@string/show_st" />
+    <CheckBox android:id="@id/st_na_cb" android:layout_width="fill_parent" android:layout_height="wrap_content" android:checked="true" android:text="@string/show_st_na" />
+    <TextView android:textSize="18.0sp" android:textColor="@android:color/white" android:padding="5.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/channels" />
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <CheckBox android:id="@id/cb_1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1" android:layout_weight="1.0" />
+        <CheckBox android:id="@id/cb_2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="2" android:layout_weight="1.0" />
+        <CheckBox android:id="@id/cb_3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="3" android:layout_weight="1.0" />
+        <CheckBox android:id="@id/cb_4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="4" android:layout_weight="1.0" />
+        <CheckBox android:id="@id/cb_5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="5  " android:layout_weight="1.0" />
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <CheckBox android:id="@id/cb_6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="6" android:layout_weight="1.0" />
+        <CheckBox android:id="@id/cb_7" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="7" android:layout_weight="1.0" />
+        <CheckBox android:id="@id/cb_8" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="8" android:layout_weight="1.0" />
+        <CheckBox android:id="@id/cb_9" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="9" android:layout_weight="1.0" />
+        <CheckBox android:id="@id/cb_10" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="10" android:layout_weight="1.0" />
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <CheckBox android:id="@id/cb_11" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="11" android:layout_weight="1.0" />
+        <CheckBox android:id="@id/cb_12" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="12" android:layout_weight="1.0" />
+        <CheckBox android:id="@id/cb_13" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="13" android:layout_weight="1.0" />
+        <CheckBox android:id="@id/cb_14" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="14" android:layout_weight="1.0" />
+        <CheckBox android:id="@id/cb_all" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true" android:text="@string/all" android:layout_weight="1.0" />
+    </LinearLayout>
+    <TextView android:textSize="18.0sp" android:textColor="@android:color/white" android:padding="5.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/security" />
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <CheckBox android:id="@id/cb_opn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true" android:text="@string/opn" android:layout_weight="1.0" />
+        <CheckBox android:id="@id/cb_wep" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true" android:text="WEP" android:layout_weight="1.0" />
+        <CheckBox android:id="@id/cb_wpa" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true" android:text="WPA/WPA2" android:layout_weight="1.0" />
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <TextView android:textSize="18.0sp" android:textColor="@android:color/white" android:padding="5.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/power" android:layout_weight="0.0" />
+        <TextView android:textSize="18.0sp" android:textColor="@android:color/white" android:id="@id/pwr" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0" />
+    </LinearLayout>
+    <SeekBar android:id="@id/seekBar" android:layout_width="fill_parent" android:layout_height="wrap_content" android:max="120" android:progress="1" android:indeterminate="false" android:layout_weight="1.0" style="@style/Widget.AppCompat.SeekBar" />
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+        <TextView android:textSize="18.0sp" android:textColor="@android:color/white" android:padding="5.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/sort" />
+        <CheckBox android:id="@id/sort_reverse" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/reverse_sort" />
+        <Button android:id="@id/select_sort" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/sort_nosort" style="?android:buttonBarButtonStyle" />
+    </LinearLayout>
+    <com.google.android.material.textfield.TextInputLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <EditText android:id="@id/manuf_filter_et" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/manuf_filter" android:maxLines="1" android:inputType="textFilter" android:imeOptions="actionDone" />
+    </com.google.android.material.textfield.TextInputLayout>
+</LinearLayout>

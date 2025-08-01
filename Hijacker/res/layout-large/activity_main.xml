@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout android:id="@id/drawer_layout" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:animateLayoutChanges="true"
+      xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+        <androidx.appcompat.widget.Toolbar android:theme="@style/ThemeOverlay.AppCompat.ActionBar" android:id="@id/my_toolbar" android:background="?colorPrimary" android:layout_width="fill_parent" android:layout_height="?actionBarSize" android:elevation="4.0dip" app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            <ImageView android:paddingTop="10.0dip" android:paddingBottom="10.0dip" android:focusable="true" android:clickable="true" android:layout_width="48.0dip" android:layout_height="@android:dimen/app_icon_size" android:adjustViewBounds="false" android:onClick="onAPStats" android:paddingStart="20.0dip" android:paddingEnd="5.0dip" app:srcCompat="@drawable/ap_drawable" />
+            <TextView android:textSize="18.0sp" android:textColor="@android:color/white" android:id="@id/ap_count" android:focusable="true" android:clickable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:onClick="onAPStats" />
+            <ImageView android:paddingTop="10.0dip" android:paddingBottom="10.0dip" android:focusable="true" android:clickable="true" android:layout_width="48.0dip" android:layout_height="@android:dimen/app_icon_size" android:adjustViewBounds="false" android:onClick="onAPStats" android:paddingStart="20.0dip" android:paddingEnd="5.0dip" app:srcCompat="@drawable/st_drawable" />
+            <TextView android:textSize="18.0sp" android:textColor="@android:color/white" android:id="@id/st_count" android:focusable="true" android:clickable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:onClick="onAPStats" />
+        </androidx.appcompat.widget.Toolbar>
+        <ProgressBar android:id="@id/progressBar" android:layout_width="fill_parent" android:layout_height="wrap_content" android:maxHeight="5.0dip" android:progressDrawable="@drawable/progress_horizontal_holo_blue_dark" android:minWidth="0.0dip" android:minHeight="5.0dip" android:layout_below="@id/my_toolbar" style="?android:progressBarStyleHorizontal" />
+        <FrameLayout android:id="@id/fragment1" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="3.0dip" android:layout_below="@id/progressBar" />
+    </RelativeLayout>
+    <com.google.android.material.navigation.NavigationView android:layout_gravity="start" android:id="@id/nav_view" android:fitsSystemWindows="true" android:layout_width="wrap_content" android:layout_height="fill_parent" app:headerLayout="@layout/nav_header" app:itemTextColor="@color/drawer_selector" app:menu="@menu/drawer_view" />
+</androidx.drawerlayout.widget.DrawerLayout>

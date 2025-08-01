@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:padding="10.0dip" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/custom_action_editor_message" />
+    <RadioGroup android:orientation="horizontal" android:id="@id/radio_group" android:padding="5.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <RadioButton android:id="@id/ap_rb" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/access_point" android:layout_weight="1.0" />
+        <RadioButton android:id="@id/st_rb" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/station" android:layout_weight="1.0" />
+    </RadioGroup>
+    <com.google.android.material.textfield.TextInputLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <EditText android:enabled="false" android:id="@id/title" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/custom_action_title" android:maxLines="1" android:inputType="text" android:imeOptions="actionNext" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <EditText android:enabled="false" android:id="@id/start_cmd" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/start_command" android:maxLines="1" android:inputType="text" android:imeOptions="actionNext" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <EditText android:enabled="false" android:id="@id/stop_cmd" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/stop_command" android:maxLines="1" android:inputType="text" android:imeOptions="actionNext" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <CheckBox android:enabled="false" android:id="@id/has_process_name" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/kill_process_on_stop" />
+    <com.google.android.material.textfield.TextInputLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <EditText android:enabled="false" android:id="@id/process_name" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/process_name" android:maxLines="1" android:inputType="text" android:imeOptions="actionDone" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <CheckBox android:enabled="false" android:id="@id/requirement" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/requires_clients" />
+    <Space android:layout_gravity="bottom" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0" />
+    <Button android:enabled="false" android:id="@id/save_button" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/save" style="?android:buttonBarButtonStyle" />
+</LinearLayout>

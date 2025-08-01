@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="band_choices">
+        <item>2.4Ghz</item>
+        <item>5Ghz</item>
+        <item>Both</item>
+    </string-array>
+    <string-array name="band_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="test_cmd">
+        <item>Aircrack</item>
+        <item>Airodump</item>
+        <item>Aireplay</item>
+        <item>MDK3</item>
+        <item>Reaver</item>
+        <item>Reaver in chroot</item>
+    </string-array>
+</resources>

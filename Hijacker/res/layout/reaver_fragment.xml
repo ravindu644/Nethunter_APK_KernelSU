@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:id="@id/mdk_scrollview" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:padding="5.0dip" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="fill_parent" android:layout_height="fill_parent"
+      xmlns:android="http://schemas.android.com/apk/res/android">
+        <LinearLayout android:orientation="vertical" android:id="@id/options_container" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <Button android:id="@id/select_ap" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/select_ap" style="?android:buttonBarButtonStyle" />
+            <com.google.android.material.textfield.TextInputLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <EditText android:id="@id/pin_delay" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="1" android:hint="@string/pin_delay" android:maxLines="1" android:inputType="number" android:imeOptions="actionNext" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <EditText android:id="@id/locked_delay" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="60" android:hint="@string/locked_delay" android:maxLines="1" android:inputType="number" android:imeOptions="actionDone" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <CheckBox android:id="@id/pixie_dust" android:layout_width="fill_parent" android:layout_height="wrap_content" android:checked="false" android:text="@string/pixie_dust" />
+            <CheckBox android:id="@id/ignore_locked" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/ignore_locked" />
+            <CheckBox android:id="@id/eap_fail" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/eap_fail" />
+            <CheckBox android:id="@id/small_dh" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/small_dh" />
+            <CheckBox android:id="@id/no_nack" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/no_nack" />
+        </LinearLayout>
+        <ScrollView android:id="@id/console_scroll_view" android:background="@color/colorPrimary" android:padding="3.0dip" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0">
+            <TextView android:textSize="10.0sp" android:textColor="?android:textColorPrimary" android:id="@id/console" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+        </ScrollView>
+        <Button android:id="@id/start_button" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/start" style="?android:buttonBarButtonStyle" />
+    </LinearLayout>
+</ScrollView>

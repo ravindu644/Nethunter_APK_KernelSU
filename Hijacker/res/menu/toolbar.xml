@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:icon="@drawable/back" android:id="@id/back" android:title="@string/back" app:showAsAction="always" />
+    <item android:icon="@drawable/filter_drawable" android:id="@id/filter" android:title="@string/filter" app:showAsAction="ifRoom" />
+    <item android:icon="@drawable/start_drawable" android:id="@id/stop_run" android:title="@string/start" app:showAsAction="always" />
+    <item android:icon="@drawable/clear_drawable" android:id="@id/reset" android:title="@string/clear" app:showAsAction="never" />
+    <item android:id="@id/stop_aireplay" android:title="@string/stop_aireplay" app:showAsAction="never" />
+    <item android:id="@id/export" android:title="@string/export_title" app:showAsAction="never" />
+    <item android:id="@id/copy_airodump" android:title="@string/copy_last_airodump_title" app:showAsAction="never" />
+    <item android:id="@id/copy_aireplay" android:title="@string/copy_last_aireplay_title" app:showAsAction="never" />
+    <item android:id="@id/copy_mdk" android:title="@string/copy_last_mdk_title" app:showAsAction="never" />
+    <item android:id="@id/copy_reaver" android:title="@string/copy_last_reaver_title" app:showAsAction="never" />
+    <item android:id="@id/settings" android:title="@string/settings" app:showAsAction="never" />
+</menu>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:id="@id/crack_scrollview" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:padding="5.0dip" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="fill_parent" android:layout_height="fill_parent"
+      xmlns:android="http://schemas.android.com/apk/res/android">
+        <LinearLayout android:orientation="vertical" android:id="@id/options_container" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_weight="1.0">
+                    <EditText android:id="@id/capfile" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/path_to_cap" android:maxLines="1" android:inputType="text" android:imeOptions="actionNext" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <Button android:layout_gravity="center_vertical" android:id="@id/cap_fe_btn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="..." style="?android:buttonBarButtonStyle" />
+            </LinearLayout>
+            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_weight="1.0">
+                    <EditText android:id="@id/wordlist" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/path_to_wordlist" android:maxLines="1" android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <ImageButton android:layout_gravity="center_vertical" android:id="@id/wordlist_download_btn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@android:drawable/stat_sys_download" android:tint="@color/colorAccent" style="?android:buttonBarButtonStyle" />
+                <Button android:layout_gravity="center_vertical" android:id="@id/wordlist_fe_btn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="..." style="?android:buttonBarButtonStyle" />
+            </LinearLayout>
+            <RadioGroup android:orientation="horizontal" android:id="@id/radio_group" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <RadioButton android:id="@id/wpa_rb" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true" android:text="WPA/WPA2" android:layout_weight="1.0" />
+                <RadioButton android:id="@id/wep_rb" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="WEP" android:layout_weight="1.0" />
+            </RadioGroup>
+            <RadioGroup android:orientation="horizontal" android:id="@id/wep_rg" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <RadioButton android:id="@id/wep_64" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="64" android:layout_weight="1.0" />
+                <RadioButton android:id="@id/wep_128" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="128" android:layout_weight="1.0" />
+                <RadioButton android:id="@id/wep_152" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="152" android:layout_weight="1.0" />
+                <RadioButton android:id="@id/wep_256" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="256" android:layout_weight="1.0" />
+                <RadioButton android:id="@id/wep_512" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="512" android:layout_weight="1.0" />
+            </RadioGroup>
+        </LinearLayout>
+        <ScrollView android:id="@id/console_scroll_view" android:background="@color/colorPrimary" android:padding="3.0dip" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0">
+            <TextView android:textSize="15.0sp" android:textColor="?android:textColorPrimary" android:id="@id/console" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+        </ScrollView>
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <Button android:id="@id/speed_test_btn" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/speed_test" android:lines="1" android:layout_weight="1.0" style="?android:buttonBarButtonStyle" />
+            <Button android:id="@id/start" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/start" android:layout_weight="1.0" android:textAlignment="center" style="?android:buttonBarButtonStyle" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
