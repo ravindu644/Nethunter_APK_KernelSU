@@ -5,7 +5,7 @@
 export PATH=/data/data/com.offsec.nhterm/files/home/.nhterm/script:/data/data/com.offsec.nhterm/files/usr/bin:/data/data/com.offsec.nhterm/files/usr/sbin:/sbin:/system/bin:/system/xbin:/apex/com.android.runtime/bin:/apex/com.android.art/bin:/odm/bin:/vendor/bin:.
 
 SU1=$(which su)
-SU2="$SU1 -c $@"
+SU2="$SU1 -M -c $@"
 
 # clear out old view
 clear

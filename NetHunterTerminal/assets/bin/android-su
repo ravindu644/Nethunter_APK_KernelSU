@@ -9,7 +9,7 @@ unset LD_PRELOAD
 export PS1="\\[\\e[1;32m\\]\\u [ \\[\\e[0m\\]\\w\\[\\e[1;32m\\] ]\$ \\[\\e[0m\\]"
 # Find and remember su location
 SU1=$(which su)
-SU2="$SU1 -mm -s $@"
+SU2="$SU1 -M -s $@"
 
 # clear out old view
 clear

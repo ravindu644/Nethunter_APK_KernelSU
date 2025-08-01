@@ -1,5 +1,3 @@
-#!/data/data/io.neoterm/files/usr/bin/bash
+#!/system/bin/sh
 
-set -e
-
-bash
+su -M -c "/data/data/com.offsec.nhterm/files/usr/bin/bash"
