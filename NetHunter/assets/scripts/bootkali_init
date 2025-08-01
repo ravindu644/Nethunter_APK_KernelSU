@@ -1,5 +1,7 @@
 #!/system/bin/sh
 
+# Custom Bootkali - modified by ravindu644 - cleaned up redundant mounts
+
 SCRIPT_PATH=$(readlink -f $0)
 . ${SCRIPT_PATH%/*}/bootkali_log
 . ${SCRIPT_PATH%/*}/bootkali_env
@@ -42,7 +44,7 @@ advanced_mount() {
     local src="$1" tgt="$2" type="$3" opts="$4"
 
     if is_mounted "$tgt"; then
-        bklog "[-] Skipping mount: $tgt is already mounted."
+        bklog "[!] Skipping mount: $tgt is already mounted."
         return 0
     fi
 
@@ -55,16 +57,11 @@ advanced_mount() {
         $BUSYBOX mount -t "$type" $opts "$type" "$tgt"
     fi
 
-    [ $? -eq 0 ] && bklog "[+] Mounted $src -> $tgt ($type)" || bklog "[-] Failed to mount $src"
+    short_tgt="${tgt#/data/local/nhsystem/}"
+
+    [ $? -eq 0 ] && bklog "[+] Mounted $src -> $short_tgt ($type)" || bklog "[-] Failed to mount $src"
+
 }
-
-
-mount_cgroup_v1() {
-    local sub="$1" path="/sys/fs/cgroup/$sub"
-    grep -q "^$sub" /proc/cgroups || return
-    mkdir -p "$path"
-    advanced_mount "cgroup" "$path" "cgroup" "-o rw,nosuid,nodev,noexec,relatime,$sub"
-}    
 
 init_mounts(){
 
@@ -84,36 +81,27 @@ init_mounts(){
         mknod /dev/net/tun c 10 200 && bklog "[+] created /dev/net/tun"
     fi      
 
+    # Core filesystem mounts
     advanced_mount "/proc" "$MNT/proc" "proc" "-o rw,nosuid,nodev,noexec,relatime"
     advanced_mount "sys" "$MNT/sys" "sysfs" "-o rw,nosuid,nodev,noexec,relatime"
-    # advanced_mount "/sys" "$MNT/sys" "bind"
     advanced_mount "/dev" "$MNT/dev" "bind"
     advanced_mount "devpts" "$MNT/dev/pts" "devpts" "-o rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000"
 
-    advanced_mount "/proc/net" "$MNT/proc/net" "bind"
-
+    # Temporary filesystems
     advanced_mount "tmpfs" "$MNT/tmp" "tmpfs" "-o rw,nosuid,nodev,relatime,size=100M"
     advanced_mount "tmpfs" "$MNT/run" "tmpfs" "-o rw,nosuid,nodev,relatime,size=50M"
     advanced_mount "tmpfs" "$MNT/dev/shm" "tmpfs" "-o rw,nosuid,nodev,mode=1777"
 
+    # System access
     advanced_mount "/system" "$MNT/system" "bind"
     advanced_mount "/dev/binderfs" "$MNT/dev/binderfs" "bind"
 
+    # Set permissions
     [ -d "$MNT/dev/shm" ] && chmod 1777 "$MNT/dev/shm"
-    [ -d "/sys/kernel/debug" ] && advanced_mount "/sys/kernel/debug" "$MNT/sys/kernel/debug" "bind"
+    [ -d "/sys/class/net" ] && chmod -R 755 /sys/class/net/ 2>/dev/null
     [ -d "/config" ] && advanced_mount "/config" "$MNT/config" "bind"
-    [ -d "/sys/kernel/config" ] && advanced_mount "/sys/kernel/config" "$MNT/sys/kernel/config" "bind"
-    [ -d "/proc/bus/usb" ] && advanced_mount "/proc/bus/usb" "$MNT/proc/bus/usb" "bind"
-    [ -d "/dev/bus/usb" ] && advanced_mount "/dev/bus/usb" "$MNT/dev/bus/usb" "bind"
-    [ -d "/sys/class/net" ] && chmod -R 755 /sys/class/net/ 2>/dev/null    
 
     for dev in /dev/null /dev/zero /dev/random /dev/urandom /dev/tty; do [ -e "$dev" ] && chmod 666 "$dev"; done
-
-    if $BUSYBOX mount -t tmpfs -o rw,nosuid,nodev,noexec,relatime,mode=755 tmpfs /sys/fs/cgroup 2>/dev/null; then
-        for c in devices cpuset cpu cpuacct memory blkio freezer net_cls net_prio perf_event pids schedtune; do 
-            mount_cgroup_v1 "$c"
-        done
-    fi
 
     # mount Android's internal storage
     local storage_path="${EXTERNAL_STORAGE:-/storage/emulated/0}"
@@ -150,7 +138,6 @@ networking() {
     echo "kali" > "$MNT/proc/sys/kernel/hostname" 2>/dev/null
 }
 
-
 # mountpoint checking part
 is_mountpoints_ready() {
     for i in proc sys dev dev/pts system sdcard; do
@@ -180,7 +167,6 @@ if ! is_mountpoints_ready; then
     bklog "[!] Mounting fs to kali chroot."
     init_mounts
 fi
-
 
 start_chroot() {
 
