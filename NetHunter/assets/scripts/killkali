@@ -1,5 +1,7 @@
 #!/system/bin/sh
 
+# Modified killkali script - updated to match bootkali mounts
+
 SCRIPT_PATH=$(readlink -f $0)
 . ${SCRIPT_PATH%/*}/bootkali_log
 . ${SCRIPT_PATH%/*}/bootkali_env
@@ -61,30 +63,44 @@ f_restore_setup() {
 
 ########## umount the fs one by one ##########
 f_umount_fs() {
-    if $BUSYBOX mountpoint -q $MNT/$1; then
+    if $BUSYBOX mountpoint -q "$MNT/$1" 2>/dev/null; then
         if $BUSYBOX umount -l "$MNT/$1" || $BUSYBOX umount -f "$MNT/$1"; then
             bklog "[+] umounted $MNT/$1"
-            if [ ! "$1" = "dev/pts" -a ! "$1" = "dev/shm" ]; then
-                if rm -rf $MNT/$1; then
-                    bklog "[+] removed $MNT/$1"
-                else
-                    bklog "[-] Failed to remove $MNT/$1"
-                    isAllunmounted=1
-                fi
-            fi
+            # Don't remove certain critical directories
+            case "$1" in
+                "dev/pts"|"dev/shm"|"proc"|"sys"|"dev"|"system"|"sdcard")
+                    # Keep these directories, just unmount them
+                    ;;
+                *)
+                    if rm -rf "$MNT/$1" 2>/dev/null; then
+                        bklog "[+] removed $MNT/$1"
+                    else
+                        bklog "[-] Failed to remove $MNT/$1"
+                        isAllunmounted=1
+                    fi
+                    ;;
+            esac
         else
-            bklog "[-] failed to umounted $MNT/$1"
+            bklog "[-] failed to umount $MNT/$1"
             isAllunmounted=1
         fi
     else
-        if [ -d $MNT/$1 ]; then
+        if [ -d "$MNT/$1" ]; then
             bklog "[+] $MNT/$1 is unmounted already."
-            if rm -rf $MNT/$1; then
-                bklog "[+] removed $MNT/$1"
-            else
-                bklog "[-] Failed to remove $MNT/$1"
-                isAllunmounted=1
-            fi
+            # Only remove non-critical directories
+            case "$1" in
+                "dev/pts"|"dev/shm"|"proc"|"sys"|"dev"|"system"|"sdcard")
+                    # Keep these directories
+                    ;;
+                *)
+                    if rm -rf "$MNT/$1" 2>/dev/null; then
+                        bklog "[+] removed $MNT/$1"
+                    else
+                        bklog "[-] Failed to remove $MNT/$1"
+                        isAllunmounted=1
+                    fi
+                    ;;
+            esac
         fi
     fi
 }
@@ -94,8 +110,31 @@ f_dir_umount() {
     $BUSYBOX sync
     f_kill_pids
     f_restore_setup
+    
     bklog "[!] Removing all fs mounts.."
-    FS=(dev/pts dev/shm dev proc sys system sdcard)
+    
+    # Unmount in reverse order of mounting to avoid dependency issues
+    # Optional mounts first (may not exist on all systems)
+    for optional_mount in "dev/bus/usb" "proc/bus/usb" "sys/kernel/config" "config" "sys/kernel/debug"; do
+        if $BUSYBOX mountpoint -q "$MNT/$optional_mount" 2>/dev/null; then
+            f_umount_fs "$optional_mount"
+        fi
+    done
+
+    
+    # Main filesystem unmounts in reverse dependency order
+    FS=(
+        "system" 
+        "dev/shm"
+        "run"
+        "tmp"
+        "dev/pts"
+        "dev"
+        "sys"
+        "proc"
+        "sdcard"
+    )
+    
     for i in "${FS[@]}"; do
         f_umount_fs "$i"
     done
@@ -134,4 +173,4 @@ else
     isAllunmounted=1
 fi
 
-return $isAllunmounted
+exit $isAllunmounted

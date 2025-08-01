@@ -1,5 +1,7 @@
 #!/system/bin/sh
 
+# Updated chrootmgr script - enhanced f_mountfs function to match bootkali
+
 SCRIPT_PATH=$(readlink -f $0)
 . ${SCRIPT_PATH%/*}/bootkali_log
 . ${SCRIPT_PATH%/*}/bootkali_env
@@ -40,7 +42,37 @@ f_chroot_usage(){
     bklog "[!] If -p option is not specified, then the script will find the chroot path according to the app sharepreference."
 }
 
-## No use for now.
+# Check if a path is a mountpoint
+is_mounted() {
+    [ "$($BUSYBOX mountpoint "$1" 2>/dev/null | grep 'is a')" ] && {
+        echo "$1 is already mounted"
+        return 0
+    }
+    return 1
+}
+
+# Enhanced mount function
+advanced_mount() {
+    local src="$1" tgt="$2" type="$3" opts="$4"
+
+    if is_mounted "$tgt"; then
+        bklog "[-] Skipping mount: $tgt is already mounted."
+        return 0
+    fi
+
+    mkdir -p "$(dirname "$tgt")" 2>/dev/null
+    [ -e "$src" ] || [ "$type" = "tmpfs" ] || [ "$type" = "devpts" ] && mkdir -p "$tgt"
+
+    if [ "$type" = "bind" ]; then
+        $BUSYBOX mount --bind "$src" "$tgt"
+    else
+        $BUSYBOX mount -t "$type" $opts "$type" "$tgt"
+    fi
+
+    [ $? -eq 0 ] && bklog "[+] Mounted $src -> $tgt ($type)" || bklog "[-] Failed to mount $src"
+}
+
+## Enhanced f_mountfs function to match bootkali script
 f_mountfs(){
     export bin=/system/bin
     export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH
@@ -49,6 +81,11 @@ f_mountfs(){
     export USER=root
     export LOGNAME=root
     unset LD_PRELOAD
+
+    # essential
+    $BUSYBOX mount -o remount,suid /data
+    $BUSYBOX chmod +s $MNT$CHROOT_EXEC    
+
     if [ ! -e "/dev/fd" -o ! -e "/dev/stdin" -o ! -e "/dev/stdout" -o ! -e "/dev/stderr" ]; then
         [ -e "/dev/fd" ] || ln -s /proc/self/fd /dev/ && bklog "[+] linked /proc/self/fd to /dev/"
         [ -e "/dev/stdin" ] || ln -s /proc/self/fd/0 /dev/stdin && bklog "[+] linked /proc/self/fd/0 to /dev/stdin"
@@ -56,49 +93,41 @@ f_mountfs(){
         [ -e "/dev/stderr" ] || ln -s /proc/self/fd/2 /dev/stderr && bklog "[+] linked /proc/self/fd/2 to /dev/stderr"
     fi
 
-    ######### SET TUN ########
     if [ ! -e "/dev/net/tun" ]; then
         [ ! -d "/dev/net" ] && mkdir -p /dev/net
-        $BUSYBOX mknod /dev/net/tun c 10 200 && bklog "[+] created /dev/net/tun"
-    fi
+        mknod /dev/net/tun c 10 200 && bklog "[+] created /dev/net/tun"
+    fi      
 
-    ######### SET DEV ########
-    if [ ! "$($BUSYBOX mountpoint $MNT/dev 2> /dev/null | grep 'is a')" ]; then
-        [ -d $MNT/dev ] && rm -rf $MNT/dev
-        [ ! -d $MNT/dev ] && mkdir -p $MNT/dev
-        $BUSYBOX mount -o bind /dev $MNT/dev && bklog "[+] binded /dev"
-    fi
+    # Core filesystem mounts
+    advanced_mount "/proc" "$MNT/proc" "proc" "-o rw,nosuid,nodev,noexec,relatime"
+    advanced_mount "sys" "$MNT/sys" "sysfs" "-o rw,nosuid,nodev,noexec,relatime"
+    advanced_mount "/dev" "$MNT/dev" "bind"
+    advanced_mount "devpts" "$MNT/dev/pts" "devpts" "-o rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000"
 
-    ######### SET DEV PTS ########
-    if [ ! "$($BUSYBOX mountpoint $MNT/dev/pts 2> /dev/null | grep 'is a')" ]; then
-        $BUSYBOX mount -t devpts devpts $MNT/dev/pts && bklog "[+] mounted /dev/pts"
-    fi
+    # Temporary filesystems
+    advanced_mount "tmpfs" "$MNT/tmp" "tmpfs" "-o rw,nosuid,nodev,relatime,size=100M"
+    advanced_mount "tmpfs" "$MNT/run" "tmpfs" "-o rw,nosuid,nodev,relatime,size=50M"
+    advanced_mount "tmpfs" "$MNT/dev/shm" "tmpfs" "-o rw,nosuid,nodev,mode=1777"
 
-    ######### SET DEV SHM ########
-    if [ ! "$($BUSYBOX mountpoint $MNT/dev/shm 2> /dev/null | grep 'is a')" ]; then
-        [ ! -d $MNT/dev/shm ] && mkdir -p $MNT/dev/shm
-        $BUSYBOX mount -o rw,nosuid,nodev,mode=1777 -t tmpfs tmpfs $MNT/dev/shm && bklog "[+] mounted /dev/shm"
-    fi
+    # System access
+    advanced_mount "/system" "$MNT/system" "bind"
+    advanced_mount "/dev/binderfs" "$MNT/dev/binderfs" "bind"
 
-    ######### SET PROC ########
-    if [ ! "$($BUSYBOX mountpoint $MNT/proc 2> /dev/null | grep 'is a')" ]; then
-        [ -d $MNT/proc ] && rm -rf $MNT/proc
-        [ ! -d $MNT/proc ] && mkdir -p $MNT/proc
-        $BUSYBOX mount -t proc proc $MNT/proc && bklog "[+] mounted /proc"
-    fi
+    # Set permissions
+    [ -d "$MNT/dev/shm" ] && chmod 1777 "$MNT/dev/shm"
+    [ -d "/sys/class/net" ] && chmod -R 755 /sys/class/net/ 2>/dev/null
+    [ -d "/config" ] && advanced_mount "/config" "$MNT/config" "bind"
 
-    ######### SET SYS ########
-    if [ ! "$($BUSYBOX mountpoint $MNT/sys 2> /dev/null | grep 'is a')" ]; then
-        [ -d $MNT/sys ] && rm -rf $MNT/sys
-        [ ! -d $MNT/sys ] && mkdir -p $MNT/sys
-        $BUSYBOX mount -t sysfs sys $MNT/sys && bklog "[+] mounted /sys"
-    fi
+    for dev in /dev/null /dev/zero /dev/random /dev/urandom /dev/tty; do [ -e "$dev" ] && chmod 666 "$dev"; done
 
-    ######### SET SYS ########
-    if [ ! "$($BUSYBOX mountpoint $MNT/system 2> /dev/null | grep 'is a')" ]; then
-        [ -d $MNT/system ] && rm -rf $MNT/system
-        [ ! -d $MNT/system ] && mkdir -p $MNT/system
-        $BUSYBOX mount -o bind /system $MNT/system && bklog "[+] binded /system"
+    # mount Android's internal storage
+    local storage_path="${EXTERNAL_STORAGE:-/storage/emulated/0}"
+    if [ -d "$storage_path" ]; then
+        bklog "[+] Setting up storage access: $storage_path"
+        mkdir -p "$MNT/sdcard"
+        advanced_mount "$storage_path" "$MNT/sdcard" "bind"
+    else
+        bklog "[-] Android storage not found - continuing without it"
     fi
 }
 
@@ -173,9 +202,11 @@ if [ ! $# -eq 0 ]; then
                             fi
                         fi
                         ISALLREADY=0
-                        FS=(proc sys dev dev/pts system sdcard)
+                        # Use our modern is_mounted function - check only essential unique mounts
+                        # Don't check sub-mounts that are already covered by parent mounts
+                        FS=(proc sys dev dev/pts system sdcard run tmp dev/shm)
                         for i in "${FS[@]}"; do
-                            if [ "$($BUSYBOX grep $MNT/$i /proc/mounts)" ]; then
+                            if is_mounted "$MNT/$i" >/dev/null 2>&1; then
                                 bklog "[+] $i was mounted already."
                                 continue
                             else
@@ -187,14 +218,14 @@ if [ ! $# -eq 0 ]; then
                       if [ $ISALLREADY -eq 0 ]; then
                             bklog "[+] Chroot environment has been set and started."
                             bklog "[!] You may click \"STOP KALI CHROOT\" to shutdown the chroot environment."
-                            return 0
+                            exit 0
                       else
                             bklog "[!] You may click \"START KALI CHROOT\" to start the chroot environment."
-                            return 1
+                            exit 1
                       fi
                     else
                         bklog "[-] seems there is no kali chroot installed yet, please click the button \"EDIT\" to configure the proper Kali Chroot Path or install the chroot."
-                        return 2
+                        exit 2
                     fi
                     ;;
                 *)
@@ -237,7 +268,7 @@ if [ ! $# -eq 0 ]; then
                         fi
                     fi
                     bklog "[+] Done! $2 has been created."
-                    return 0
+                    exit 0
                     ;;
                 *)
                     f_chroot_usage
@@ -314,7 +345,7 @@ if [ ! $# -eq 0 ]; then
                     mv "$TEMP_EXTRACT_DIR/$TARBALL_ROOTDIR_NAME" "$TARGET_CHROOT_DIR_NAME"
                     rmdir "$TEMP_EXTRACT_DIR"
                     bklog "[+] Chroot has been installed."
-                    return 0
+                    exit 0
                     ;;
                 *)
                     f_chroot_usage
@@ -398,10 +429,10 @@ if [ ! $# -eq 0 ]; then
                     bklog "$COMPUTED_SHA"
                     if [ "$CORRECT_SHA" = "$COMPUTED_SHA" ]; then
                         bklog "[+] Checksum matches!"
-                        return 0
+                        exit 0
                     else
                         bklog "[-] Checksum mismatches! the downloaded file may be compromised already!! Please contact the nethunter devs for help."
-                        return 1
+                        exit 1
                     fi
                     ;;
                 *)
