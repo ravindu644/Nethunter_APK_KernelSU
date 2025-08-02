@@ -16,16 +16,30 @@ REPLACE_EXAMPLE="
 /system/framework
 "
 
-print_modname() {
-  ui_print " "
-  ui_print " "
-  ui_print "********************************"
-  ui_print "-  USB Arsenal for exynos9820  -"
-  ui_print "        by ravindu644           "
-  ui_print "********************************"
-  ui_print " "
+ui_print " "
+ui_print " "
+ui_print "********************************"
+ui_print "-  USB Arsenal for exynos9820  -"
+ui_print "        by ravindu644           "
+ui_print "********************************"
+ui_print " "
 
+check_device() {
+  hw=$(getprop ro.hardware)
+  case "$hw" in
+    exynos9820) ;;
+    *)
+      ui_print "Unsupported device: $hw"
+      ui_print "This module is only for exynos9820 devices."
+      abort
+      ;;
+  esac
 }
+
+ui_print "Verifying device..."
+ui_print " "
+check_device
+
 
 on_install() {
   ui_print "Copying files..."
