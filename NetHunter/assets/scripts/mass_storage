@@ -1,0 +1,79 @@
+#!/system/bin/sh
+
+# This is the final, most robust version.
+# It dynamically finds the mass_storage function name instead of hardcoding it.
+
+SCRIPT_PATH=$(readlink -f $0)
+. ${SCRIPT_PATH%/*}/bootkali_log
+. ${SCRIPT_PATH%/*}/bootkali_env
+
+set -e
+
+bklog "🔍 Discovering mass storage function name..."
+MASS_STORAGE_F_NAME=$(ls /config/usb_gadget/g1/functions/ | grep "mass" | head -n 1)
+
+# --- VALIDATION ---
+
+# 1. Check if the function name was actually found
+if [ -z "$MASS_STORAGE_F_NAME" ]; then
+    bklog "❌ Error: No mass_storage function found. Is it enabled in USB Arsenal?"
+    exit 5
+fi
+bklog "  > Found function: $MASS_STORAGE_F_NAME"
+
+# 2. Construct the dynamic LUN path
+LUN_PATH="/config/usb_gadget/g1/functions/${MASS_STORAGE_F_NAME}/lun.0"
+
+# 3. Standard input validation
+if [ "$#" -ne 2 ]; then
+  bklog "Usage: $0 <image_path> <read_only_flag>"
+  exit 1
+fi
+
+IMAGE_FILE="$1"
+READ_ONLY_FLAG="$2"
+
+if [ "$(id -u)" -ne 0 ]; then
+  bklog "Error: This script must be run as root."
+  exit 2
+fi
+if [ ! -f "$IMAGE_FILE" ]; then
+  bklog "Error: Image file not found at '$IMAGE_FILE'"
+  exit 3
+fi
+if [ ! -d "$LUN_PATH" ]; then
+    bklog "Error: Dynamic LUN path not found at '$LUN_PATH'."
+    exit 4
+fi
+
+# --- CORE LOGIC (using the dynamic path) ---
+
+bklog "⚙️  Smart mount script starting..."
+CURRENTLY_MOUNTED=$(cat "$LUN_PATH/file")
+
+if [ -n "$CURRENTLY_MOUNTED" ] && [ "$CURRENTLY_MOUNTED" = "$IMAGE_FILE" ]; then
+    bklog "  > Image already mounted. Toggling read-only status."
+    bklog "  > Setting read-only to: $READ_ONLY_FLAG"
+    echo "$READ_ONLY_FLAG" > "$LUN_PATH/ro"
+    bklog "✅ Real-time toggle successful."
+    exit 0
+else
+    bklog "  > Performing full mount/remount."
+    bklog "  > Image: $IMAGE_FILE"
+    bklog "  > Read-Only: $READ_ONLY_FLAG"
+    echo "" > "$LUN_PATH/file"
+
+    if [[ "$IMAGE_FILE" == *.iso ]]; then
+      bklog "  > Detected .iso, forcing CD-ROM and read-only mode."
+      echo 1 > "$LUN_PATH/cdrom"
+      echo 1 > "$LUN_PATH/ro"
+    else
+      bklog "  > Detected .img, setting as standard drive."
+      echo 0 > "$LUN_PATH/cdrom"
+      echo "$READ_ONLY_FLAG" > "$LUN_PATH/ro"
+    fi
+
+    echo "$IMAGE_FILE" > "$LUN_PATH/file"
+    bklog "✅ Full mount successful."
+    exit 0
+fi
