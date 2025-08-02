@@ -2596,8 +2596,9 @@
 .end method
 
 .method synthetic lambda$onViewCreated$4$com-offsec-nethunter-USBArsenalFragment(Landroid/widget/CheckBox;Landroid/view/View;)V
-    .locals 12
+    .locals 3
 
+    .line 1
     iget-object p2, p0, Lcom/offsec/nethunter/USBArsenalFragment;->imgFileSpinner:Landroid/widget/Spinner;
 
     invoke-virtual {p2}, Landroid/widget/Spinner;->getSelectedItem()Ljava/lang/Object;
@@ -2606,14 +2607,16 @@
 
     if-nez p2, :cond_0
 
+    .line 2
     iget-object p1, p0, Lcom/offsec/nethunter/USBArsenalFragment;->context:Landroid/content/Context;
 
     const-string p2, "No image file is selected."
 
     invoke-static {p1, p2}, Lcom/offsec/nethunter/utils/NhPaths;->showMessage(Landroid/content/Context;Ljava/lang/String;)V
 
-    goto/16 :goto_1
+    goto :goto_1
 
+    .line 3
     :cond_0
     iget-object p2, p0, Lcom/offsec/nethunter/USBArsenalFragment;->mountImgButton:Landroid/widget/Button;
 
@@ -2621,236 +2624,72 @@
 
     invoke-virtual {p2, v0}, Landroid/widget/Button;->setEnabled(Z)V
 
+    .line 4
     iget-object p2, p0, Lcom/offsec/nethunter/USBArsenalFragment;->unmountImgButton:Landroid/widget/Button;
 
     invoke-virtual {p2, v0}, Landroid/widget/Button;->setEnabled(Z)V
 
-    new-instance p2, Landroid/os/Message;
+    # --- START OF NEW SCRIPT-CALLING LOGIC ---
 
-    invoke-direct {p2}, Landroid/os/Message;-><init>()V
-
-    const/4 v1, 0x7
-
-    iput v1, p2, Landroid/os/Message;->what:I
-
+    .line 5
+    # Get the read-only flag ('1' for checked, '0' for not)
     invoke-virtual {p1}, Landroid/widget/CheckBox;->isChecked()Z
-
     move-result p1
 
-    const/4 v1, 0x3
+    if-eqz p1, :cond_set_writable
+    const-string p1, "1"
+    goto :goto_set_flag
+    :cond_set_writable
+    const-string p1, "0"
+    :goto_set_flag
 
-    const/4 v2, 0x2
-
-    const-string v3, "/lun.0/cdrom"
-
-    const-string v4, " && echo \'1\' > /config/usb_gadget/g1/functions/"
-
-    const-string v5, " && echo \'0\' > /config/usb_gadget/g1/functions/mass_storage.gs6/lun.0/cdrom"
-
-    const-string v6, ".iso"
-
-    const/4 v7, 0x1
-
-    const-string v8, "/lun.0/ro"
-
-    const/4 v9, 0x4
-
-    const-string v10, "/lun.0/file"
-
-    const-string v11, "%s%s && echo \'%s/%s\' > /config/usb_gadget/g1/functions/"
-
-    if-eqz p1, :cond_2
-
-    new-instance p1, Ljava/lang/StringBuilder;
-
-    invoke-direct {p1, v11}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    iget-object v11, p0, Lcom/offsec/nethunter/USBArsenalFragment;->usbStorageFunctionName:Ljava/lang/String;
-
-    invoke-virtual {p1, v11}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    invoke-virtual {p1, v10}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object p1
-
-    new-array v9, v9, [Ljava/lang/Object;
-
-    new-instance v10, Ljava/lang/StringBuilder;
-
-    const-string v11, "echo \'1\' > /config/usb_gadget/g1/functions/"
-
-    invoke-direct {v10, v11}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    iget-object v11, p0, Lcom/offsec/nethunter/USBArsenalFragment;->usbStorageFunctionName:Ljava/lang/String;
-
-    invoke-virtual {v10, v11}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v10, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v10}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v8
-
-    aput-object v8, v9, v0
-
-    iget-object v0, p0, Lcom/offsec/nethunter/USBArsenalFragment;->imgFileSpinner:Landroid/widget/Spinner;
-
-    invoke-virtual {v0}, Landroid/widget/Spinner;->getSelectedItem()Ljava/lang/Object;
-
-    move-result-object v0
-
-    invoke-virtual {v0}, Ljava/lang/Object;->toString()Ljava/lang/String;
-
-    move-result-object v0
-
-    invoke-virtual {v0, v6}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_1
-
-    new-instance v0, Ljava/lang/StringBuilder;
-
-    invoke-direct {v0, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    iget-object v4, p0, Lcom/offsec/nethunter/USBArsenalFragment;->usbStorageFunctionName:Ljava/lang/String;
-
-    invoke-virtual {v0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v5
-
-    :cond_1
-    aput-object v5, v9, v7
-
+    .line 6
+    # Get the full path of the selected image file
+    new-instance p2, Ljava/lang/StringBuilder;
+    invoke-direct {p2}, Ljava/lang/StringBuilder;-><init>()V
     sget-object v0, Lcom/offsec/nethunter/utils/NhPaths;->APP_SD_FILES_IMG_PATH:Ljava/lang/String;
-
-    aput-object v0, v9, v2
-
+    invoke-virtual {p2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    const-string v0, "/"
+    invoke-virtual {p2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
     iget-object v0, p0, Lcom/offsec/nethunter/USBArsenalFragment;->imgFileSpinner:Landroid/widget/Spinner;
-
     invoke-virtual {v0}, Landroid/widget/Spinner;->getSelectedItem()Ljava/lang/Object;
-
     move-result-object v0
-
     invoke-virtual {v0}, Ljava/lang/Object;->toString()Ljava/lang/String;
-
     move-result-object v0
+    invoke-virtual {p2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {p2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    move-result-object p2
 
-    aput-object v0, v9, v1
-
-    invoke-static {p1, v9}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
-
+    .line 7
+    # Build the command string: "script_path 'image_path' read_only_flag"
+    const/4 v0, 0x2
+    new-array v0, v0, [Ljava/lang/Object;
+    const/4 v1, 0x0
+    aput-object p2, v0, v1
+    const/4 p2, 0x1
+    aput-object p1, v0, p2
+    const-string p1, "/data/data/com.offsec.nethunter/scripts/mass_storage \'%s\' %s"
+    invoke-static {p1, v0}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
     move-result-object p1
 
+    .line 8
+    # Create a message to send to the background handler thread
+    new-instance p2, Landroid/os/Message;
+    invoke-direct {p2}, Landroid/os/Message;-><init>()V
+    const/4 v0, 0x7 
+    iput v0, p2, Landroid/os/Message;->what:I
     iput-object p1, p2, Landroid/os/Message;->obj:Ljava/lang/Object;
 
-    goto :goto_0
-
-    :cond_2
-    new-instance p1, Ljava/lang/StringBuilder;
-
-    invoke-direct {p1, v11}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    iget-object v11, p0, Lcom/offsec/nethunter/USBArsenalFragment;->usbStorageFunctionName:Ljava/lang/String;
-
-    invoke-virtual {p1, v11}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    invoke-virtual {p1, v10}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object p1
-
-    new-array v9, v9, [Ljava/lang/Object;
-
-    new-instance v10, Ljava/lang/StringBuilder;
-
-    const-string v11, "echo \'0\' > /config/usb_gadget/g1/functions/"
-
-    invoke-direct {v10, v11}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    iget-object v11, p0, Lcom/offsec/nethunter/USBArsenalFragment;->usbStorageFunctionName:Ljava/lang/String;
-
-    invoke-virtual {v10, v11}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v10, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v10}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v8
-
-    aput-object v8, v9, v0
-
-    iget-object v0, p0, Lcom/offsec/nethunter/USBArsenalFragment;->imgFileSpinner:Landroid/widget/Spinner;
-
-    invoke-virtual {v0}, Landroid/widget/Spinner;->getSelectedItem()Ljava/lang/Object;
-
-    move-result-object v0
-
-    invoke-virtual {v0}, Ljava/lang/Object;->toString()Ljava/lang/String;
-
-    move-result-object v0
-
-    invoke-virtual {v0, v6}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_3
-
-    new-instance v0, Ljava/lang/StringBuilder;
-
-    invoke-direct {v0, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    iget-object v4, p0, Lcom/offsec/nethunter/USBArsenalFragment;->usbStorageFunctionName:Ljava/lang/String;
-
-    invoke-virtual {v0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v5
-
-    :cond_3
-    aput-object v5, v9, v7
-
-    sget-object v0, Lcom/offsec/nethunter/utils/NhPaths;->APP_SD_FILES_IMG_PATH:Ljava/lang/String;
-
-    aput-object v0, v9, v2
-
-    iget-object v0, p0, Lcom/offsec/nethunter/USBArsenalFragment;->imgFileSpinner:Landroid/widget/Spinner;
-
-    invoke-virtual {v0}, Landroid/widget/Spinner;->getSelectedItem()Ljava/lang/Object;
-
-    move-result-object v0
-
-    invoke-virtual {v0}, Ljava/lang/Object;->toString()Ljava/lang/String;
-
-    move-result-object v0
-
-    aput-object v0, v9, v1
-
-    invoke-static {p1, v9}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
-
-    move-result-object p1
-
-    iput-object p1, p2, Landroid/os/Message;->obj:Ljava/lang/Object;
-
-    :goto_0
+    .line 9
+    # Send the command to the background thread to be executed as root
     iget-object p1, p0, Lcom/offsec/nethunter/USBArsenalFragment;->usbArsenalHandlerThread:Lcom/offsec/nethunter/HandlerThread/USBArsenalHandlerThread;
-
     invoke-virtual {p1}, Lcom/offsec/nethunter/HandlerThread/USBArsenalHandlerThread;->getHandler()Landroid/os/Handler;
-
     move-result-object p1
-
     invoke-virtual {p1, p2}, Landroid/os/Handler;->sendMessage(Landroid/os/Message;)Z
 
+    # --- END OF NEW SCRIPT-CALLING LOGIC ---
+    
+    .line 10
     :goto_1
     return-void
 .end method
