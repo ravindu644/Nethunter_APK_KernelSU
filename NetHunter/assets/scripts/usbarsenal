@@ -7,8 +7,6 @@ SCRIPT_PATH=$(readlink -f $0)
 . ${SCRIPT_PATH%/*}/bootkali_log
 . ${SCRIPT_PATH%/*}/bootkali_env
 
-
-
 #################################
 #### Define global variables ####
 #################################
@@ -64,18 +62,18 @@ function switch_funcs(){
     local FUNCS_DESC
 
     ## Setup the idProduct, idVendor, manufacturer, product, serialnumber
-    echo "$ID_VENDOR" > $DIR_CONFIGFS/idVendor
-    echo "$ID_PRODUCT" > $DIR_CONFIGFS/idProduct
+    setprop offsec.nethunter.idVendor "$ID_VENDOR"
+    setprop offsec.nethunter.idProduct "$ID_PRODUCT"
 
     ### Changing manufacturer, product, serialnumber may make your PC fail to authen your device again, ##
     ## so this part is disabled now until further experiment. ##
-    [ ! -z "$MANUFACTURER" ] && [ -f $DIR_CONFIGFS/strings/0x409/manufacturer ] && echo "$MANUFACTURER" > $DIR_CONFIGFS/strings/0x409/manufacturer
-    [ ! -z "$PRODUCT" ] && [ -f $DIR_CONFIGFS/strings/0x409/product ] && echo "$PRODUCT" > $DIR_CONFIGFS/strings/0x409/product
-    [ ! -z "$SERIALNUMBER" ] && [ -f $DIR_CONFIGFS/strings/0x409/serialnumber ] && echo "$SERIALNUMBER" > $DIR_CONFIGFS/strings/0x409/serialnumber
+    [ ! -z "$MANUFACTURER" ] && [ -f $DIR_CONFIGFS/strings/0x409/manufacturer ] && setprop offsec.nethunter.manufacturer "$MANUFACTURER"
+    [ ! -z "$PRODUCT" ] && [ -f $DIR_CONFIGFS/strings/0x409/product ] && setprop offsec.nethunter.product "$PRODUCT"
+    [ ! -z "$SERIALNUMBER" ] && [ -f $DIR_CONFIGFS/strings/0x409/serialnumber ] && setprop offsec.nethunter.serialnumber "$SERIALNUMBER"
 
     ## If the target function is "reset" then use adb setprop directly ##
     if [ "$TARGET_FUNCS" = "reset" ]; then
-        bklog "[!] Resetting the usb functions."
+        bklog "[!] Resetting the usb functions to adb only."
         setprop sys.usb.config adb
         exit 0
     fi
@@ -107,6 +105,9 @@ function switch_funcs(){
         CONFIG_STRING="adb"
         FUNCS_DESC+=('adb')
     fi
+
+    # MODIFICATION HERE: Prepend the "nethunter" namespace to the config string
+    CONFIG_STRING="nethunter,${CONFIG_STRING}"
 
     bklog "[!] Setting USB configuration: ${CONFIG_STRING}"
     
@@ -140,7 +141,7 @@ while getopts "t:f:v:p:m:P:s:" OPTS; do
     esac
 done
 
-## The number of args should be exactly 4 ##
+## The number of args should be exactly 8 ##
 if [ -z "$TARGET_OS" -o -z "$TARGET_FUNCS" -o -z "$ID_VENDOR" -o -z "$ID_PRODUCT" ]; then
     print_usage; exit 1
 fi
