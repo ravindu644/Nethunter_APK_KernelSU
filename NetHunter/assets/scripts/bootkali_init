@@ -1,10 +1,31 @@
 #!/system/bin/sh
 
 # Custom Bootkali - modified by ravindu644 - cleaned up redundant mounts
+# Only for exynos9820/9825 devices with ravindu644's .rc file
 
 SCRIPT_PATH=$(readlink -f $0)
 . ${SCRIPT_PATH%/*}/bootkali_log
 . ${SCRIPT_PATH%/*}/bootkali_env
+
+bklog "[!] Custom Nethunter build by ravindu644 for exynos9820/9825."
+sleep 0.5
+
+
+HARDWARE=$(getprop ro.hardware)
+USB_RC="/vendor/etc/init/init.$HARDWARE.usb.rc"
+
+if [ "$HARDWARE" != "exynos9820" ] && [ "$HARDWARE" != "exynos9825" ]; then
+    bklog "[-] This specific Nethunter build is only designed for exynos9820/exynos9825 series..."
+    sleep 3
+    exit 1
+fi
+
+if ! grep -q "nethunter" "$USB_RC"; then
+    bklog "[-] You must use my custom usb.rc file to continue..."
+    bklog "[i] Please download it from: https://github.com/ravindu644/Simple-Android-Guides/tree/exynos9820-hid-ums"
+    sleep 5
+    exit 2
+fi
 
 ## Validate busybox path.
 if [ -z "$BUSYBOX" ]; then

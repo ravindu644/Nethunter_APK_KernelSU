@@ -7,6 +7,16 @@ SCRIPT_PATH=$(readlink -f $0)
 . ${SCRIPT_PATH%/*}/bootkali_log
 . ${SCRIPT_PATH%/*}/bootkali_env
 
+
+USB_RC="/vendor/etc/init/init.$(getprop ro.hardware).usb.rc"
+
+if grep -q "nethunter" "$USB_RC"; then
+    bklog "[!] Custom Nethunter build by ravindu644 for exynos9820/9825."
+else
+    bklog "[-] This specific script will only work with ravindu644's custom usb.rc file."
+    exit 1
+fi
+
 #################################
 #### Define global variables ####
 #################################
