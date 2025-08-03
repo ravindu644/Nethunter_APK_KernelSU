@@ -53,7 +53,7 @@ check_device
 
 on_install() {
 
-  ui_print "Checking prebuilt kernel.."
+  ui_print "Checking prebuilt kernel..."
   unzip -o "$ZIPFILE" 'kernel/*' -d $TMPDIR >&2 && source $TMPDIR/kernel/util_functions.sh
   install_kernel || ui_print "No kernel found for device $PRODUCT_NAME, skipping..."
 
