@@ -75,6 +75,10 @@ on_install() {
       ui_print "** $x success" || ui_print "** ! $x failed"
   done
 
+  ui_print "Copying boot scripts..."
+
+  (unzip -o "$ZIPFILE" 'post-fs-data.sh' -d $MODPATH >&2
+  unzip -o "$ZIPFILE" 'service.sh' -d $MODPATH >&2) || abort "Failed to copy boot scripts..."
 
   rm -rf /data/system/package_cache/*
   ui_print " "
