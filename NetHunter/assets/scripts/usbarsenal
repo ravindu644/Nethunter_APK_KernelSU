@@ -129,10 +129,11 @@ function switch_funcs(){
     
     ## Use setprop to change USB configuration - init.rc handles the rest ##
     setprop offsec.nethunter.usbarsenal "1"
+    sleep 1
     setprop sys.usb.config "$CONFIG_STRING"
 
     ## Wait for the configuration to fully apply ##
-    sleep 4
+    sleep 1
 
     ## Build description for logging ##
     FUNCS_DESC=$(join_by _ "${FUNCS_DESC[@]}")
