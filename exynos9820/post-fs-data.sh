@@ -1,1 +1,1 @@
-setprop sys.usb.config mtp,adb
+#setprop sys.usb.config mtp,adb

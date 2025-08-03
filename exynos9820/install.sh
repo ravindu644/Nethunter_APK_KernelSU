@@ -4,17 +4,10 @@ SKIPMOUNT=false
 PROPFILE=false
 
 # Set to true if you need post-fs-data script
-POSTFSDATA=false
+POSTFSDATA=true
 
 # Set to true if you need late_start service script
-LATESTARTSERVICE=false
-
-REPLACE_EXAMPLE="
-/system/app/Youtube
-/system/priv-app/SystemUI
-/system/priv-app/Settings
-/system/framework
-"
+LATESTARTSERVICE=true
 
 ui_print " "
 ui_print " "
@@ -26,23 +19,39 @@ ui_print " "
 
 check_device() {
   hw=$(getprop ro.hardware)
+  kernel=$(uname -r)
+
+  ui_print "Verifying device..."
+  ui_print " "
+
+  # Check hardware first
   case "$hw" in
     exynos9820) ;;
     *)
       ui_print "Unsupported device: $hw"
-      ui_print "This module is only for exynos9820 devices."
+      ui_print "This module is only for Exynos9820 devices."
       abort
       ;;
   esac
+
+  # Check if kernel string contains nh/nethunter
+  ui_print "Detected Kernel version: $kernel"
+  echo "$kernel" | grep -iqE "nh|nethunter|ravindu644"
+  if [ $? -ne 0 ]; then
+    ui_print "Unsupported Kernel: $kernel"
+    ui_print "Please install a compatible NetHunter kernel before using this module."
+    abort
+  fi
+
+  ui_print "Device & Kernel check passed."
+  ui_print " "
 }
 
-ui_print "Verifying device..."
-ui_print " "
 check_device
 
 
 on_install() {
-  ui_print "Copying files..."
+  ui_print "Installing files..."
 
   unzip -o "$ZIPFILE" 'system/*' -d $MODPATH >&2
 
@@ -52,7 +61,7 @@ on_install() {
   ui_print "Installing the new Nethunter app..."
 
   unzip -o "$ZIPFILE" 'data/*' -d $TMPDIR >&2
-  pm install -r $TMPDIR/data/NetHunter_exynos9820_signed.apk &>/dev/null || true
+  pm install -r $TMPDIR/data/NetHunter_exynos9820_signed.apk &>/dev/null || abort "Failed to install the Nethunter app...!"
 
   ui_print "Granting required permissions..."
 
@@ -69,22 +78,15 @@ on_install() {
 
   rm -rf /data/system/package_cache/*
   ui_print " "
-  ui_print "Done !"
 }
-
-# Only some special files require specific permissions
-# This function will be called after on_install is done
-# The default permissions should be good enough for most cases
 
 set_permissions() {
-  # The following is the default rule, DO NOT remove
   set_perm_recursive $MODPATH 0 0 0755 0644
 
-  # Here are some examples:
-  # set_perm_recursive  $MODPATH/system/lib       0     0       0755      0644
-  # set_perm  $MODPATH/system/bin/app_process32   0     2000    0755      u:object_r:zygote_exec:s0
-  # set_perm  $MODPATH/system/bin/dex2oat         0     2000    0755      u:object_r:dex2oat_exec:s0
-  # set_perm  $MODPATH/system/lib/libart.so       0     0       0644
-}
+  # Set correct SELinux contexts and permissions for specific files
+  set_perm $MODPATH/system/vendor/etc/init/init.exynos9820.usb.rc 0 0 0644 u:object_r:vendor_configs_file:s0
+  set_perm $MODPATH/system/bin/busybox_nh 0 2000 0755 u:object_r:system_file:s0
+  set_perm_recursive $MODPATH/system/vendor/firmware 0 2000 0755 0644 u:object_r:vendor_fw_file:s0
 
-# You can add more functions to assist your custom script code
+  ui_print "Done setting up permissions..."
+}
