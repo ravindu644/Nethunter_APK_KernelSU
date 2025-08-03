@@ -58,7 +58,7 @@ else
     abort
 fi
 
-  ui_print "Device & Kernel check passed."
+  ui_print "Device, init.$(getprop ro.hardware).usb.rc & Kernel check passed."
   ui_print " "
 }
 
