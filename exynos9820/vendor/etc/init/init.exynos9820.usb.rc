@@ -1412,7 +1412,7 @@ on property:sys.usb.config=mass_storage
 # All original Product/Vendor IDs and proprietary Samsung functions
 # (ss_mon, conn_gadget) are preserved for full compatibility.
 
-# MTP mode -> Augmented with HID and Mass Storage
+# MTP mode
 on property:sys.usb.config=mtp
     setprop vendor.usb.state ${sys.usb.config}
     write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "mtp_hid_storage"
@@ -1436,41 +1436,17 @@ on property:sys.usb.config=mtp
     rm /config/usb_gadget/g1/configs/b.1/conn_gadget.0
     rm /config/usb_gadget/g1/configs/b.1/ecm.0 
 
-    # Configure HID Keyboard function
-    write /config/usb_gadget/g1/functions/hid.0/protocol 1
-    write /config/usb_gadget/g1/functions/hid.0/report_length 8
-    write /config/usb_gadget/g1/functions/hid.0/subclass 1
-    copy /vendor/firmware/hid/keyboard-descriptor.bin /config/usb_gadget/g1/functions/hid.0/report_desc
-
-    # Configure HID Mouse function
-    write /config/usb_gadget/g1/functions/hid.1/protocol 2
-    write /config/usb_gadget/g1/functions/hid.1/report_length 4
-    write /config/usb_gadget/g1/functions/hid.1/subclass 1
-    copy /vendor/firmware/hid/mouse-descriptor.bin /config/usb_gadget/g1/functions/hid.1/report_desc
-    
-    # Configure Mass Storage function
-    # IMPORTANT: Replace this path with the actual path to your storage image.
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/file ""    
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/cdrom 0
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/inquiry_string "NETUSB"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/nofua "0"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/removable "1"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/ro "0"
-
-    # Link functions: Original OEM + Augmented
+    # Link functions: Original OEM
     symlink /config/usb_gadget/g1/functions/ffs.mtp /config/usb_gadget/g1/configs/b.1/ffs.mtp
     symlink /config/usb_gadget/g1/functions/ss_mon.mtp /config/usb_gadget/g1/configs/b.1/ss_mon.mtp
     symlink /config/usb_gadget/g1/functions/acm.0 /config/usb_gadget/g1/configs/b.1/acm.0
     symlink /config/usb_gadget/g1/functions/ss_mon.0 /config/usb_gadget/g1/configs/b.1/ss_mon.0
-    symlink /config/usb_gadget/g1/functions/hid.0 /config/usb_gadget/g1/configs/b.1/hid.0
-    symlink /config/usb_gadget/g1/functions/hid.1 /config/usb_gadget/g1/configs/b.1/hid.1
-    symlink /config/usb_gadget/g1/functions/mass_storage.0 /config/usb_gadget/g1/configs/b.1/mass_storage.0
 
     symlink /config/usb_gadget/g1/configs/b.1 /config/usb_gadget/g1/os_desc/b.1
     write /config/usb_gadget/g1/UDC ${vendor.usb.controller}
     setprop sys.usb.state ${sys.usb.config}
 
-# MTP + ADB mode -> Augmented with HID and Mass Storage
+# MTP + ADB mode
 on property:sys.usb.config=mtp,adb
     start adbd
 
@@ -1497,42 +1473,18 @@ on property:sys.usb.ffs.ready=1 && property:sys.usb.config=mtp,adb
     rm /config/usb_gadget/g1/configs/b.1/conn_gadget.0
     rm /config/usb_gadget/g1/configs/b.1/ecm.0 
 
-    # Configure HID Keyboard function
-    write /config/usb_gadget/g1/functions/hid.0/protocol 1
-    write /config/usb_gadget/g1/functions/hid.0/report_length 8
-    write /config/usb_gadget/g1/functions/hid.0/subclass 1
-    copy /vendor/firmware/hid/keyboard-descriptor.bin /config/usb_gadget/g1/functions/hid.0/report_desc
-
-    # Configure HID Mouse function
-    write /config/usb_gadget/g1/functions/hid.1/protocol 2
-    write /config/usb_gadget/g1/functions/hid.1/report_length 4
-    write /config/usb_gadget/g1/functions/hid.1/subclass 1
-    copy /vendor/firmware/hid/mouse-descriptor.bin /config/usb_gadget/g1/functions/hid.1/report_desc
-    
-    # Configure Mass Storage function
-    # IMPORTANT: Replace this path with the actual path to your storage image.
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/file ""    
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/cdrom 0
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/inquiry_string "NETUSB"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/nofua "0"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/removable "1"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/ro "0"
-
-    # Link functions: Original OEM + Augmented
+    # Link functions: Original OEM
     symlink /config/usb_gadget/g1/functions/ffs.mtp /config/usb_gadget/g1/configs/b.1/ffs.mtp
     symlink /config/usb_gadget/g1/functions/ss_mon.mtp /config/usb_gadget/g1/configs/b.1/ss_mon.mtp
     symlink /config/usb_gadget/g1/functions/acm.0 /config/usb_gadget/g1/configs/b.1/acm.0
     symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/ffs.adb
     symlink /config/usb_gadget/g1/functions/ss_mon.0 /config/usb_gadget/g1/configs/b.1/ss_mon.0
-    symlink /config/usb_gadget/g1/functions/hid.0 /config/usb_gadget/g1/configs/b.1/hid.0
-    symlink /config/usb_gadget/g1/functions/hid.1 /config/usb_gadget/g1/configs/b.1/hid.1
-    symlink /config/usb_gadget/g1/functions/mass_storage.0 /config/usb_gadget/g1/configs/b.1/mass_storage.0
 
     symlink /config/usb_gadget/g1/configs/b.1 /config/usb_gadget/g1/os_desc/b.1
     write /config/usb_gadget/g1/UDC ${vendor.usb.controller}
     setprop sys.usb.state ${sys.usb.config}
 
-# PTP mode -> Augmented with HID and Mass Storage
+# PTP mode
 on property:sys.usb.ffs.ready=1 && property:sys.usb.config=ptp
     setprop vendor.usb.state ${sys.usb.config}
     write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "ptp_hid_storage"
@@ -1556,37 +1508,13 @@ on property:sys.usb.ffs.ready=1 && property:sys.usb.config=ptp
     rm /config/usb_gadget/g1/configs/b.1/conn_gadget.0
     rm /config/usb_gadget/g1/configs/b.1/ecm.0 
 
-    # Configure HID Keyboard function
-    write /config/usb_gadget/g1/functions/hid.0/protocol 1
-    write /config/usb_gadget/g1/functions/hid.0/report_length 8
-    write /config/usb_gadget/g1/functions/hid.0/subclass 1
-    copy /vendor/firmware/hid/keyboard-descriptor.bin /config/usb_gadget/g1/functions/hid.0/report_desc
-
-    # Configure HID Mouse function
-    write /config/usb_gadget/g1/functions/hid.1/protocol 2
-    write /config/usb_gadget/g1/functions/hid.1/report_length 4
-    write /config/usb_gadget/g1/functions/hid.1/subclass 1
-    copy /vendor/firmware/hid/mouse-descriptor.bin /config/usb_gadget/g1/functions/hid.1/report_desc
-    
-    # Configure Mass Storage function
-    # IMPORTANT: Replace this path with the actual path to your storage image.
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/file ""    
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/cdrom 0
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/inquiry_string "NETUSB"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/nofua "0"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/removable "1"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/ro "0"
-
     symlink /config/usb_gadget/g1/functions/ffs.ptp /config/usb_gadget/g1/configs/b.1/ffs.ptp
-    symlink /config/usb_gadget/g1/functions/hid.0 /config/usb_gadget/g1/configs/b.1/hid.0
-    symlink /config/usb_gadget/g1/functions/hid.1 /config/usb_gadget/g1/configs/b.1/hid.1
-    symlink /config/usb_gadget/g1/functions/mass_storage.0 /config/usb_gadget/g1/configs/b.1/mass_storage.0
 
     symlink /config/usb_gadget/g1/configs/b.1 /config/usb_gadget/g1/os_desc/b.1
     write /config/usb_gadget/g1/UDC ${vendor.usb.controller}
     setprop sys.usb.state ${sys.usb.config}
 
-# PTP + ADB mode -> Augmented with HID and Mass Storage
+# PTP + ADB mode
 on property:sys.usb.config=ptp,adb
     start adbd
 
@@ -1613,38 +1541,14 @@ on property:sys.usb.ffs.ready=1 && property:sys.usb.config=ptp,adb
     rm /config/usb_gadget/g1/configs/b.1/conn_gadget.0
     rm /config/usb_gadget/g1/configs/b.1/ecm.0 
 
-    # Configure HID Keyboard function
-    write /config/usb_gadget/g1/functions/hid.0/protocol 1
-    write /config/usb_gadget/g1/functions/hid.0/report_length 8
-    write /config/usb_gadget/g1/functions/hid.0/subclass 1
-    copy /vendor/firmware/hid/keyboard-descriptor.bin /config/usb_gadget/g1/functions/hid.0/report_desc
-
-    # Configure HID Mouse function
-    write /config/usb_gadget/g1/functions/hid.1/protocol 2
-    write /config/usb_gadget/g1/functions/hid.1/report_length 4
-    write /config/usb_gadget/g1/functions/hid.1/subclass 1
-    copy /vendor/firmware/hid/mouse-descriptor.bin /config/usb_gadget/g1/functions/hid.1/report_desc
-    
-    # Configure Mass Storage function
-    # IMPORTANT: Replace this path with the actual path to your storage image.
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/file ""    
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/cdrom 0
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/inquiry_string "NETUSB"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/nofua "0"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/removable "1"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/ro "0"
-
     symlink /config/usb_gadget/g1/functions/ffs.ptp /config/usb_gadget/g1/configs/b.1/ffs.ptp
     symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/ffs.adb
-    symlink /config/usb_gadget/g1/functions/hid.0 /config/usb_gadget/g1/configs/b.1/hid.0
-    symlink /config/usb_gadget/g1/functions/hid.1 /config/usb_gadget/g1/configs/b.1/hid.1
-    symlink /config/usb_gadget/g1/functions/mass_storage.0 /config/usb_gadget/g1/configs/b.1/mass_storage.0
 
     symlink /config/usb_gadget/g1/configs/b.1 /config/usb_gadget/g1/os_desc/b.1
     write /config/usb_gadget/g1/UDC ${vendor.usb.controller}
     setprop sys.usb.state ${sys.usb.config}
 
-# Samsung Charging mode -> Augmented with HID and Mass Storage
+# Samsung Charging mode
 on property:sys.usb.ffs.ready=1 && property:sys.usb.config=sec_charging
     setprop vendor.usb.state ${sys.usb.config}
     write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "charging_hid_storage"
@@ -1668,37 +1572,13 @@ on property:sys.usb.ffs.ready=1 && property:sys.usb.config=sec_charging
     rm /config/usb_gadget/g1/configs/b.1/conn_gadget.0
     rm /config/usb_gadget/g1/configs/b.1/ecm.0 
 
-    # Configure HID Keyboard function
-    write /config/usb_gadget/g1/functions/hid.0/protocol 1
-    write /config/usb_gadget/g1/functions/hid.0/report_length 8
-    write /config/usb_gadget/g1/functions/hid.0/subclass 1
-    copy /vendor/firmware/hid/keyboard-descriptor.bin /config/usb_gadget/g1/functions/hid.0/report_desc
-
-    # Configure HID Mouse function
-    write /config/usb_gadget/g1/functions/hid.1/protocol 2
-    write /config/usb_gadget/g1/functions/hid.1/report_length 4
-    write /config/usb_gadget/g1/functions/hid.1/subclass 1
-    copy /vendor/firmware/hid/mouse-descriptor.bin /config/usb_gadget/g1/functions/hid.1/report_desc
-    
-    # Configure Mass Storage function
-    # IMPORTANT: Replace this path with the actual path to your storage image.
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/file ""    
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/cdrom 0
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/inquiry_string "NETUSB"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/nofua "0"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/removable "1"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/ro "0"
-
     symlink /config/usb_gadget/g1/functions/ss_mon.0 /config/usb_gadget/g1/configs/b.1/ss_mon.0
-    symlink /config/usb_gadget/g1/functions/hid.0 /config/usb_gadget/g1/configs/b.1/hid.0
-    symlink /config/usb_gadget/g1/functions/hid.1 /config/usb_gadget/g1/configs/b.1/hid.1
-    symlink /config/usb_gadget/g1/functions/mass_storage.0 /config/usb_gadget/g1/configs/b.1/mass_storage.0
 
     symlink /config/usb_gadget/g1/configs/b.1 /config/usb_gadget/g1/os_desc/b.1
     write /config/usb_gadget/g1/UDC ${vendor.usb.controller}
     setprop sys.usb.state ${sys.usb.config}
 
-# Samsung Charging + ADB mode -> Augmented
+# Samsung Charging + ADB mode
 on property:sys.usb.config=sec_charging,adb
     start adbd
 
@@ -1725,39 +1605,14 @@ on property:sys.usb.ffs.ready=1 && property:sys.usb.config=sec_charging,adb
     rm /config/usb_gadget/g1/configs/b.1/conn_gadget.0
     rm /config/usb_gadget/g1/configs/b.1/ecm.0 
 
-    # Configure HID Keyboard function
-    write /config/usb_gadget/g1/functions/hid.0/protocol 1
-    write /config/usb_gadget/g1/functions/hid.0/report_length 8
-    write /config/usb_gadget/g1/functions/hid.0/subclass 1
-    copy /vendor/firmware/hid/keyboard-descriptor.bin /config/usb_gadget/g1/functions/hid.0/report_desc
-
-    # Configure HID Mouse function
-    write /config/usb_gadget/g1/functions/hid.1/protocol 2
-    write /config/usb_gadget/g1/functions/hid.1/report_length 4
-    write /config/usb_gadget/g1/functions/hid.1/subclass 1
-    copy /vendor/firmware/hid/mouse-descriptor.bin /config/usb_gadget/g1/functions/hid.1/report_desc
-    
-    # Configure Mass Storage function
-    # IMPORTANT: Replace this path with the actual path to your storage image.
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/file ""    
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/cdrom 0
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/inquiry_string "NETUSB"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/nofua "0"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/removable "1"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/ro "0"
-
     symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/ffs.adb
     symlink /config/usb_gadget/g1/functions/ss_mon.0 /config/usb_gadget/g1/configs/b.1/ss_mon.0
-    symlink /config/usb_gadget/g1/functions/hid.0 /config/usb_gadget/g1/configs/b.1/hid.0
-    symlink /config/usb_gadget/g1/functions/hid.1 /config/usb_gadget/g1/configs/b.1/hid.1
-    symlink /config/usb_gadget/g1/functions/mass_storage.0 /config/usb_gadget/g1/configs/b.1/mass_storage.0
 
     symlink /config/usb_gadget/g1/configs/b.1 /config/usb_gadget/g1/os_desc/b.1
     write /config/usb_gadget/g1/UDC ${vendor.usb.controller}
     setprop sys.usb.state ${sys.usb.config}
 
-# DeX / Smart Switch mode -> Augmented
-# This is the most complex one, preserving all original functions.
+# DeX / Smart Switch mode
 on property:sys.usb.ffs.ready=1 && property:sys.usb.config=mtp,conn_gadget
     start ss_conn_daemon2_service
     setprop vendor.usb.state ${sys.usb.config}
@@ -1782,41 +1637,17 @@ on property:sys.usb.ffs.ready=1 && property:sys.usb.config=mtp,conn_gadget
     rm /config/usb_gadget/g1/configs/b.1/conn_gadget.0
     rm /config/usb_gadget/g1/configs/b.1/ecm.0 
 
-    # Configure HID Keyboard function
-    write /config/usb_gadget/g1/functions/hid.0/protocol 1
-    write /config/usb_gadget/g1/functions/hid.0/report_length 8
-    write /config/usb_gadget/g1/functions/hid.0/subclass 1
-    copy /vendor/firmware/hid/keyboard-descriptor.bin /config/usb_gadget/g1/functions/hid.0/report_desc
-
-    # Configure HID Mouse function
-    write /config/usb_gadget/g1/functions/hid.1/protocol 2
-    write /config/usb_gadget/g1/functions/hid.1/report_length 4
-    write /config/usb_gadget/g1/functions/hid.1/subclass 1
-    copy /vendor/firmware/hid/mouse-descriptor.bin /config/usb_gadget/g1/functions/hid.1/report_desc
-    
-    # Configure Mass Storage function
-    # IMPORTANT: Replace this path with the actual path to your storage image.
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/file ""    
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/cdrom 0
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/inquiry_string "NETUSB"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/nofua "0"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/removable "1"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/ro "0"
-
     symlink /config/usb_gadget/g1/functions/ffs.mtp /config/usb_gadget/g1/configs/b.1/ffs.mtp
     symlink /config/usb_gadget/g1/functions/ss_mon.mtp /config/usb_gadget/g1/configs/b.1/ss_mon.mtp
     symlink /config/usb_gadget/g1/functions/acm.0 /config/usb_gadget/g1/configs/b.1/acm.0
     symlink /config/usb_gadget/g1/functions/conn_gadget.0 /config/usb_gadget/g1/configs/b.1/conn_gadget.0
     symlink /config/usb_gadget/g1/functions/ss_mon.0 /config/usb_gadget/g1/configs/b.1/ss_mon.0
-    symlink /config/usb_gadget/g1/functions/hid.0 /config/usb_gadget/g1/configs/b.1/hid.0
-    symlink /config/usb_gadget/g1/functions/hid.1 /config/usb_gadget/g1/configs/b.1/hid.1
-    symlink /config/usb_gadget/g1/functions/mass_storage.0 /config/usb_gadget/g1/configs/b.1/mass_storage.0
 
     symlink /config/usb_gadget/g1/configs/b.1 /config/usb_gadget/g1/os_desc/b.1
     write /config/usb_gadget/g1/UDC ${vendor.usb.controller}
     setprop sys.usb.state ${sys.usb.config}
 
-# DeX / Smart Switch + ADB mode -> Augmented
+# DeX / Smart Switch + ADB mode
 on property:sys.usb.config=mtp,conn_gadget,adb
     start adbd
 
@@ -1842,37 +1673,13 @@ on property:sys.usb.ffs.ready=1 && property:sys.usb.config=mtp,conn_gadget,adb
     rm /config/usb_gadget/g1/configs/b.1/ss_mon.0
     rm /config/usb_gadget/g1/configs/b.1/ffs.ptp
     rm /config/usb_gadget/g1/configs/b.1/conn_gadget.0
-    rm /config/usb_gadget/g1/configs/b.1/ecm.0 
-
-    # Configure HID Keyboard function
-    write /config/usb_gadget/g1/functions/hid.0/protocol 1
-    write /config/usb_gadget/g1/functions/hid.0/report_length 8
-    write /config/usb_gadget/g1/functions/hid.0/subclass 1
-    copy /vendor/firmware/hid/keyboard-descriptor.bin /config/usb_gadget/g1/functions/hid.0/report_desc
-
-    # Configure HID Mouse function
-    write /config/usb_gadget/g1/functions/hid.1/protocol 2
-    write /config/usb_gadget/g1/functions/hid.1/report_length 4
-    write /config/usb_gadget/g1/functions/hid.1/subclass 1
-    copy /vendor/firmware/hid/mouse-descriptor.bin /config/usb_gadget/g1/functions/hid.1/report_desc
-    
-    # Configure Mass Storage function
-    # IMPORTANT: Replace this path with the actual path to your storage image.
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/file ""    
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/cdrom 0
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/inquiry_string "NETUSB"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/nofua "0"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/removable "1"
-    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/ro "0"
+    rm /config/usb_gadget/g1/configs/b.1/ecm.0
 
     symlink /config/usb_gadget/g1/functions/ffs.mtp /config/usb_gadget/g1/configs/b.1/ffs.mtp
     symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/ffs.adb    
     symlink /config/usb_gadget/g1/functions/acm.0 /config/usb_gadget/g1/configs/b.1/acm.0
     symlink /config/usb_gadget/g1/functions/conn_gadget.0 /config/usb_gadget/g1/configs/b.1/conn_gadget.0
     symlink /config/usb_gadget/g1/functions/ss_mon.0 /config/usb_gadget/g1/configs/b.1/ss_mon.0
-    symlink /config/usb_gadget/g1/functions/hid.0 /config/usb_gadget/g1/configs/b.1/hid.0
-    symlink /config/usb_gadget/g1/functions/hid.1 /config/usb_gadget/g1/configs/b.1/hid.1
-    symlink /config/usb_gadget/g1/functions/mass_storage.0 /config/usb_gadget/g1/configs/b.1/mass_storage.0
 
     symlink /config/usb_gadget/g1/configs/b.1 /config/usb_gadget/g1/os_desc/b.1
     write /config/usb_gadget/g1/UDC ${vendor.usb.controller}
