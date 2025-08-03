@@ -25,6 +25,7 @@ DIR_CONFIGFS=/config/usb_gadget/g1
 DIR_ALL_FUNCS=$DIR_CONFIGFS/functions
 DIR_CUR_FUNCS=$DIR_CONFIGFS/configs/b.1
 
+
 ## Get what functions the user are using, and list them in ascending order.
 ORI_FUNCS_UNSORT=($($BUSYBOX find $DIR_CUR_FUNCS -type l))
 ORI_FUNCS=($(printf '%s\n' "${ORI_FUNCS_UNSORT[@]}" | $BUSYBOX sort -n))
@@ -70,6 +71,11 @@ function switch_funcs(){
     local TARGET_FUNCS=$2
     local ARRAY_TARGET_FUNCS
     local FUNCS_DESC
+
+    # some nastry ticks
+    [ -z "$MANUFACTURER" ] && setprop offsec.nethunter.manufacturer "Offensive Security"
+    [ -z "$PRODUCT" ] && setprop offsec.nethunter.product "NetHunter"
+    [ -z "$SERIALNUMBER" ] && setprop offsec.nethunter.serialnumber "1337H4X0R"
 
     ## Setup the idProduct, idVendor, manufacturer, product, serialnumber
     setprop offsec.nethunter.idVendor "$ID_VENDOR"
@@ -122,6 +128,7 @@ function switch_funcs(){
     bklog "[!] Setting USB configuration: ${CONFIG_STRING}"
     
     ## Use setprop to change USB configuration - init.rc handles the rest ##
+    setprop offsec.nethunter.usbarsenal "1"
     setprop sys.usb.config "$CONFIG_STRING"
 
     ## Wait for the configuration to fully apply ##
