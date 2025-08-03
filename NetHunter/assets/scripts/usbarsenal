@@ -73,9 +73,9 @@ function switch_funcs(){
     local FUNCS_DESC
 
     # some nastry ticks
-    [ -z "$MANUFACTURER" ] && setprop offsec.nethunter.manufacturer "Offensive Security"
-    [ -z "$PRODUCT" ] && setprop offsec.nethunter.product "NetHunter"
-    [ -z "$SERIALNUMBER" ] && setprop offsec.nethunter.serialnumber "1337H4X0R"
+    [ -z "$MANUFACTURER" ] && MANUFACTURER="OffSec"
+    [ -z "$PRODUCT" ] && PRODUCT="NetHunter"
+    [ -z "$SERIALNUMBER" ] && SERIALNUMBER="1337H4X0R"
 
     ## Setup the idProduct, idVendor, manufacturer, product, serialnumber
     setprop offsec.nethunter.idVendor "$ID_VENDOR"
@@ -83,13 +83,21 @@ function switch_funcs(){
 
     ### Changing manufacturer, product, serialnumber may make your PC fail to authen your device again, ##
     ## so this part is disabled now until further experiment. ##
-    [ ! -z "$MANUFACTURER" ] && [ -f $DIR_CONFIGFS/strings/0x409/manufacturer ] && setprop offsec.nethunter.manufacturer "$MANUFACTURER"
-    [ ! -z "$PRODUCT" ] && [ -f $DIR_CONFIGFS/strings/0x409/product ] && setprop offsec.nethunter.product "$PRODUCT"
-    [ ! -z "$SERIALNUMBER" ] && [ -f $DIR_CONFIGFS/strings/0x409/serialnumber ] && setprop offsec.nethunter.serialnumber "$SERIALNUMBER"
+    [ ! -z "$MANUFACTURER" ] && [ -f $DIR_CONFIGFS/strings/0x409/manufacturer ] && echo "$MANUFACTURER" | tee $DIR_CONFIGFS/strings/0x409/manufacturer
+    [ ! -z "$PRODUCT" ] && [ -f $DIR_CONFIGFS/strings/0x409/product ] && echo "$PRODUCT" | tee $DIR_CONFIGFS/strings/0x409/product
+    [ ! -z "$SERIALNUMBER" ] && [ -f $DIR_CONFIGFS/strings/0x409/serialnumber ] && echo "$SERIALNUMBER" | tee $DIR_CONFIGFS/strings/0x409/serialnumber
 
     ## If the target function is "reset" then use adb setprop directly ##
     if [ "$TARGET_FUNCS" = "reset" ]; then
         bklog "[!] Resetting the usb functions to adb only."
+
+        setprop sys.usb.config none
+        sleep 3
+
+        echo "SAMSUNG" | tee $DIR_CONFIGFS/strings/0x409/manufacturer
+        echo "SAMSUNG_Android" | tee $DIR_CONFIGFS/strings/0x409/product
+        echo "$(getprop ro.serialno)" | tee $DIR_CONFIGFS/strings/0x409/serialnumber
+
         setprop sys.usb.config adb
         exit 0
     fi
@@ -128,8 +136,8 @@ function switch_funcs(){
     bklog "[!] Setting USB configuration: ${CONFIG_STRING}"
     
     ## Use setprop to change USB configuration - init.rc handles the rest ##
-    setprop offsec.nethunter.usbarsenal "1"
-    sleep 1
+    setprop sys.usb.config none
+    sleep 3
     setprop sys.usb.config "$CONFIG_STRING"
 
     ## Wait for the configuration to fully apply ##
