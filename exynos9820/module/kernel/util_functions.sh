@@ -15,22 +15,35 @@ install_kernel() {
     PRODUCT_NAME=$(getprop ro.product.name)
     KERNEL_VERSION=$(uname -r)
     
-    [ "$ANDROID_VERSION" != "12" ] && return 1
+    if [ "$ANDROID_VERSION" != "12" ]; then
+        ui_print "Android version mismatch, skipping..."
+        return 1
+    fi
     
-    echo "$SUPPORTED_PRODUCTS" | grep -q "$PRODUCT_NAME" || return 1
+    if ! echo "$SUPPORTED_PRODUCTS" | grep -q "$PRODUCT_NAME"; then
+        ui_print "Device $PRODUCT_NAME not supported, skipping..."
+        return 1
+    fi
     
-    echo "$KERNEL_VERSION" | grep -q "4.14.113" || return 1
+    if ! echo "$KERNEL_VERSION" | grep -q "4.14.113"; then
+        ui_print "Kernel version must 4.14.113, skipping..."
+        return 1
+    fi
     
     KERNEL_PATH="$TMPDIR/kernel/$PRODUCT_NAME"
     
-    [ ! -d "$KERNEL_PATH" ] && return 1
+    if [ ! -d "$KERNEL_PATH" ]; then
+        ui_print "Kernel directory not found, skipping..."
+        return 1
+    fi
     
     ui_print "Found Kernel for device: $PRODUCT_NAME"
     
-    [ ! -f "$KERNEL_PATH/boot.img" ] || [ ! -f "$KERNEL_PATH/dtb.img" ] && {
+    if [ ! -f "$KERNEL_PATH/boot.img" ] || [ ! -f "$KERNEL_PATH/dtb.img" ]; then
+        ui_print "Required kernel images missing, skipping..."
         rm -rf "$KERNEL_PATH"
         return 1
-    }
+    fi
     
     ui_print "Flashing: boot.img"
     dd if="$KERNEL_PATH/boot.img" of="/dev/block/by-name/boot"
