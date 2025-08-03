@@ -273,6 +273,11 @@ on property:sys.usb.config=none
 #       Begins Nethunter ConfigFS Functions         #
 #####################################################
 
+on property:offsec.nethunter.usbarsenal=1
+    write /config/usb_gadget/g1/strings/0x409/serialnumber ${offsec.nethunter.serialnumber}
+    write /config/usb_gadget/g1/strings/0x409/manufacturer ${offsec.nethunter.manufacturer}
+    write /config/usb_gadget/g1/strings/0x409/product ${offsec.nethunter.product}
+
 # Only HID
 on property:sys.usb.config=nethunter,hid
     setprop vendor.usb.state ${sys.usb.config}
