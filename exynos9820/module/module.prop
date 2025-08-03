@@ -1,0 +1,6 @@
+id=exynos9820_usb_nethunter
+name=USB Arsenal for exynos9820
+version=1.2
+versionCode=1200
+author=Kali NetHunter Team @ GitLab && ravindu644
+description=Fully functional working USB Arsenal for Kali Nethunter in exynos9820 devices. Also includes required wireless firmwares.
