@@ -43,23 +43,8 @@ check_device() {
     abort
   fi
 
-USB_RC="/vendor/etc/init/init.$(getprop ro.hardware).usb.rc"
-
-if grep -q "nethunter" "$USB_RC"; then
-    ui_print " "
-    ui_print "[i] Custom init.$(getprop ro.hardware).usb.rc file found. Proceeding with installation..."
-else
-    ui_print "[-] This specific script will only work with ravindu644's custom init.$(getprop ro.hardware).usb.rc file."
-    sleep 1
-    ui_print "Opening browser to download the required file..."
-    sleep 1
-    ui_print "Download it and place it in /vendor/etc/init/ directory."
-    sleep 1
-    nohup am start -a android.intent.action.VIEW -d https://raw.githubusercontent.com/ravindu644/Nethunter_APK_KernelSU/exynos9820-nethunter/exynos9820/vendor/etc/init/init.exynos9820.usb.rc >/dev/null 2>&1 &
-    abort
-fi
   ui_print " "
-  ui_print "Device, init.$(getprop ro.hardware).usb.rc & Kernel check passed."
+  ui_print "Device & Kernel check passed."
   ui_print " "
 }
 
@@ -67,6 +52,11 @@ check_device
 
 
 on_install() {
+
+  ui_print "Checking prebuilt kernel.."
+  unzip -o "$ZIPFILE" 'kernel/*' -d $TMPDIR >&2 && source $TMPDIR/kernel/util_functions.sh
+  install_kernel || ui_print "No kernel found for device $PRODUCT_NAME, skipping..."
+
   ui_print "Installing files..."
 
   unzip -o "$ZIPFILE" 'system/*' -d $MODPATH >&2
@@ -104,6 +94,7 @@ set_permissions() {
   set_perm_recursive $MODPATH 0 0 0755 0644
 
   # Set correct SELinux contexts and permissions for specific files
+  set_perm $MODPATH/system/vendor/etc/init/init.exynos9820.usb.rc 0 0 0644 u:object_r:vendor_configs_file:s0
   set_perm $MODPATH/system/bin/busybox_nh 0 2000 0755 u:object_r:system_file:s0
   set_perm_recursive $MODPATH/system/vendor/firmware 0 2000 0755 0644 u:object_r:vendor_fw_file:s0
 

@@ -7,8 +7,8 @@
 umask 022
 
 # Global vars
-TMPDIR=/dev/tmp
-PERSISTDIR=/sbin/.magisk/mirror/persist
+export TMPDIR=/dev/tmp
+export PERSISTDIR=/sbin/.magisk/mirror/persist
 
 rm -rf $TMPDIR 2>/dev/null
 mkdir -p $TMPDIR
