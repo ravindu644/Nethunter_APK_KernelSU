@@ -1,5 +1,10 @@
+export ZIPFILE="$ZIPFILE"
+export TMPDIR="$TMPDIR"
+
 # source our functions
-unzip -o "$ZIPFILE" 'META-INF/*' -d $TMPDIR >&2 && source $TMPDIR/META-INF/com/google/android/util_functions.sh
+unzip -o "$ZIPFILE" 'META-INF/*' -d $TMPDIR >&2
+. "$TMPDIR/META-INF/com/google/android/util_functions.sh"
+
 
 SKIPMOUNT=false
 

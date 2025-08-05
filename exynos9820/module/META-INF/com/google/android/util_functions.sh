@@ -65,12 +65,16 @@ backup_images(){
     dd if=/dev/block/by-name/boot of=$BOOT_BACKUP_DIR/boot.img
     dd if=/dev/block/by-name/dtb of=$BOOT_BACKUP_DIR/dtb.img
 
-    ui_print "Backup completed, and saved to $BOOT_BACKUP_DIR..."
+    ui_print "Backup completed, and saved to $BOOT_BACKUP_DIR"
+
+    ui_print " "
 }
 
 install_kernel(){
 
     check_device || return 1
+
+    unzip -o "$ZIPFILE" 'kernel/*' -d $TMPDIR >&2
 
     if [ ! -d "$KERNEL_PATH" ]; then
         ui_print "Kernel directory not found, skipping..."
@@ -97,6 +101,8 @@ install_kernel(){
     rm -rf "$TMPDIR/kernel"
     
     ui_print "Success !"
+
+    ui_print " "
     
     return 0
 }
@@ -104,7 +110,6 @@ install_kernel(){
 prepare_nethunter_kernel(){ 
 
   ui_print "Checking prebuilt kernel..."
-  unzip -o "$ZIPFILE" 'kernel' -d $TMPDIR >&2
 
   if install_kernel; then
       KERNEL_FLASH_SUCCESS="1"
