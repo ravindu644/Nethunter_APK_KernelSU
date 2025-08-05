@@ -9,9 +9,6 @@ POSTFSDATA=true
 # Set to true if you need late_start service script
 LATESTARTSERVICE=true
 
-# source our functions
-unzip -o "$ZIPFILE" 'META-INF/*' -d $TMPDIR >&2 && source $TMPDIR/META-INF/com/google/android/util_functions.sh
-
 ui_print " "
 ui_print " "
 ui_print "********************************"
@@ -58,6 +55,9 @@ on_install() {
 
   ui_print "Checking prebuilt kernel..."
   unzip -o "$ZIPFILE" 'kernel' -d $TMPDIR >&2
+
+  # source our functions
+  unzip -o "$ZIPFILE" 'META-INF/*' -d $TMPDIR >&2 && source $TMPDIR/META-INF/com/google/android/util_functions.sh
   install_kernel || ui_print "No Nethunter kernel found for device $PRODUCT_NAME, skipping..."
 
   ui_print "Installing files..."
@@ -91,6 +91,7 @@ on_install() {
 
   rm -rf /data/system/package_cache/*
   ui_print " "
+
 }
 
 set_permissions() {
@@ -101,11 +102,11 @@ set_permissions() {
   set_perm_recursive $MODPATH/system/vendor/firmware 0 2000 0755 0644 u:object_r:vendor_fw_file:s0
 
   ui_print "Done setting up permissions..."
+
+  warning
+
+  ui_print " "
+  ui_print "Nethunter Kernel with full USB Arsenal support for exynos9820 devices is installed successfully!"
+  ui_print "Please reboot your device to apply changes."
+  ui_print " "  
 }
-
-warning
-
-ui_print " "
-ui_print "Nethunter Kernel with full USB Arsenal support for exynos9820 devices is installed successfully!"
-ui_print "Please reboot your device to apply changes."
-ui_print " "

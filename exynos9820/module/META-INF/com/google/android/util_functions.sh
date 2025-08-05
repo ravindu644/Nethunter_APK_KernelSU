@@ -2,15 +2,9 @@
 
 TMPDIR=/dev/tmp
 
-ui_print ""
-
-ui_print "[DEBUG] FUNCTIONS ARE FUNCTIONAL !"
-
-ui_print ""
-
 export SUPPORTED_PRODUCTS="beyond0 beyond1 beyond1 beyondx"
 export ANDROID_VERSION=$(getprop ro.build.version.release)
-export PRODUCT_NAME=$(getprop ro.product.name)
+export PRODUCT_NAME=$(getprop ro.product.bootimage.device)
 export KERNEL_VERSION=$(uname -r)
 export KERNEL_PATH="$TMPDIR/kernel/$PRODUCT_NAME"
 export BOOT_BACKUP_DIR="/sdcard/BootBackup"
@@ -32,7 +26,7 @@ check_device() {
         return 1
     fi
 
-} ; check_device
+}
 
 backup_images(){
     ui_print "Backing up original boot and dtb images..."
@@ -45,6 +39,9 @@ backup_images(){
 }
 
 install_kernel(){
+
+    check_device || return 1
+
     if [ ! -d "$KERNEL_PATH" ]; then
         ui_print "Kernel directory not found, skipping..."
         return 1
@@ -74,19 +71,12 @@ install_kernel(){
     return 0
 }
 
-warning() {
-    ui_print "********************************************************"
-    ui_print "*                                                      *"
-    ui_print "*                !!! WARNING !!!                       *"
-    ui_print "*                                                      *"
-    ui_print "*  Please SAVE the following directory **NOW**:        *"
-    ui_print "*      ->  $BOOT_BACKUP_DIR                             *"
-    ui_print "*                                                      *"
-    ui_print "*  If your device FAILS TO BOOT:                       *"
-    ui_print "*      -> Restore the backup via TWRP or ODIN          *"
-    ui_print "*                                                      *"
-    ui_print "*  DO NOT reboot without saving your backup!           *"
-    ui_print "*                                                      *"
-    ui_print "********************************************************"
-    ui_print ""
+warning(){
+    ui_print "**************************************************"
+    ui_print "*         WARNING WARNING WARNING                *"
+    ui_print "  Please save $BOOT_BACKUP_DIR before rebooting! *"
+    ui_print " If the device fails to boot, restore the backup *"
+    ui_print " Flash thoese images using the TWRP or ODIN mode *"
+    ui_print "**************************************************"
+    ui_print " "
 }
