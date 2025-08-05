@@ -42,24 +42,8 @@ check_device() {
     ui_print "This module requires a 4.14.113-xxxxx kernel."    
     abort "Please install the stock boot.img or a stable 4.14.113 kernel for your device and re-flash this module."
   fi
-
-USB_RC="/vendor/etc/init/init.$(getprop ro.hardware).usb.rc"
-
-if grep -q "nethunter" "$USB_RC"; then
-    ui_print " "
-    ui_print "[i] Custom init.$(getprop ro.hardware).usb.rc file found. Proceeding with installation..."
-else
-    ui_print "[-] This specific script will only work with ravindu644's custom init.$(getprop ro.hardware).usb.rc file."
-    sleep 1
-    ui_print "Opening browser to download the required file..."
-    sleep 1
-    ui_print "Download it and place it in /vendor/etc/init/ directory."
-    sleep 1
-    nohup am start -a android.intent.action.VIEW -d https://raw.githubusercontent.com/ravindu644/Nethunter_APK_KernelSU/exynos9820-nethunter/exynos9820/vendor/etc/init/init.exynos9820.usb.rc >/dev/null 2>&1 &
-    abort
-fi
   ui_print " "
-  ui_print "Device, init.$(getprop ro.hardware).usb.rc & Kernel check passed."
+  ui_print "Device & Kernel check passed."
   ui_print " "
 }
 
