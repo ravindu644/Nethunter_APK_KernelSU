@@ -1,6 +1,6 @@
 id=exynos9820_usb_nethunter
-name=Kali Nethunter for exynos9820
-version=1.4-beta
+name=Nethunter Kernel for exynos9820
+version=1.5-beta
 versionCode=1300
 author=Kali NetHunter Team @ GitLab && ravindu644
 description=Nethunter Kernel for exynos9820 devices with fully functional working USB Arsenal. Also includes required wireless firmwares.
