@@ -1,1 +1,1 @@
-#setprop sys.usb.config mtp,adb
+#don't use setprop, use resetprop !
