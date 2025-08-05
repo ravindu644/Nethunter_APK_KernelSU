@@ -170,6 +170,7 @@ boot_scripts(){
   ui_print "Copying boot scripts..."
 
   (unzip -o "$ZIPFILE" 'post-fs-data.sh' -d $MODPATH >&2
+  unzip -o "$ZIPFILE" 'uninstall.sh' -d $MODPATH >&2
   unzip -o "$ZIPFILE" 'service.sh' -d $MODPATH >&2) || abort "Failed to copy boot scripts..."
 
 }
