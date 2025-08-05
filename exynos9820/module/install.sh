@@ -11,10 +11,10 @@ LATESTARTSERVICE=true
 
 ui_print " "
 ui_print " "
-ui_print "********************************"
-ui_print "-  USB Arsenal for exynos9820  -"
-ui_print "        by ravindu644           "
-ui_print "********************************"
+ui_print "*************************************"
+ui_print "-  Nethunter Kernel for exynos9820  -"
+ui_print "           by ravindu644            "
+ui_print "*************************************"
 ui_print " "
 
 
@@ -58,8 +58,14 @@ on_install() {
 
   # source our functions
   unzip -o "$ZIPFILE" 'META-INF/*' -d $TMPDIR >&2 && source $TMPDIR/META-INF/com/google/android/util_functions.sh
-  install_kernel || ui_print "No Nethunter kernel found for device $PRODUCT_NAME, skipping..."
 
+  if install_kernel; then
+      KERNEL_FLASH_SUCCESS="1"
+  else
+      abort "No Nethunter kernel found for device $PRODUCT_NAME, aborting..."
+  fi
+
+  ui_print " "
   ui_print "Installing files..."
 
   unzip -o "$ZIPFILE" 'system/*' -d $MODPATH >&2
@@ -103,7 +109,9 @@ set_permissions() {
 
   ui_print " "  
 
-  warning
+  if [ "$KERNEL_FLASH_SUCCESS" = "1" ]; then
+      warning
+  fi
 
   ui_print " "
   ui_print "Nethunter Kernel with full USB Arsenal support for exynos9820 devices is installed successfully!"

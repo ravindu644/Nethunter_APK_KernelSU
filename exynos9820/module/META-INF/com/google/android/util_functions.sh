@@ -74,7 +74,7 @@ install_kernel(){
 warning(){
     ui_print "******************************************"
     ui_print "*        WARNING WARNING WARNING         *"
-    ui_print "*    Please save $BOOT_BACKUP_DIR        *"
+    ui_print "*    Please save /sdcard/BootBackup      *"
     ui_print "*         before rebooting!              *"
     ui_print "*     If the device fails to boot,       *"
     ui_print "*        restore the backup.             *"
