@@ -126,7 +126,7 @@ warning(){
     ui_print "*         before rebooting!              *"
     ui_print "*     If the device fails to boot,       *"
     ui_print "*        restore the backup.             *"
-    ui_print "*   Flash thoese images using the TWRP   *"
+    ui_print "*    Flash those images using the TWRP   *"
     ui_print "*           or ODIN mode                 *"
     ui_print "******************************************"
     ui_print " "
