@@ -4,7 +4,7 @@ TMPDIR=/dev/tmp
 
 export SUPPORTED_PRODUCTS="beyond0 beyond1 beyond1 beyondx"
 export ANDROID_VERSION=$(getprop ro.build.version.release)
-export PRODUCT_NAME=$(getprop ro.product.bootimage.device)
+export PRODUCT_NAME=$(getprop ro.product.device)
 export KERNEL_VERSION=$(uname -r)
 export KERNEL_PATH="$TMPDIR/kernel/$PRODUCT_NAME"
 export BOOT_BACKUP_DIR="/sdcard/BootBackup"
@@ -72,11 +72,14 @@ install_kernel(){
 }
 
 warning(){
-    ui_print "**************************************************"
-    ui_print "*         WARNING WARNING WARNING                *"
-    ui_print "  Please save $BOOT_BACKUP_DIR before rebooting! *"
-    ui_print " If the device fails to boot, restore the backup *"
-    ui_print " Flash thoese images using the TWRP or ODIN mode *"
-    ui_print "**************************************************"
+    ui_print "******************************************"
+    ui_print "*        WARNING WARNING WARNING         *"
+    ui_print "*    Please save $BOOT_BACKUP_DIR        *"
+    ui_print "*         before rebooting!              *"
+    ui_print "*     If the device fails to boot,       *"
+    ui_print "*        restore the backup.             *"
+    ui_print "*   Flash thoese images using the TWRP   *"
+    ui_print "*           or ODIN mode                 *"
+    ui_print "******************************************"
     ui_print " "
 }

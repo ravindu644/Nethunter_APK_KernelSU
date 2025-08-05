@@ -101,12 +101,13 @@ set_permissions() {
   set_perm $MODPATH/system/bin/busybox_nh 0 2000 0755 u:object_r:system_file:s0
   set_perm_recursive $MODPATH/system/vendor/firmware 0 2000 0755 0644 u:object_r:vendor_fw_file:s0
 
-  ui_print "Done setting up permissions..."
+  ui_print " "  
 
   warning
 
   ui_print " "
   ui_print "Nethunter Kernel with full USB Arsenal support for exynos9820 devices is installed successfully!"
+  ui_print " "    
   ui_print "Please reboot your device to apply changes."
   ui_print " "  
 }
