@@ -121,13 +121,13 @@ f_mountfs(){
     for dev in /dev/null /dev/zero /dev/random /dev/urandom /dev/tty; do [ -e "$dev" ] && chmod 666 "$dev"; done
 
     # mount Android's internal storage
-    local storage_path="${EXTERNAL_STORAGE:-/storage/emulated/0}"
+    local storage_path="/storage/emulated/0"
     if [ -d "$storage_path" ]; then
         bklog "[+] Setting up storage access: $storage_path"
-        mkdir -p "$MNT/sdcard"
-        advanced_mount "$storage_path" "$MNT/sdcard" "bind"
+        mkdir -p "$MNT/storage/emulated/0" 
+        advanced_mount "$storage_path" "$MNT/storage/emulated/0" "bind"
     else
-        bklog "[-] Android storage not found - continuing without it"
+        bklog "[-] Android storage at $storage_path not found - continuing without it"
     fi
 }
 
@@ -204,7 +204,7 @@ if [ ! $# -eq 0 ]; then
                         ISALLREADY=0
                         # Use our modern is_mounted function - check only essential unique mounts
                         # Don't check sub-mounts that are already covered by parent mounts
-                        FS=(proc sys dev dev/pts system sdcard run tmp dev/shm)
+                        FS=(proc sys dev dev/pts system storage/emulated/0 run tmp dev/shm)
                         for i in "${FS[@]}"; do
                             if is_mounted "$MNT/$i" >/dev/null 2>&1; then
                                 bklog "[+] $i was mounted already."

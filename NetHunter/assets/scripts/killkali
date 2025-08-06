@@ -68,7 +68,7 @@ f_umount_fs() {
             bklog "[+] umounted $MNT/$1"
             # Don't remove certain critical directories
             case "$1" in
-                "dev/pts"|"dev/shm"|"proc"|"sys"|"dev"|"system"|"sdcard")
+                "dev/pts"|"dev/shm"|"proc"|"sys"|"dev"|"system"|"storage/emulated/0")
                     # Keep these directories, just unmount them
                     ;;
                 *)
@@ -89,7 +89,7 @@ f_umount_fs() {
             bklog "[+] $MNT/$1 is unmounted already."
             # Only remove non-critical directories
             case "$1" in
-                "dev/pts"|"dev/shm"|"proc"|"sys"|"dev"|"system"|"sdcard")
+                "dev/pts"|"dev/shm"|"proc"|"sys"|"dev"|"system"|"storage/emulated/0")
                     # Keep these directories
                     ;;
                 *)
@@ -132,7 +132,7 @@ f_dir_umount() {
         "dev"
         "sys"
         "proc"
-        "sdcard"
+        "storage/emulated/0"
     )
     
     for i in "${FS[@]}"; do

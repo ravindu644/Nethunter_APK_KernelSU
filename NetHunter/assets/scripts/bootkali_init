@@ -125,13 +125,13 @@ init_mounts(){
     for dev in /dev/null /dev/zero /dev/random /dev/urandom /dev/tty; do [ -e "$dev" ] && chmod 666 "$dev"; done
 
     # mount Android's internal storage
-    local storage_path="${EXTERNAL_STORAGE:-/storage/emulated/0}"
+    local storage_path="/storage/emulated/0"
     if [ -d "$storage_path" ]; then
         bklog "[+] Setting up storage access: $storage_path"
-        mkdir -p "$MNT/sdcard"
-        advanced_mount "$storage_path" "$MNT/sdcard" "bind"
+        mkdir -p "$MNT/storage/emulated/0" 
+        advanced_mount "$storage_path" "$MNT/storage/emulated/0" "bind"
     else
-        bklog "[-] Android storage not found - continuing without it"
+        bklog "[-] Android storage at $storage_path not found - continuing without it"
     fi
 
 }
