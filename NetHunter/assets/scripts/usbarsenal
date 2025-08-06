@@ -81,8 +81,6 @@ function switch_funcs(){
     setprop offsec.nethunter.idVendor "$ID_VENDOR"
     setprop offsec.nethunter.idProduct "$ID_PRODUCT"
 
-    ### Changing manufacturer, product, serialnumber may make your PC fail to authen your device again, ##
-    ## so this part is disabled now until further experiment. ##
     [ ! -z "$MANUFACTURER" ] && [ -f $DIR_CONFIGFS/strings/0x409/manufacturer ] && echo "$MANUFACTURER" | tee $DIR_CONFIGFS/strings/0x409/manufacturer
     [ ! -z "$PRODUCT" ] && [ -f $DIR_CONFIGFS/strings/0x409/product ] && echo "$PRODUCT" | tee $DIR_CONFIGFS/strings/0x409/product
     [ ! -z "$SERIALNUMBER" ] && [ -f $DIR_CONFIGFS/strings/0x409/serialnumber ] && echo "$SERIALNUMBER" | tee $DIR_CONFIGFS/strings/0x409/serialnumber
@@ -90,14 +88,10 @@ function switch_funcs(){
     ## If the target function is "reset" then use adb setprop directly ##
     if [ "$TARGET_FUNCS" = "reset" ]; then
         bklog "[!] Resetting the usb functions to adb only."
-
-        setprop sys.usb.config none
-        sleep 3
-
+        setprop sys.usb.config none; sleep 3
         echo "SAMSUNG" | tee $DIR_CONFIGFS/strings/0x409/manufacturer
         echo "SAMSUNG_Android" | tee $DIR_CONFIGFS/strings/0x409/product
         echo "$(getprop ro.serialno)" | tee $DIR_CONFIGFS/strings/0x409/serialnumber
-
         setprop sys.usb.config adb
         exit 0
     fi
@@ -106,47 +100,81 @@ function switch_funcs(){
     TARGET_FUNCS=$(echo ${TARGET_FUNCS//[[:space:]]})
     IFS=','; ARRAY_TARGET_FUNCS=($TARGET_FUNCS); unset IFS
 
-    ## Build the setprop config string based on selected functions ##
+    ## Re-introduce the state variables from the original script ##
+    ## Initialize to 1 (false / not selected)
+    IS_ADB_SELECTED=1
+    IS_HID_SELECTED=1
+    IS_MASS_SELECTED=1
+    IS_RNDIS_SELECTED=1
+    IS_ACM_SELECTED=1
+    IS_ECM_SELECTED=1
+
+    ## Build the setprop config string and set state variables ##
     local CONFIG_STRING=""
     local FIRST_FUNC=1
     
     for i in ${ARRAY_TARGET_FUNCS[@]}; do
         case "$i" in
-            adb|hid|mass_storage|rndis|acm|ecm)
-                if [ $FIRST_FUNC -eq 1 ]; then
-                    CONFIG_STRING="$i"
-                    FIRST_FUNC=0
-                else
-                    CONFIG_STRING="${CONFIG_STRING},$i"
-                fi
-                FUNCS_DESC+=("$i")
+            adb)
+                IS_ADB_SELECTED=0
+                ;;
+            hid)
+                IS_HID_SELECTED=0
+                ;;
+            mass_storage)
+                IS_MASS_SELECTED=0
+                ;;
+            rndis)
+                IS_RNDIS_SELECTED=0
+                ;;
+            acm)
+                IS_ACM_SELECTED=0
+                ;;
+            ecm)
+                IS_ECM_SELECTED=0
                 ;;
         esac
     done
+    
+    # We can now just use the original input for the config string
+    CONFIG_STRING=$(echo "$TARGET_FUNCS" | sed 's/ //g')
 
     ## If no functions selected, default to adb ##
     if [ -z "$CONFIG_STRING" ]; then
         CONFIG_STRING="adb"
-        FUNCS_DESC+=('adb')
+        IS_ADB_SELECTED=0
     fi
 
-    # MODIFICATION HERE: Prepend the "nethunter" namespace to the config string
+    # Prepend the "nethunter" namespace to the config string
     CONFIG_STRING="nethunter,${CONFIG_STRING}"
 
     bklog "[!] Setting USB configuration: ${CONFIG_STRING}"
     
     ## Use setprop to change USB configuration - init.rc handles the rest ##
-    setprop sys.usb.config none
-    sleep 3
+    setprop sys.usb.config none; sleep 3
     setprop sys.usb.config "$CONFIG_STRING"
 
     ## Wait for the configuration to fully apply ##
-    sleep 1
+    sleep 2
+
+    ## Perform conditional actions based on the state variables ##
+    ## This is the section other scripts (and the app) depend on.
+    if [ "$IS_HID_SELECTED" -eq 0 ]; then
+        if [ -c /dev/hidg0 ] && [ -c /dev/hidg1 ]; then
+            bklog "[+] HID function enabled. Setting permissions for /dev/hidg*."
+            chmod 666 /dev/hidg0 /dev/hidg1
+        else
+            bklog "[-] HID was selected, but /dev/hidg0 or /dev/hidg1 not found."
+        fi
+    fi
+    
+    # NOTE: You can now export these variables if other child scripts need them
+    export IS_ADB_SELECTED IS_HID_SELECTED IS_MASS_SELECTED IS_RNDIS_SELECTED IS_ACM_SELECTED IS_ECM_SELECTED
 
     ## Build description for logging ##
-    FUNCS_DESC=$(join_by _ "${FUNCS_DESC[@]}")
+    FUNCS_DESC=$(join_by _ "${ARRAY_TARGET_FUNCS[@]}")
 
-    bklog "[+] Done."
+    bklog "[+] Done. Enabled functions: $FUNCS_DESC"
 }
 
 ###################
