@@ -204,7 +204,7 @@ if [ ! $# -eq 0 ]; then
                         ISALLREADY=0
                         # Use our modern is_mounted function - check only essential unique mounts
                         # Don't check sub-mounts that are already covered by parent mounts
-                        FS=(proc sys dev dev/pts system storage/emulated/0 run tmp dev/shm)
+                        FS=(proc sys dev dev/pts system storage/emulated/0 sdcard run tmp dev/shm)
                         for i in "${FS[@]}"; do
                             if is_mounted "$MNT/$i" >/dev/null 2>&1; then
                                 bklog "[+] $i was mounted already."
