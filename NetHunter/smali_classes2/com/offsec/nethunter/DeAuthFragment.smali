@@ -161,121 +161,92 @@
 .end method
 
 .method synthetic lambda$onCreateView$1$com-offsec-nethunter-DeAuthFragment(Landroid/widget/Spinner;Landroid/widget/CheckBox;Landroid/widget/EditText;Landroid/view/View;)V
-    .locals 4
+    .locals 5
+    # p1 = Spinner, p2 = CheckBox, p3 = EditText
 
-    const-string p4, "echo Press Crtl+C to stop! && mdk3 "
-
-    const-string v0, "airmon-ng start  "
-
-    new-instance v1, Lcom/offsec/nethunter/utils/BootKali;
-
-    new-instance v2, Ljava/lang/StringBuilder;
-
-    const-string v3, "ip link set "
-
-    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
+    # Get the selected interface from the spinner
     invoke-virtual {p1}, Landroid/widget/Spinner;->getSelectedItem()Ljava/lang/Object;
+    move-result-object v0
+    invoke-virtual {v0}, Ljava/lang/Object;->toString()Ljava/lang/String;
+    move-result-object v0
 
-    move-result-object v3
+    # v1 will hold the command prefix (e.g., "airmon-ng start ...")
+    # v2 will hold the final monitor interface name (e.g., "wlan1mon")
+    move-object v2, v0
+    const-string v1, ""
 
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    # Check if the selected interface name ALREADY ends with "mon"
+    const-string v3, "mon"
+    invoke-virtual {v0, v3}, Ljava/lang/String;->endsWith(Ljava/lang/String;)Z
+    move-result v3
 
-    const-string v3, " up"
+    # If it does NOT end with "mon", we need to build the airmon-ng command part
+    if-nez v3, :cond_0
 
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    # Build the prefix command: "airmon-ng start [interface] && sleep 3 && "
+    new-instance v1, Ljava/lang/StringBuilder;
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+    const-string v3, "airmon-ng start "
+    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    const-string v3, " && sleep 3 && "
+    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    move-result-object v1
 
+    # And build the expected monitor interface name, e.g., "wlan1" -> "wlan1mon"
+    new-instance v2, Ljava/lang/StringBuilder;
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    const-string v0, "mon"
+    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
     invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
     move-result-object v2
 
-    invoke-direct {v1, v2}, Lcom/offsec/nethunter/utils/BootKali;-><init>(Ljava/lang/String;)V
-
-    const-wide/16 v1, 0x3e8
-
-    :try_start_0
-    invoke-static {v1, v2}, Ljava/lang/Thread;->sleep(J)V
-
-    new-instance v1, Lcom/offsec/nethunter/utils/BootKali;
-
-    new-instance v2, Ljava/lang/StringBuilder;
-
-    invoke-direct {v2, v0}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {p1}, Landroid/widget/Spinner;->getSelectedItem()Ljava/lang/Object;
-
-    move-result-object v0
-
-    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v0
-
-    invoke-direct {v1, v0}, Lcom/offsec/nethunter/utils/BootKali;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v1}, Lcom/offsec/nethunter/utils/BootKali;->run_bg()V
-
-    const-wide/16 v0, 0x7d0
-
-    invoke-static {v0, v1}, Ljava/lang/Thread;->sleep(J)V
-
-    invoke-virtual {p2}, Landroid/widget/CheckBox;->isChecked()Z
-
-    move-result p2
-
-    if-eqz p2, :cond_0
-
-    const-string p2, "-w /sdcard/nh_files/deauth/whitelist.txt "
-
-    goto :goto_0
-
+    # If already in monitor mode, the prefix v1 remains empty and v2 is the selected interface.
     :cond_0
-    const-string p2, ""
 
+    # Check if the whitelist checkbox is checked
+    invoke-virtual {p2}, Landroid/widget/CheckBox;->isChecked()Z
+    move-result v0
+    if-eqz v0, :cond_1
+    const-string v0, "-w /sdcard/nh_files/deauth/whitelist.txt "
+    goto :goto_0
+    :cond_1
+    const-string v0, ""
     :goto_0
-    new-instance v0, Ljava/lang/StringBuilder;
 
-    invoke-direct {v0, p4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    # Build the complete final command string by chaining all the parts
+    new-instance v3, Ljava/lang/StringBuilder;
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+    
+    # 1. Append the prefix (airmon-ng part, or empty string if not needed)
+    invoke-virtual {v3, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {p1}, Landroid/widget/Spinner;->getSelectedItem()Ljava/lang/Object;
+    # 2. Append the main mdk3 command
+    const-string v1, "echo Press Crtl+C to stop! && mdk3 "
+    invoke-virtual {v3, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object p1
-
-    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-
-    const-string p1, "mon d "
-
-    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v0, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    const-string p1, "-c "
-
-    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
+    # 3. Append the correct monitor interface name
+    invoke-virtual {v3, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    
+    # 4. Append the rest of the mdk3 options
+    const-string v1, " d "
+    invoke-virtual {v3, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v3, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    const-string v0, "-c "
+    invoke-virtual {v3, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
     invoke-virtual {p3}, Landroid/widget/EditText;->getText()Landroid/text/Editable;
-
+    move-result-object p1
+    invoke-virtual {v3, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    
+    # Convert the StringBuilder to the final command string
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
     move-result-object p1
 
-    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-
-    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object p1
-
+    # Execute the single, complete command string
     invoke-virtual {p0, p1}, Lcom/offsec/nethunter/DeAuthFragment;->run_cmd(Ljava/lang/String;)V
-    :try_end_0
-    .catch Ljava/lang/InterruptedException; {:try_start_0 .. :try_end_0} :catch_0
 
-    goto :goto_1
-
-    :catch_0
-    move-exception p1
-
-    invoke-virtual {p1}, Ljava/lang/InterruptedException;->printStackTrace()V
-
-    :goto_1
     return-void
 .end method
 
@@ -699,14 +670,12 @@
 .end method
 
 .method public onCreateView(Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Landroid/os/Bundle;)Landroid/view/View;
-    .locals 8
+    .locals 9
 
     const p3, 0x7f0c003b
-
     const/4 v0, 0x0
 
     invoke-virtual {p1, p3, p2, v0}, Landroid/view/LayoutInflater;->inflate(ILandroid/view/ViewGroup;Z)Landroid/view/View;
-
     move-result-object p1
 
     iget-object p2, p0, Lcom/offsec/nethunter/DeAuthFragment;->context:Landroid/content/Context;
@@ -720,139 +689,104 @@
     invoke-virtual {p0, p2}, Lcom/offsec/nethunter/DeAuthFragment;->setHasOptionsMenu(Z)V
 
     const p3, 0x7f0903c4
-
     invoke-virtual {p1, p3}, Landroid/view/View;->findViewById(I)Landroid/view/View;
-
     move-result-object p3
 
     check-cast p3, Landroid/widget/Button;
 
     const v1, 0x7f0904e5
-
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
-
     move-result-object v1
 
     check-cast v1, Landroid/widget/Spinner;
 
+    # =================== START OF MODIFIED BLOCK ===================
+
     :try_start_0
     new-instance v2, Ljava/util/ArrayList;
-
     invoke-direct {v2}, Ljava/util/ArrayList;-><init>()V
 
-    invoke-static {}, Ljava/net/NetworkInterface;->getNetworkInterfaces()Ljava/util/Enumeration;
-
+    iget-object v3, p0, Lcom/offsec/nethunter/DeAuthFragment;->exe:Lcom/offsec/nethunter/utils/ShellExecuter;
+    const-string v4, "ls /sys/class/net/"
+    invoke-virtual {v3, v4}, Lcom/offsec/nethunter/utils/ShellExecuter;->RunAsRootOutput(Ljava/lang/String;)Ljava/lang/String;
     move-result-object v3
 
-    :cond_0
+    const-string v4, "\n"
+    invoke-virtual {v3, v4}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
+    move-result-object v3
+
+    array-length v4, v3
+    const/4 v5, 0x0
+
     :goto_0
-    invoke-interface {v3}, Ljava/util/Enumeration;->hasMoreElements()Z
+    if-ge v5, v4, :cond_1
 
-    move-result v4
+    aget-object v6, v3, v5
 
-    if-eqz v4, :cond_1
+    invoke-virtual {v6}, Ljava/lang/String;->trim()Ljava/lang/String;
+    move-result-object v6
 
-    invoke-interface {v3}, Ljava/util/Enumeration;->nextElement()Ljava/lang/Object;
+    const-string v7, "wlan"
+    invoke-virtual {v6, v7}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+    move-result v7
 
-    move-result-object v4
+    if-eqz v7, :cond_0
 
-    check-cast v4, Ljava/net/NetworkInterface;
+    invoke-interface {v2, v6}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    invoke-virtual {v4}, Ljava/net/NetworkInterface;->isUp()Z
-
-    move-result v5
-
-    if-eqz v5, :cond_0
-
-    invoke-virtual {v4}, Ljava/net/NetworkInterface;->isLoopback()Z
-
-    move-result v5
-
-    if-nez v5, :cond_0
-
-    invoke-virtual {v4}, Ljava/net/NetworkInterface;->getName()Ljava/lang/String;
-
-    move-result-object v5
-
-    const-string v6, "wlan"
-
-    invoke-virtual {v5, v6}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
-
-    move-result v5
-
-    if-eqz v5, :cond_0
-
-    invoke-virtual {v4}, Ljava/net/NetworkInterface;->getName()Ljava/lang/String;
-
-    move-result-object v4
-
-    invoke-interface {v2, v4}, Ljava/util/List;->add(Ljava/lang/Object;)Z
-
+    :cond_0
+    add-int/lit8 v5, v5, 0x1
     goto :goto_0
 
     :cond_1
     new-instance v3, Landroid/widget/ArrayAdapter;
-
     invoke-virtual {p0}, Lcom/offsec/nethunter/DeAuthFragment;->requireContext()Landroid/content/Context;
-
     move-result-object v4
-
     const v5, 0x1090008
-
     invoke-direct {v3, v4, v5, v2}, Landroid/widget/ArrayAdapter;-><init>(Landroid/content/Context;ILjava/util/List;)V
 
     const v2, 0x1090009
-
     invoke-virtual {v3, v2}, Landroid/widget/ArrayAdapter;->setDropDownViewResource(I)V
 
     invoke-virtual {v1, v3}, Landroid/widget/Spinner;->setAdapter(Landroid/widget/SpinnerAdapter;)V
     :try_end_0
-    .catch Ljava/net/SocketException; {:try_start_0 .. :try_end_0} :catch_0
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
 
     goto :goto_1
 
     :catch_0
     move-exception v2
+    invoke-virtual {v2}, Ljava/lang/Exception;->printStackTrace()V
 
-    invoke-virtual {v2}, Ljava/net/SocketException;->printStackTrace()V
+    # =================== END OF MODIFIED BLOCK ===================
 
     :goto_1
     const v2, 0x7f09002a
-
     invoke-virtual {p1, v2}, Landroid/view/View;->findViewById(I)Landroid/view/View;
-
     move-result-object v2
 
     check-cast v2, Landroid/widget/EditText;
 
     const v3, 0x7f090027
-
     invoke-virtual {p1, v3}, Landroid/view/View;->findViewById(I)Landroid/view/View;
-
     move-result-object v3
 
     check-cast v3, Landroid/widget/Button;
 
     const v4, 0x7f090139
-
     invoke-virtual {p1, v4}, Landroid/view/View;->findViewById(I)Landroid/view/View;
-
     move-result-object v4
 
     check-cast v4, Landroid/widget/CheckBox;
 
     const v5, 0x7f090135
-
     invoke-virtual {p1, v5}, Landroid/view/View;->findViewById(I)Landroid/view/View;
-
     move-result-object v5
 
     check-cast v5, Landroid/widget/CheckBox;
 
     const v6, 0x7f0900fc
-
     invoke-virtual {p1, v6}, Landroid/view/View;->findViewById(I)Landroid/view/View;
-
     move-result-object v6
 
     check-cast v6, Landroid/widget/EditText;
