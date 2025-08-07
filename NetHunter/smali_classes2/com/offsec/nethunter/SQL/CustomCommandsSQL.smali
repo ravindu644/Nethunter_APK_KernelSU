@@ -35,129 +35,140 @@
 
     sput-object v0, Lcom/offsec/nethunter/SQL/CustomCommandsSQL;->COLUMNS:Ljava/util/ArrayList;
 
-    const/4 v0, 0x6
+    # MODIFICATION 1: Use const/16 for values outside the -8 to +7 range.
+    const/16 v0, 0xa
 
     new-array v0, v0, [[Ljava/lang/String;
 
-    const-string v1, "1"
+    # --- START: 4 New Custom Commands (Placed at the top) ---
 
-    const-string v2, "Update Kali Metapackages"
-
-    const-string v3, "echo -ne \"\\033]0;Updating Kali\\007\" && clear;apt update && apt -y upgrade"
-
-    const-string v4, "kali"
-
-    const-string v5, "interactive"
-
-    const-string v6, "0"
-
-    filled-new-array/range {v1 .. v6}, [Ljava/lang/String;
-
+    # Command 1 (Array Index 0)
+    const-string v3, "1"
+    const-string v4, "1. START KEX SERVER AS ROOT"
+    const-string v5, "echo -ne \"\\033]0;Setting up Server\\007\" && clear; chmod +x ~/.vnc/xstartup && clear; echo $'\\nPlease enter your new VNC server password\\n' && if [ \"root\" == \"root\" ]; then if [ ! -d /root/.config/tigervnc ]; then mkdir -p /root/.config/tigervnc; fi; fi; sudo -u root vncpasswd && sleep 2 && exit"
+    const-string v6, "kali"
+    const-string v7, "interactive"
+    const-string v8, "0"
+    filled-new-array/range {v3 .. v8}, [Ljava/lang/String;
     move-result-object v1
-
     const/4 v2, 0x0
-
     aput-object v1, v0, v2
 
+    # Command 2 (Array Index 1)
     const-string v3, "2"
-
-    const-string v4, "Launch Wifite"
-
-    const-string v5, "echo -ne \"\\033]0;Wifite\\007\" && clear;wifite"
-
+    const-string v4, "2. START KEX SESSION"
+    const-string v5, "echo -ne \"\\033]0;Starting Server\\007\" && clear; if HOME=/root USER=root LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgcc_s.so.1 nohup vncserver :1 -localhost no -name \"NetHunter KeX\" >/dev/null 2>&1 </dev/null; then echo \"Server started! Closing terminal..\"; else echo -ne \"\\033[0;31mServer already started! \\n\"; fi; sleep 2; exit"
     const-string v6, "kali"
-
     const-string v7, "interactive"
-
     const-string v8, "0"
-
     filled-new-array/range {v3 .. v8}, [Ljava/lang/String;
-
     move-result-object v1
-
     const/4 v2, 0x1
-
     aput-object v1, v0, v2
 
+    # Command 3 (Array Index 2)
     const-string v3, "3"
-
-    const-string v4, "Launch hcxdumptool"
-
-    const-string v5, "echo -ne \"\\033]0;hcxdumptool\\007\" && clear;hcxdumptool -i wlan1 -w $HOME/$(date +\"%Y-%m-%d_%H-%M-%S\").pcapng"
-
-    const-string v6, "kali"
-
+    const-string v4, "3. START 5GHz HOTSPOT"
+    const-string v5, "clear ; su -c \"sh /data/data/com.offsec.nethunter/scripts/start-hotspot\""
+    const-string v6, "android"
     const-string v7, "interactive"
-
     const-string v8, "0"
-
     filled-new-array/range {v3 .. v8}, [Ljava/lang/String;
-
     move-result-object v1
-
     const/4 v2, 0x2
-
     aput-object v1, v0, v2
 
+    # Command 4 (Array Index 3)
     const-string v3, "4"
-
-    const-string v4, "Start wlan1 in monitor mode"
-
-    const-string v5, "echo -ne \"\\033]0;Wlan1 monitor mode\\007\" && clear;ip link set wlan1 down && iw wlan1 set monitor control && ip link set wlan1 up;sleep 2 && exit"
-
+    const-string v4, "Show Public IP"
+    const-string v5, "curl ifconfig.me; echo; sleep 5 && exit"
     const-string v6, "kali"
-
     const-string v7, "interactive"
-
     const-string v8, "0"
-
     filled-new-array/range {v3 .. v8}, [Ljava/lang/String;
-
     move-result-object v1
-
     const/4 v2, 0x3
-
     aput-object v1, v0, v2
 
-    const-string v3, "5"
+    # --- END: 4 New Custom Commands ---
 
-    const-string v4, "Start wlan0 in monitor mode"
+    # --- START: Original Commands (Re-numbered with new IDs) ---
 
-    const-string v5, "echo -ne \"\\033]0;Wlan0 Monitor Mode\\007\" && clear;su -c \"[ -f /sys/module/wlan/parameters/con_mode ] && echo 4 > /sys/module/wlan/parameters/con_mode;ip link set wlan0 down;ip link set wlan0 up || echo \'Your device is not QCACLD3.0 or does not support monitor mode! Exiting..\'\";echo \'Done! Exiting..\' && sleep 2 && exit"
-
-    const-string v6, "android"
-
-    const-string v7, "interactive"
-
-    const-string v8, "0"
-
-    filled-new-array/range {v3 .. v8}, [Ljava/lang/String;
-
+    # Original Command 1 is now Command 5 (Array Index 4)
+    const-string v1, "5"
+    const-string v2, "Update Kali Metapackages"
+    const-string v3, "echo -ne \"\\033]0;Updating Kali\\007\" && clear;apt update && apt -y upgrade"
+    const-string v4, "kali"
+    const-string v5, "interactive"
+    const-string v6, "0"
+    filled-new-array/range {v1 .. v6}, [Ljava/lang/String;
     move-result-object v1
-
     const/4 v2, 0x4
-
     aput-object v1, v0, v2
 
+    # Original Command 2 is now Command 6 (Array Index 5)
     const-string v3, "6"
-
-    const-string v4, "Stop wlan0 monitor mode"
-
-    const-string v5, "echo -ne \"\\033]0;Stopping Wlan0 Mon Mode\\007\" && clear;su -c \"[ -f /sys/module/wlan/parameters/con_mode ] && ip link set wlan0 down; echo 0 > /sys/module/wlan/parameters/con_mode;ip link set wlan0 up; svc wifi enable || echo \'Your device is not QCACLD3.0 or does not support monitor mode! Exiting..\'\";echo \'Done! Exiting..\' && sleep 2 && exit"
-
-    const-string v6, "android"
-
+    const-string v4, "Launch Wifite"
+    const-string v5, "echo -ne \"\\033]0;Wifite\\007\" && clear;wifite"
+    const-string v6, "kali"
     const-string v7, "interactive"
-
     const-string v8, "0"
-
     filled-new-array/range {v3 .. v8}, [Ljava/lang/String;
-
     move-result-object v1
-
     const/4 v2, 0x5
-
     aput-object v1, v0, v2
+
+    # Original Command 3 is now Command 7 (Array Index 6)
+    const-string v3, "7"
+    const-string v4, "Launch hcxdumptool"
+    const-string v5, "echo -ne \"\\033]0;hcxdumptool\\007\" && clear;hcxdumptool -i wlan1 -w $HOME/$(date +\"%Y-%m-%d_%H-%M-%S\").pcapng"
+    const-string v6, "kali"
+    const-string v7, "interactive"
+    const-string v8, "0"
+    filled-new-array/range {v3 .. v8}, [Ljava/lang/String;
+    move-result-object v1
+    const/4 v2, 0x6
+    aput-object v1, v0, v2
+
+    # Original Command 4 is now Command 8 (Array Index 7)
+    const-string v3, "8"
+    const-string v4, "Start wlan1 in monitor mode"
+    const-string v5, "echo -ne \"\\033]0;Wlan1 monitor mode\\007\" && clear;ip link set wlan1 down && iw wlan1 set monitor control && ip link set wlan1 up;sleep 2 && exit"
+    const-string v6, "kali"
+    const-string v7, "interactive"
+    const-string v8, "0"
+    filled-new-array/range {v3 .. v8}, [Ljava/lang/String;
+    move-result-object v1
+    const/4 v2, 0x7
+    aput-object v1, v0, v2
+
+    # Original Command 5 is now Command 9 (Array Index 8)
+    const-string v3, "9"
+    const-string v4, "Start wlan0 in monitor mode"
+    const-string v5, "echo -ne \"\\033]0;Wlan0 Monitor Mode\\007\" && clear;su -c \"[ -f /sys/module/wlan/parameters/con_mode ] && echo 4 > /sys/module/wlan/parameters/con_mode;ip link set wlan0 down;ip link set wlan0 up || echo \'Your device is not QCACLD3.0 or does not support monitor mode! Exiting..\'\";echo \'Done! Exiting..\' && sleep 2 && exit"
+    const-string v6, "android"
+    const-string v7, "interactive"
+    const-string v8, "0"
+    filled-new-array/range {v3 .. v8}, [Ljava/lang/String;
+    move-result-object v1
+    # MODIFICATION 2: Use const/16 for values outside the -8 to +7 range.
+    const/16 v2, 0x8
+    aput-object v1, v0, v2
+
+    # Original Command 6 is now Command 10 (Array Index 9)
+    const-string v3, "10"
+    const-string v4, "Stop wlan0 monitor mode"
+    const-string v5, "echo -ne \"\\033]0;Stopping Wlan0 Mon Mode\\007\" && clear;su -c \"[ -f /sys/module/wlan/parameters/con_mode ] && ip link set wlan0 down; echo 0 > /sys/module/wlan/parameters/con_mode;ip link set wlan0 up; svc wifi enable || echo \'Your device is not QCACLD3.0 or does not support monitor mode! Exiting..\'\";echo \'Done! Exiting..\' && sleep 2 && exit"
+    const-string v6, "android"
+    const-string v7, "interactive"
+    const-string v8, "0"
+    filled-new-array/range {v3 .. v8}, [Ljava/lang/String;
+    move-result-object v1
+    # MODIFICATION 3: Use const/16 for values outside the -8 to +7 range.
+    const/16 v2, 0x9
+    aput-object v1, v0, v2
+
+    # --- END: Original Commands ---
 
     sput-object v0, Lcom/offsec/nethunter/SQL/CustomCommandsSQL;->customcommandsData:[[Ljava/lang/String;
 

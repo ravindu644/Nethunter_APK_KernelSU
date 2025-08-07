@@ -1,0 +1,257 @@
+#!/system/bin/sh
+# THIS SCRIPT MUST BE RUN FROM A ROOT ANDROID SHELL
+#
+# Version 30: The Dual-Band Release
+# - Allows the user to select between a 2.4GHz and a 5GHz hotspot.
+# - Automatically enables 802.11ac (Wi-Fi 5) for 5GHz mode.
+# - The definitive, feature-complete, polished script.
+
+# --- Color Codes for Better Output (Bold) ---
+C_RED='\e[1;31m'
+C_GREEN='\e[1;32m'
+C_YELLOW='\e[1;33m'
+C_BLUE='\e[1;34m'
+C_NC='\e[0m' # No Color
+
+# --- Helper Function ---
+run_in_chroot() {
+    chroot /data/local/nhsystem/kalifs /bin/bash -c "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin; $*"
+}
+
+# --- Global Variables ---
+DNS_SERVER1=$(getprop net.dns1)
+[ -z "$DNS_SERVER1" ] && DNS_SERVER1=8.8.8.8
+PHY_IFACE="wlan0"
+AP_IFACE="ap0"
+
+
+# --- Functions ---
+function print_usage() {
+    echo -e "${C_YELLOW}[!] Usage: sh start_wifi_hotspot.sh [-o <iface>] [-s <SSID>] [-p <password>] [-b <band>] [-c <channel>] [-k] [-h|--help]${C_NC}"
+    echo -e "${C_YELLOW}    -o <iface>     Upstream interface${C_NC}"
+    echo -e "${C_YELLOW}    -s <SSID>      Hotspot name${C_NC}"
+    echo -e "${C_YELLOW}    -p <password>  Hotspot password${C_NC}"
+    echo -e "${C_YELLOW}    -b <band>      Band selection (2 for 2.4GHz, 5 for 5GHz)${C_NC}"
+    echo -e "${C_YELLOW}    -c <channel>   Channel (1-11 for 2.4GHz, 36/48/149 etc for 5GHz)${C_NC}"
+    echo -e "${C_YELLOW}    -k             Kill hotspot${C_NC}"
+    echo -e "${C_YELLOW}    -h, --help     Show this help${C_NC}"
+}
+
+function kill_proc() {
+    echo -e "\n\n${C_YELLOW}[*] Bringing down $AP_IFACE and reverting settings...${C_NC}"
+
+    run_in_chroot "pkill hostapd; pkill dhcpd"
+    run_in_chroot "rm -f /var/lib/dhcp/dhcpd.leases /tmp/hotspot_dhcpd.conf /run/dhcpd.pid /tmp/hotspot_hostapd.conf"
+
+    echo 0 > /proc/sys/net/ipv4/ip_forward
+
+    /system/bin/iptables -t nat -D POSTROUTING -o $UPSTREAM_IFACE -j MASQUERADE 2>/dev/null
+    /system/bin/iptables -t filter -D FORWARD -i $UPSTREAM_IFACE -o $AP_IFACE -j ACCEPT 2>/dev/null
+    /system/bin/iptables -t filter -D FORWARD -i $AP_IFACE -o $UPSTREAM_IFACE -j ACCEPT 2>/dev/null
+    /system/bin/ip rule del from all iif $AP_IFACE lookup $UPSTREAM_IFACE 2>/dev/null
+    /system/bin/ip route del $IP_NET_ADDR/$IP_SUB_CDIR dev $AP_IFACE 2>/dev/null
+    
+    echo -e "${C_YELLOW}[*] Deleting virtual interface $AP_IFACE...${C_NC}"
+    run_in_chroot "iw dev $AP_IFACE del"
+
+    echo -e "${C_GREEN}[+] Done.${C_NC}"
+    exit 0
+}
+
+function config_network() {
+    echo -e "${C_YELLOW}[*] Creating virtual AP interface '$AP_IFACE'...${C_NC}"
+    run_in_chroot "iw dev $AP_IFACE del" 2>/dev/null
+    run_in_chroot "iw dev $PHY_IFACE interface add $AP_IFACE type __ap"
+    
+    echo -e "${C_YELLOW}[*] Configuring hotspot IP address...${C_NC}"
+    /system/bin/ip link set $AP_IFACE down
+    /system/bin/ip addr flush dev $AP_IFACE
+    /system/bin/ip addr add $IP_GW/$IP_SUB_CDIR dev $AP_IFACE
+    /system/bin/ip link set $AP_IFACE up
+
+    echo -e "${C_YELLOW}[*] Enabling Kernel IP forwarding...${C_NC}"
+    echo 1 > /proc/sys/net/ipv4/ip_forward
+    
+    echo -e "${C_YELLOW}[*] Adding routing and firewall rules...${C_NC}"
+    MAIN_TABLE=$(/system/bin/ip rule list | head -n1 | sed -n -e 's/^.*lookup \(.*$\)/\1/p')
+    echo -e "${C_YELLOW}[*] Adding explicit route for hotspot subnet to main table ($MAIN_TABLE)...${C_NC}"
+    /system/bin/ip route append $IP_NET_ADDR/$IP_SUB_CDIR dev $AP_IFACE src $IP_GW proto kernel scope link table $MAIN_TABLE
+
+    /system/bin/ip rule add from all iif $AP_IFACE lookup $UPSTREAM_IFACE
+    /system/bin/iptables -t filter -I FORWARD 1 -i $AP_IFACE -o $UPSTREAM_IFACE -j ACCEPT
+    /system/bin/iptables -t filter -I FORWARD 2 -i $UPSTREAM_IFACE -o $AP_IFACE -j ACCEPT
+    /system/bin/iptables -t nat -I POSTROUTING 1 -o $UPSTREAM_IFACE -j MASQUERADE
+}
+
+function start_services() {
+    echo -e "${C_YELLOW}[*] Creating configuration files in chroot...${C_NC}"
+    
+    # --- Smart Config Generation ---
+    if [ "$BAND" = "5" ]; then
+        # 5GHz Configuration with 802.11ac
+        HOSTAPD_CONF="interface=$AP_IFACE
+driver=nl80211
+ssid=$SSID
+hw_mode=a
+channel=$CHANNEL
+ieee80211n=1
+ieee80211ac=1
+wpa=2
+wpa_passphrase=$PASSWORD
+wpa_key_mgmt=WPA-PSK
+rsn_pairwise=CCMP"
+    else
+        # 2.4GHz Configuration (Default)
+        HOSTAPD_CONF="interface=$AP_IFACE
+driver=nl80211
+ssid=$SSID
+hw_mode=g
+channel=$CHANNEL
+wpa=2
+wpa_passphrase=$PASSWORD
+wpa_key_mgmt=WPA-PSK
+rsn_pairwise=CCMP"
+    fi
+
+    run_in_chroot "echo \"$HOSTAPD_CONF\" > /tmp/hotspot_hostapd.conf"
+
+    run_in_chroot "cat << EOF > /tmp/hotspot_dhcpd.conf
+ddns-update-style none;
+default-lease-time 600;
+max-lease-time 7200;
+authoritative;
+log-facility local7;
+subnet $IP_NET_ADDR netmask $IP_SUB_OCTET {
+  range $IP_BEGIN $IP_END;
+  option routers $IP_GW;
+  option domain-name-servers $DNS_SERVER1, 8.8.8.8;
+}
+EOF"
+    
+    echo -e "${C_YELLOW}[*] Starting hostapd and isc-dhcp-server in chroot...${C_NC}"
+    run_in_chroot "rm -f /var/lib/dhcp/dhcpd.leases && touch /var/lib/dhcp/dhcpd.leases"
+    run_in_chroot "/usr/sbin/hostapd -B -P /run/hostapd.pid /tmp/hotspot_hostapd.conf"
+    run_in_chroot "/usr/sbin/dhcpd -cf /tmp/hotspot_dhcpd.conf -q $AP_IFACE"
+}
+
+# --- Command Line Argument Processing ---
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -h|--help)
+            print_usage
+            exit 0
+            ;;
+        -k)
+            # Set dummy variables to avoid errors in kill_proc
+            UPSTREAM_IFACE=""
+            IP_NET_ADDR="192.168.42.0"
+            IP_SUB_CDIR="24"
+            kill_proc
+            ;;
+        -o)
+            shift
+            UPSTREAM_IFACE="$1"
+            ;;
+        -s)
+            shift
+            SSID="$1"
+            ;;
+        -p)
+            shift
+            PASSWORD="$1"
+            ;;
+        -b)
+            shift
+            BAND="$1"
+            ;;
+        -c)
+            shift
+            CHANNEL="$1"
+            ;;
+        *)
+            echo -e "${C_RED}[!] Unknown option: $1${C_NC}"
+            print_usage
+            exit 1
+            ;;
+    esac
+    shift
+done
+
+# --- Main Part ---
+trap 'kill_proc; exit' INT TERM
+
+echo -e "${C_GREEN}=====================================${C_NC}"
+echo -e "${C_GREEN}  ${C_BLUE}Nethunter Hotspot Activator${C_NC}  ${C_NC}"
+echo ""
+echo -e "${C_GREEN}         by ravindu644${C_NC}"
+echo -e "${C_GREEN}=====================================${C_NC}"
+echo ""
+
+# --- Interactive Mode ---
+if [ -z "$UPSTREAM_IFACE" ]; then
+    echo -n -e "${C_BLUE}Enter Internet Interface (e.g., wlan0): ${C_NC}"
+    read UPSTREAM_IFACE
+fi
+
+if [ -z "$SSID" ]; then
+    echo -n -e "${C_BLUE}Enter Hotspot Name (SSID): ${C_NC}"
+    read SSID
+fi
+
+if [ -z "$PASSWORD" ]; then
+    echo -n -e "${C_BLUE}Enter Hotspot Password (min 8 chars): ${C_NC}"
+    read PASSWORD
+fi
+
+if [ -z "$BAND" ]; then
+    echo -n -e "${C_BLUE}Select band (2 for 2.4GHz, 5 for 5GHz) [2]: ${C_NC}"
+    read BAND
+fi
+
+if [ -z "$CHANNEL" ]; then
+    if [ "$BAND" = "5" ]; then
+        echo -n -e "${C_BLUE}Enter 5GHz Channel (e.g., 36, 48, 149): ${C_NC}"
+        read CHANNEL
+    else
+        echo -n -e "${C_BLUE}Enter 2.4GHz Channel (1-11) [6]: ${C_NC}"
+        read CHANNEL
+        CHANNEL=${CHANNEL:-6} # Default to 6 if empty
+    fi
+fi
+
+# Final validation
+[ -z "$UPSTREAM_IFACE" ] && echo -e "\n${C_RED}[!] Upstream interface cannot be empty.${C_NC}" && exit 1
+[ -z "$SSID" ] && echo -e "\n${C_RED}[!] SSID cannot be empty.${C_NC}" && exit 1
+if [ $(echo -n "$PASSWORD" | wc -c) -lt 8 ]; then
+    echo -e "\n${C_RED}[!] Password must be at least 8 characters long.${C_NC}"
+    exit 1
+fi
+[ -z "$CHANNEL" ] && echo -e "\n${C_RED}[!] Channel cannot be empty.${C_NC}" && exit 1
+
+IP_GW="192.168.42.1"
+IP_SUB_OCTET="255.255.255.0"
+IP_SUB_CDIR="24"
+IP_NET_ADDR="192.168.42.0"
+IP_BEGIN="192.168.42.10"
+IP_END="192.168.42.50"
+
+echo -e "${C_GREEN}[+] UPSTREAM_IFACE: $UPSTREAM_IFACE${C_NC}"
+echo -e "${C_GREEN}[+] AP_IFACE: $AP_IFACE${C_NC}"
+echo -e "${C_GREEN}[+] SSID: $SSID${C_NC}"
+
+config_network
+start_services
+
+echo ""
+echo -e "${C_GREEN}=====================================================${C_NC}"
+echo -e "      ${C_GREEN}Hotspot is now ACTIVE! Press Ctrl+C to stop${C_NC}"
+echo -e "${C_GREEN}=====================================================${C_NC}"
+echo "  To access the NetHunter GUI, connect to VNC on:"
+echo -e "       ${C_GREEN}$IP_GW:1${C_NC}"
+echo -e "${C_GREEN}=====================================================${C_NC}"
+echo -e "\n${C_YELLOW}--- To stop, press Ctrl+C ---${C_NC}"
+
+while true; do
+    sleep 86400 &
+    wait $!
+done
