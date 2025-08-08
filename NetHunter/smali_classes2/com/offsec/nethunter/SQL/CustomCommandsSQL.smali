@@ -80,8 +80,8 @@
 
     # Command 4 (Array Index 3)
     const-string v3, "4"
-    const-string v4, "Show Public IP"
-    const-string v5, "curl ifconfig.me; echo; sleep 5 && exit"
+    const-string v4, "Start a File server for HID attacks"
+    const-string v5, "python3 /sdcard/nh_files/modules/server.py"
     const-string v6, "kali"
     const-string v7, "interactive"
     const-string v8, "0"
