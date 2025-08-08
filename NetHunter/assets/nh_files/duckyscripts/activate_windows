@@ -1,0 +1,19 @@
+REM Author: ravindu644
+REM Github: https://github.com/ravindu644
+REM Title: MAS, but as a Ducky script
+REM Description: Fastest way to run MAS on a ducky script. Requires an active internet connection
+REM Target: Windows based
+REM VERSION: 1.0
+
+
+GUI x
+DELAY 200
+STRING A
+DELAY 1000
+LEFT
+DELAY 100
+ENTER
+DELAY 1300
+STRING irm https://get.activated.win
+DELAY 250
+ENTER
