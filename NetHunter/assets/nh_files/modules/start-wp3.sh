@@ -8,6 +8,7 @@ CHANNEL=1
 TEMPLATE="Login_v4"
 GATEWAY_IP="10.0.0.1"
 SOCAT_PID=""
+WLAN0TO1=1
 
 # Strip any quotes from SSID variable (in case they were accidentally included)
 STRIPPED_SSID=$(echo "$SSID" | sed 's/^"//;s/"$//' | sed "s/^'//;s/'$//")
