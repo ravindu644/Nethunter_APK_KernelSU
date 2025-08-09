@@ -28,6 +28,7 @@ check_product() {
 
   # Check if kernel string contains nh/nethunter
   ui_print "Detected Kernel version: $kernel"
+  ui_print "Detected Device: $PRODUCT_NAME"
   echo "$kernel" | grep -iqE "4.14.113"
   if [ $? -ne 0 ]; then
     ui_print "Unsupported Kernel version: $kernel"
