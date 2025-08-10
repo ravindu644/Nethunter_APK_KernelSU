@@ -66,12 +66,15 @@ check_device() {
     fi
     
     if ! echo "$KERNEL_VERSION" | grep -q "4.14.113"; then
-        ui_print "Kernel version must be 4.14.113 to avoid stability issues. Do you want to continue..?"
+        ui_print ""
+        ui_print "Kernel version should be 4.14.113-xxxx to avoid stability issues. Do you want to continue..?"
         
         if volume_key_selector; then
             ui_print "Proceeding to install anyway..."
+            ui_print ""
         else
             abort "Aborting installation!.."
+            ui_print ""
         fi
     fi
 
