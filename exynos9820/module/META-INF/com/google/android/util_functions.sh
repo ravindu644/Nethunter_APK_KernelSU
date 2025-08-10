@@ -8,6 +8,25 @@ export PRODUCT_NAME=$(getprop ro.product.device)
 export KERNEL_VERSION=$(uname -r)
 export KERNEL_PATH="$TMPDIR/kernel/$PRODUCT_NAME"
 export BOOT_BACKUP_DIR="/sdcard/BootBackup"
+export KEYCHECK="$TMPDIR/META-INF/com/google/android/keycheck"
+
+volume_key_selector(){
+  ui_print ""
+  ui_print "[+] Press Volume up for 'YES' "
+  ui_print "[+] Press Volume down for 'NO' "
+  ui_print ""
+
+  chmod 755 "$KEYCHECK"
+  "$KEYCHECK"
+  key=$?
+
+  case "$key" in
+    42) return 0 ;;  # YES
+    41) return 1 ;;  # NO
+    *) abort "Invalid key pressed! Exiting..." ;;
+  esac
+}
+
 
 check_product() {
   hw=$(getprop ro.hardware)
@@ -47,8 +66,13 @@ check_device() {
     fi
     
     if ! echo "$KERNEL_VERSION" | grep -q "4.14.113"; then
-        ui_print "Kernel version must 4.14.113, skipping..."
-        return 1
+        ui_print "Kernel version must be 4.14.113 to avoid stability issues. Do you want to continue..?"
+        
+        if volume_key_selector; then
+            ui_print "Proceeding to install anyway..."
+        else
+            abort "Aborting installation!.."
+        fi
     fi
 
 }
