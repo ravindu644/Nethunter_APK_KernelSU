@@ -40,8 +40,7 @@ check_product() {
     exynos9820) ;;
     *)
       ui_print "Unsupported device: $hw"
-      ui_print "This module is only for exynos9820 devices."
-      abort
+      abort "This module is only for exynos9820 devices."
       ;;
   esac
 
@@ -56,24 +55,39 @@ check_product() {
 check_device() {
     
     if [ "$ANDROID_VERSION" != "12" ]; then
-        ui_print "Android version mismatch, skipping..."
-        return 1
+        ui_print "Android version mismatch..!"
+        ui_print "It should be 12, but yours is ${ANDROID_VERSION}. Do you want to continue?"
+        
+        if volume_key_selector; then
+            ui_print "Okay, continuing with Android ${ANDROID_VERSION}..."
+            ui_print ""
+        else
+            abort "Aborting installation..."
+            ui_print ""
+        fi        
     fi
     
     if ! echo "$SUPPORTED_PRODUCTS" | grep -q "$PRODUCT_NAME"; then
-        ui_print "Device $PRODUCT_NAME not supported, skipping..."
-        return 1
+        ui_print "Device $PRODUCT_NAME not supported. Is this a ported ROM for the Galaxy S10 series?"
+
+        if volume_key_selector; then
+            ui_print "Okay, continuing with $PRODUCT_NAME..."
+            ui_print ""
+        else
+            abort "Aborting installation..."
+            ui_print ""
+        fi 
     fi
     
     if ! echo "$KERNEL_VERSION" | grep -q "4.14.113"; then
         ui_print ""
-        ui_print "Kernel version should be 4.14.113-xxxx to avoid stability issues. Do you want to continue..?"
+        ui_print "Kernel version should be 4.14.113-xxxx to avoid stability issues. Do you want to continue?"
         
         if volume_key_selector; then
             ui_print "Proceeding to install anyway..."
             ui_print ""
         else
-            abort "Aborting installation!.."
+            abort "Aborting installation..."
             ui_print ""
         fi
     fi
